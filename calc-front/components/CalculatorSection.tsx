@@ -1,3 +1,5 @@
+import { Calculator } from "./Calculator";
+
 export const CalculatorSection = () => {
   return (
     <section>
@@ -7,7 +9,7 @@ export const CalculatorSection = () => {
           Обирайте прилад, який хочете розрахувати порівнюючи з центральною
           мережею та визначайте, що для вас є вигідніше.
         </p>
-        <div className="p-12 bg-white rounded-[40px]"></div>
+        <Calculator />
       </div>
     </section>
   );
