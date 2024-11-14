@@ -73,7 +73,7 @@ export const Calculator: React.FC = () => {
             onClick={() => setActiveTab(item.id)}
           >
             <Image src={item.image} alt={item.name} />
-            <h3>{item.name}</h3>
+            <h3 className="text-2xl mt-6">{item.name}</h3>
           </div>
         ))}
       </div>
