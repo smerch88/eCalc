@@ -64,4 +64,54 @@ body {
   .hero {
     background-image: url("../public/heroBG.png");
   }
+
+  .decorated-left {
+    position: relative;
+  }
+
+  .decorated-left::after {
+    position: absolute;
+    bottom: 0;
+    right: 100%;
+    content: "";
+    width: 40px;
+    height: 40px;
+    background-color: #e6e8e3;
+    border-radius: 0 0 100% 0;
+  }
+
+  .decorated-left::before {
+    position: absolute;
+    bottom: 0;
+    right: 100%;
+    content: "";
+    width: 40px;
+    height: 40px;
+    background-color: white;
+  }
+
+  .decorated-right {
+    position: relative;
+  }
+
+  .decorated-right::after {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    content: "";
+    width: 40px;
+    height: 40px;
+    background-color: #e6e8e3;
+    border-radius: 0 0 0 100%;
+  }
+
+  .decorated-right::before {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    content: "";
+    width: 40px;
+    height: 40px;
+    background-color: white;
+  }
 }

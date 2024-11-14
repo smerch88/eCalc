@@ -8,7 +8,6 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import cn from "classnames";
 
-// Lazy load components for each tab
 const LightComponent = dynamic(() => import("./calculators/LightComponent"));
 const BoilerComponent = dynamic(() => import("./calculators/BoilerComponent"));
 const WMComponent = dynamic(() => import("./calculators/WMComponent"));
@@ -67,13 +66,24 @@ export const Calculator: React.FC = () => {
           <div
             key={item.id}
             className={cn(
-              activeTab === item.id ? "bg-white" : "",
-              "flex flex-col items-center pt-16 pb-12 rounded-tl-[40px] rounded-tr-[40px]"
+              activeTab !== "mw" && activeTab === item.id
+                ? "decorated-right"
+                : ""
             )}
-            onClick={() => setActiveTab(item.id)}
           >
-            <Image src={item.image} alt={item.name} />
-            <h3 className="text-2xl mt-6">{item.name}</h3>
+            <div
+              className={cn(
+                activeTab !== "light" && activeTab === item.id
+                  ? "decorated-left"
+                  : "",
+                activeTab === item.id ? "bg-white" : "",
+                "flex flex-col items-center pt-16 pb-12 rounded-tl-[40px] rounded-tr-[40px]"
+              )}
+              onClick={() => setActiveTab(item.id)}
+            >
+              <Image src={item.image} alt={item.name} />
+              <h3 className="text-2xl mt-6">{item.name}</h3>
+            </div>
           </div>
         ))}
       </div>
