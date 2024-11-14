@@ -124,6 +124,24 @@ const BoilerComponent = () => {
           </div>
         </div>
         <div>
+          <label htmlFor="waterVolume">
+            Споживання гарячої води на місяць:
+          </label>
+          <div className="relative mt-6">
+            <Input
+              id="waterVolume"
+              type="text"
+              placeholder="Місто"
+              value={formData.waterVolume}
+              onChange={handleInputChange}
+              className="px-6 py-6 rounded-2xl text-lg"
+            />
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              літрів
+            </span>
+          </div>
+        </div>
+        <div>
           <span>Тариф на електроенергію:</span>
           <div className="flex flex-row gap-12 text-lg mt-6">
             <div className="relative">
@@ -188,6 +206,22 @@ const BoilerComponent = () => {
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+        <div>
+          <label htmlFor="subscriptionFee">Абонплата на підключення:</label>
+          <div className="relative mt-6">
+            <Input
+              id="subscriptionFee"
+              type="text"
+              placeholder="Місто"
+              value={formData.subscriptionFee}
+              onChange={handleInputChange}
+              className="px-6 py-6 rounded-2xl text-lg"
+            />
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              грн/міс
+            </span>
           </div>
         </div>
         <div className="flex flex-row gap-12">
