@@ -6,14 +6,14 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 
-// Define types for options
+import cn from "classnames";
+
 interface Option {
   value: string;
   label: string;
   tariff: string;
 }
 
-// Define types for form data
 interface FormData {
   waterVolume: string;
   initialTemp: string;
@@ -27,16 +27,15 @@ interface FormData {
   city: string;
 }
 
-// Define types for calculation result
 interface CalculationResult {
   totalCostInUAH: number;
   networkHotWaterCostInUAH: number;
-  moreProfitable: string;
 }
 
 const BoilerComponent = () => {
-  const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>("");
-  const [inputValue, setInputValue] = useState<string>("");
+  const [selectedCostPerKWh, setSelectedCostPerKWh] =
+    useState<string>("single-zone");
+  const [inputValue, setInputValue] = useState<string>("4.32");
   const [formData, setFormData] = useState<FormData>({
     waterVolume: "3000",
     initialTemp: "15",
@@ -52,8 +51,8 @@ const BoilerComponent = () => {
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   const options: Option[] = [
-    { value: "single-zone", label: "Однозонний", tariff: "4.08" },
-    { value: "two-zone", label: "Двозонний", tariff: "2.04" },
+    { value: "single-zone", label: "Однозонний", tariff: "4.32" },
+    { value: "two-zone", label: "Двозонний", tariff: "2.16" },
   ];
 
   const handleTariffChange = (
@@ -72,8 +71,15 @@ const BoilerComponent = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const { id, value } = event.target;
+
+    setFormData((prev) => {
+      if (id === "costPerKWhInput") {
+        return { ...prev, costPerKWh: value };
+      }
+      return { ...prev, [id]: value };
+    });
+
     setInputValue(value);
-    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const calculateAndSetResult = (updatedInputs: FormData): void => {
@@ -89,13 +95,8 @@ const BoilerComponent = () => {
       updatedInputs.nightRateFactor
     );
 
-    const boilerTotalCost = result.totalCostInUAH;
-    const networkHotWaterCost = result.networkHotWaterCostInUAH;
-
-    const moreProfitable =
-      boilerTotalCost < networkHotWaterCost ? "Бойлер" : "Гаряча вода з мережі";
-
-    setResult({ ...result, moreProfitable });
+    setResult(result);
+    console.log(result);
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -104,8 +105,8 @@ const BoilerComponent = () => {
   };
 
   return (
-    <form className="flex flex-row gap-16 text-2xl">
-      <div className="w-7/12 flex-shrink-0 flex flex-col gap-12">
+    <form className="flex flex-row gap-16 text-2xl h-full">
+      <div className="w-7/12 flex-shrink-0 flex flex-col justify-between">
         <div>
           <label htmlFor="city">Тарифи за воду з міста:</label>
           <div className="relative mt-6">
@@ -118,6 +119,24 @@ const BoilerComponent = () => {
               className="px-6 py-6 rounded-2xl text-lg"
             />
             <MapPin className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4" />
+          </div>
+        </div>
+        <div>
+          <label htmlFor="waterVolume">
+            Споживання гарячої води на місяць:
+          </label>
+          <div className="relative mt-6">
+            <Input
+              id="waterVolume"
+              type="text"
+              placeholder="Місто"
+              value={formData.waterVolume}
+              onChange={handleInputChange}
+              className="px-6 py-6 rounded-2xl text-lg"
+            />
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              літрів
+            </span>
           </div>
         </div>
         <div>
@@ -146,7 +165,7 @@ const BoilerComponent = () => {
                 onChange={handleInputChange}
                 className="px-6 py-6 rounded-2xl text-lg"
               />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                 грн/кВт
               </span>
             </div>
@@ -165,7 +184,7 @@ const BoilerComponent = () => {
                   onChange={handleInputChange}
                   className="px-6 py-6 rounded-2xl text-lg"
                 />
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                   грн/м³
                 </span>
               </div>
@@ -180,11 +199,29 @@ const BoilerComponent = () => {
                   onChange={handleInputChange}
                   className="px-6 py-6 rounded-2xl text-lg"
                 />
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                   грн/м³
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+        <div>
+          <label htmlFor="subscriptionFee">
+            Абонплата за підключення гарячої води:
+          </label>
+          <div className="relative mt-6">
+            <Input
+              id="subscriptionFee"
+              type="text"
+              placeholder="Місто"
+              value={formData.subscriptionFee}
+              onChange={handleInputChange}
+              className="px-6 py-6 rounded-2xl text-lg"
+            />
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              грн/міс
+            </span>
           </div>
         </div>
         <div className="flex flex-row gap-12">
@@ -196,9 +233,9 @@ const BoilerComponent = () => {
                 type="text"
                 value={formData.initialTemp}
                 onChange={handleInputChange}
-                className="px-6 py-6 rounded-2xl text-lg"
+                className="px-6 py-6 rounded-2xl"
               />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                 °C
               </span>
             </div>
@@ -213,7 +250,7 @@ const BoilerComponent = () => {
                 onChange={handleInputChange}
                 className="px-6 py-6 rounded-2xl text-lg"
               />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                 °C
               </span>
             </div>
@@ -230,17 +267,55 @@ const BoilerComponent = () => {
               placeholder="98"
               className="px-6 py-6 rounded-2xl text-lg"
             />
-            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
               %
             </span>
           </div>
         </div>
       </div>
-      <div>
-        <p>Бойлер</p>
-        <p>{result?.totalCostInUAH || 0} грн/міс</p>
-        <p>на {result?.moreProfitable}</p>
-        <Button onClick={handleSubmit}>Розрахувати</Button>
+      <div className="flex flex-col justify-between">
+        <div className="flex flex-col gap-12">
+          <div>
+            <p className="mb-4">Бойлер</p>
+            <p
+              className={cn(
+                (result?.totalCostInUAH ?? 0) <
+                  (result?.networkHotWaterCostInUAH ?? 0)
+                  ? "text-success"
+                  : "text-failure",
+                "text-4xl font-semibold mb-4"
+              )}
+            >
+              {result?.totalCostInUAH.toFixed(2) || 0} грн/міс
+            </p>
+            {result?.totalCostInUAH && result?.networkHotWaterCostInUAH && (
+              <p className="mb-4">
+                на{" "}
+                <span className="font-semibold">
+                  {Math.abs(
+                    result?.totalCostInUAH - result?.networkHotWaterCostInUAH
+                  ).toFixed(2)}{" "}
+                  грн
+                </span>{" "}
+                {result?.totalCostInUAH &&
+                result?.networkHotWaterCostInUAH &&
+                result?.totalCostInUAH - result?.networkHotWaterCostInUAH > 0
+                  ? "більше"
+                  : "менше"}
+              </p>
+            )}
+          </div>
+          <span className="text-center text-base">проти</span>
+          <div>
+            <p className="mb-4">Центральне водопостачання</p>
+            <p className="text-4xl font-semibold">
+              {result?.networkHotWaterCostInUAH.toFixed(2) || 0} грн/міс
+            </p>
+          </div>
+        </div>
+        <Button onClick={handleSubmit} className="rounded-2xl py-6 text-2xl">
+          Розрахувати
+        </Button>
       </div>
     </form>
   );

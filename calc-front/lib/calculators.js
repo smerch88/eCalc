@@ -48,13 +48,13 @@ export function calculateBoilerEnergyConsumption(
     const waterVolumeInCubicMeters = waterVolume / 1000;
 
     // Вартість води з мережі гарячого водопостачання
-    const networkHotWaterCost = waterVolumeInCubicMeters * hotWaterCostPerCubicMeter;
+    const networkHotWaterCost = waterVolumeInCubicMeters * hotWaterCostPerCubicMeter + subscriptionFee;
 
     // Вартість холодної води
     const coldWaterCost = waterVolumeInCubicMeters * coldWaterCostPerCubicMeter;
 
     // Додаємо абонентську плату до загальної вартості
-    const totalCostWithSubscription = (totalCost + coldWaterCost + subscriptionFee) / 100;
+    const totalCostWithSubscription = (totalCost + coldWaterCost) / 100;
 
     return {
         energyConsumption: totalEnergyConsumption, // кВт*год
