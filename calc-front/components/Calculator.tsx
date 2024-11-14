@@ -91,7 +91,7 @@ export const Calculator: React.FC = () => {
         className={cn(
           activeTab === "light" && "!rounded-tl-[0px]",
           activeTab === "mw" && "!rounded-tr-[0px]",
-          "p-12 bg-white rounded-[40px]"
+          "p-12 bg-white rounded-[40px] h-[1100px]"
         )}
       >
         {renderContent()}

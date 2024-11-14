@@ -105,8 +105,8 @@ const BoilerComponent = () => {
   };
 
   return (
-    <form className="flex flex-row gap-16 text-2xl">
-      <div className="w-7/12 flex-shrink-0 flex flex-col gap-12">
+    <form className="flex flex-row gap-16 text-2xl h-full">
+      <div className="w-7/12 flex-shrink-0 flex flex-col justify-between">
         <div>
           <label htmlFor="city">Тарифи за воду з міста:</label>
           <div className="relative mt-6">
