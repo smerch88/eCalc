@@ -17,6 +17,8 @@ const config: Config = {
     },
     extend: {
       colors: {
+        success: "#225C07",
+        failure: "red",
         background: "hsl(var(--background))",
         background_header: "#ADADAD",
         foreground: "hsl(var(--foreground))",

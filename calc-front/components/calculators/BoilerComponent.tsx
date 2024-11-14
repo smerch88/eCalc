@@ -6,6 +6,8 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 
+import cn from "classnames";
+
 // Define types for options
 interface Option {
   value: string;
@@ -31,7 +33,6 @@ interface FormData {
 interface CalculationResult {
   totalCostInUAH: number;
   networkHotWaterCostInUAH: number;
-  moreProfitable: string;
 }
 
 const BoilerComponent = () => {
@@ -72,8 +73,15 @@ const BoilerComponent = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const { id, value } = event.target;
+
+    setFormData((prev) => {
+      if (id === "costPerKWhInput") {
+        return { ...prev, costPerKWh: value };
+      }
+      return { ...prev, [id]: value };
+    });
+
     setInputValue(value);
-    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const calculateAndSetResult = (updatedInputs: FormData): void => {
@@ -89,13 +97,8 @@ const BoilerComponent = () => {
       updatedInputs.nightRateFactor
     );
 
-    const boilerTotalCost = result.totalCostInUAH;
-    const networkHotWaterCost = result.networkHotWaterCostInUAH;
-
-    const moreProfitable =
-      boilerTotalCost < networkHotWaterCost ? "Бойлер" : "Гаряча вода з мережі";
-
-    setResult({ ...result, moreProfitable });
+    setResult(result);
+    console.log(result);
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -146,7 +149,7 @@ const BoilerComponent = () => {
                 onChange={handleInputChange}
                 className="px-6 py-6 rounded-2xl text-lg"
               />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                 грн/кВт
               </span>
             </div>
@@ -165,7 +168,7 @@ const BoilerComponent = () => {
                   onChange={handleInputChange}
                   className="px-6 py-6 rounded-2xl text-lg"
                 />
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                   грн/м³
                 </span>
               </div>
@@ -180,7 +183,7 @@ const BoilerComponent = () => {
                   onChange={handleInputChange}
                   className="px-6 py-6 rounded-2xl text-lg"
                 />
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                   грн/м³
                 </span>
               </div>
@@ -196,9 +199,9 @@ const BoilerComponent = () => {
                 type="text"
                 value={formData.initialTemp}
                 onChange={handleInputChange}
-                className="px-6 py-6 rounded-2xl text-lg"
+                className="px-6 py-6 rounded-2xl"
               />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                 °C
               </span>
             </div>
@@ -213,7 +216,7 @@ const BoilerComponent = () => {
                 onChange={handleInputChange}
                 className="px-6 py-6 rounded-2xl text-lg"
               />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                 °C
               </span>
             </div>
@@ -230,17 +233,55 @@ const BoilerComponent = () => {
               placeholder="98"
               className="px-6 py-6 rounded-2xl text-lg"
             />
-            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-lg">
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
               %
             </span>
           </div>
         </div>
       </div>
-      <div>
-        <p>Бойлер</p>
-        <p>{result?.totalCostInUAH || 0} грн/міс</p>
-        <p>на {result?.moreProfitable}</p>
-        <Button onClick={handleSubmit}>Розрахувати</Button>
+      <div className="flex flex-col justify-between">
+        <div className="flex flex-col gap-12">
+          <div>
+            <p className="mb-4">Бойлер</p>
+            <p
+              className={cn(
+                (result?.totalCostInUAH ?? 0) <
+                  (result?.networkHotWaterCostInUAH ?? 0)
+                  ? "text-success"
+                  : "text-failure",
+                "text-4xl font-semibold mb-4"
+              )}
+            >
+              {result?.totalCostInUAH.toFixed(2) || 0} грн/міс
+            </p>
+            {result?.totalCostInUAH && result?.networkHotWaterCostInUAH && (
+              <p className="mb-4">
+                на{" "}
+                <span className="font-semibold">
+                  {Math.abs(
+                    result?.totalCostInUAH - result?.networkHotWaterCostInUAH
+                  ).toFixed(2)}{" "}
+                  грн
+                </span>{" "}
+                {result?.totalCostInUAH &&
+                result?.networkHotWaterCostInUAH &&
+                result?.totalCostInUAH - result?.networkHotWaterCostInUAH > 0
+                  ? "більше"
+                  : "менше"}
+              </p>
+            )}
+          </div>
+          <span className="text-center text-base">проти</span>
+          <div>
+            <p className="mb-4">Центральне водопостачання</p>
+            <p className="text-4xl font-semibold">
+              {result?.networkHotWaterCostInUAH.toFixed(2) || 0} грн/міс
+            </p>
+          </div>
+        </div>
+        <Button onClick={handleSubmit} className="rounded-2xl py-6 text-2xl">
+          Розрахувати
+        </Button>
       </div>
     </form>
   );
