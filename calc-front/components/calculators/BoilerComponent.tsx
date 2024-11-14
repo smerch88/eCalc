@@ -8,14 +8,12 @@ import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 
 import cn from "classnames";
 
-// Define types for options
 interface Option {
   value: string;
   label: string;
   tariff: string;
 }
 
-// Define types for form data
 interface FormData {
   waterVolume: string;
   initialTemp: string;
@@ -29,15 +27,15 @@ interface FormData {
   city: string;
 }
 
-// Define types for calculation result
 interface CalculationResult {
   totalCostInUAH: number;
   networkHotWaterCostInUAH: number;
 }
 
 const BoilerComponent = () => {
-  const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>("");
-  const [inputValue, setInputValue] = useState<string>("");
+  const [selectedCostPerKWh, setSelectedCostPerKWh] =
+    useState<string>("single-zone");
+  const [inputValue, setInputValue] = useState<string>("4.32");
   const [formData, setFormData] = useState<FormData>({
     waterVolume: "3000",
     initialTemp: "15",
@@ -53,8 +51,8 @@ const BoilerComponent = () => {
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   const options: Option[] = [
-    { value: "single-zone", label: "Однозонний", tariff: "4.08" },
-    { value: "two-zone", label: "Двозонний", tariff: "2.04" },
+    { value: "single-zone", label: "Однозонний", tariff: "4.32" },
+    { value: "two-zone", label: "Двозонний", tariff: "2.16" },
   ];
 
   const handleTariffChange = (
@@ -209,7 +207,9 @@ const BoilerComponent = () => {
           </div>
         </div>
         <div>
-          <label htmlFor="subscriptionFee">Абонплата на підключення:</label>
+          <label htmlFor="subscriptionFee">
+            Абонплата за підключення гарячої води:
+          </label>
           <div className="relative mt-6">
             <Input
               id="subscriptionFee"
