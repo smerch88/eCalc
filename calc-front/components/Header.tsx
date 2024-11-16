@@ -1,12 +1,12 @@
-"use client"; //вказує next.js що компонент рендериться на стороні клієнта, що дасть можливість використовувати onClick
 
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../public/logo.png";
 import { menuItems } from "@/lib/menuItems";
 
-import { Input } from "@/components/ui/input";
-import { geoFindMe } from "@/lib/location";
+
+import {LocationButton} from "./ui/LocationButton";
+//
 
 export const Header = () => {
   return (
@@ -33,17 +33,8 @@ export const Header = () => {
               </Link>
             ))}
           </nav>
-          <Input
-            id="location"
-            type="text"
-            placeholder="Місто"
-            value=""
-            onChange={geoFindMe}
-            className="w-1/4 bg-white px-6 py-6 rounded-xl text-lg"
-          />
-          <button id="find-me" onClick={geoFindMe}>
-            &#8743;
-          </button>
+          
+          <LocationButton />
         </div>
       </div>
     </header>
