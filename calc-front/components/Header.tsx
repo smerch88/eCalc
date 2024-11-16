@@ -5,7 +5,7 @@ import Logo from "../public/logo.png";
 import { menuItems } from "@/lib/menuItems";
 
 
-import {LocationButton} from "./ui/LocationButton";
+import CityAutoDetect from "./CityAutoDetect";
 //
 
 export const Header = () => {
@@ -34,7 +34,7 @@ export const Header = () => {
             ))}
           </nav>
           
-          <LocationButton />
+          <CityAutoDetect />
         </div>
       </div>
     </header>
