@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 
 export const HeroSection = () => {
   return (
@@ -14,7 +14,7 @@ export const HeroSection = () => {
           <h1 className="text-5xl font-bold max-w-[650px]">
             Контролюй споживання електроенергії легко
           </h1>
-          <Button className="w-max" size="lg">
+          <Button className="rounded-2xl py-6 text-2xl w-max" size="lg">
             Розрахувати
           </Button>
         </div>

@@ -1,17 +1,11 @@
+import { UnifiedStoreState } from "@/types/common";
 import { create } from "zustand";
 
-type TarrifType = "day" | "night";
-
-interface TarrifState {
-  location: string;
-  tarrifType: TarrifType;
-  setLocation: (location: string) => void;
-  setTarrifType: (type: TarrifType) => void;
-}
-
-export const useTarrigStore = create<TarrifState>((set) => ({
+export const useUnifiedStore = create<UnifiedStoreState>((set) => ({
   location: "",
-  tarrifType: "day",
+  tariffType: "day",
   setLocation: (location) => set({ location }),
-  setTarrifType: (type) => set({ tarrifType: type }),
+  setTariffType: (type) => set({ tariffType: type }),
+  boiler: null,
+  setBoiler: (boiler) => set({ boiler }),
 }));

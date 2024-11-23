@@ -3,8 +3,9 @@
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
+import { useUnifiedStore } from "@/stores/stores";
 
 import cn from "classnames";
 
@@ -54,6 +55,17 @@ const BoilerComponent = () => {
     { value: "single-zone", label: "Однозонний", tariff: "4.32" },
     { value: "two-zone", label: "Двозонний", tariff: "2.16" },
   ];
+
+  const boiler = useUnifiedStore((state) => state.boiler);
+
+  useEffect(() => {
+    if (boiler?.efficiency) {
+      setFormData((prev) => ({
+        ...prev,
+        efficiency: boiler.efficiency.toString(),
+      }));
+    }
+  }, [boiler]);
 
   const handleTariffChange = (
     event: React.ChangeEvent<HTMLSelectElement>
