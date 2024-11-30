@@ -43,20 +43,17 @@ const CityAutoDetect = () => {
       <Input
         type="text"
         placeholder="Місто"
-        width={200}
-        height={56}
         value={location} // Значення з zustand store.
         readOnly
         onClick={() => setIsModalOpen(true)} // Відкрити модальне вікно.
-        className="w-full bg-white px-6 py-6 pr-14 rounded-xl text-lg cursor-pointer"
+        className="w-[200px] h-[56px] bg-white px-6 py-6 pr-14 rounded-xl text-lg cursor-pointer"
       />
 
       {/* Кнопка для вибору вручну */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 text-lg text-black px-3 py-2 rounded-lg hover:bg-gray-200 hover:text-white transition-colors"
-      >
-        &#8744;
+        className="absolute top-4 right-6 w-[24px] h-[24px] transform -translate-y-1/2 text-lg text-black px-3 py-2 rounded-lg transition-colors"
+      >&#8744;
       </button>
 
       {/* Модальне вікно */}
