@@ -1,10 +1,12 @@
-"use client"; //вказує next.js що компонент рендериться на стороні клієнта, що дасть можливість використовувати onClick
+"use client"; // Вказує Next.js, що компонент рендериться на стороні клієнта.
 
 import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-// import {CitySelector} from './CitySelector';
+import { Input } from "@/components/ui/input"; // Припустимо, у вас є кастомний Input компонент.
+import CitySelector from "./CitySelector"; // Імпорт модального компонента для вибору міста.
+
 const CityAutoDetect = () => {
-  const [city, setCity] = useState("Невідомо");
+  const [city, setCity] = useState("Київ"); // За замовчуванням - Київ.
+  const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна.
 
   useEffect(() => {
     // Спроба визначити місцезнаходження через Geolocation API
@@ -33,23 +35,43 @@ const CityAutoDetect = () => {
     );
   }, []);
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true); // Відкрити модальне вікно.
+  };
+
+  const handleCitySelect = (selectedCity: string) => {
+    setCity(selectedCity); // Оновити вибраний город.
+    setIsModalOpen(false); // Закрити модальне вікно.
+  };
+
   return (
-    <div className="relative w-1\2">
+    <div className="relative w-1/2">
+      {/* Поле вводу */}
       <Input
-        // id="location"
         type="text"
         placeholder="Місто"
         value={city}
-        // readOnly
-        // onChange={}
-        className="w-full bg-white px-6 py-6 pr-14 rounded-xl text-lg"
+        readOnly
+        onClick={handleModalOpen} // При кліку - відкрити модальне вікно.
+        className="w-full bg-white px-6 py-6 pr-6 rounded-xl text-lg cursor-pointer"
       />
+
+      {/* Кнопка для вибору вручну */}
       <button
-        // onClick={geoFindMe}
+        onClick={handleModalOpen}
         className="absolute top-1/2 right-4 transform -translate-y-1/2 text-lg bg-gray-200 text-black px-3 py-2 rounded-lg hover:bg-blue-700 hover:text-white transition-colors"
       >
         &#8743;
       </button>
+
+      {/* Модальне вікно */}
+      {isModalOpen && (
+        <CitySelector
+          selectedCity={city}
+          onCitySelect={handleCitySelect}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
