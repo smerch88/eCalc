@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
-import CitySelector from "./CitySelector";
+import CitySelector from "@/components/CitySelect";
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
 
 const CityAutoDetect = () => {
@@ -46,7 +46,7 @@ const CityAutoDetect = () => {
         value={location} // Значення з zustand store.
         readOnly
         onClick={() => setIsModalOpen(true)} // Відкрити модальне вікно.
-        className="w-full bg-white px-6 py-4 pr-14 rounded-xl text-lg cursor-pointer"
+        className="w-full bg-white px-6 py-6 pr-14 rounded-xl text-lg cursor-pointer"
       />
 
       {/* Кнопка для вибору вручну */}
