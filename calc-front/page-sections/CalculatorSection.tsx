@@ -1,4 +1,4 @@
-import { Calculator } from "../components/CalculatorSection";
+import { CalculatorsTab } from "../components/CalculatorsTab";
 
 export const CalculatorSection = () => {
   return (
@@ -9,7 +9,7 @@ export const CalculatorSection = () => {
           Обирайте прилад, який хочете розрахувати порівнюючи з центральною
           мережею та визначайте, що для вас є вигідніше.
         </p>
-        <Calculator />
+        <CalculatorsTab />
       </div>
     </section>
   );

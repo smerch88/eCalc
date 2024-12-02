@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
 import CitySelector from "@/components/CitySelect";
+import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
+import { useEffect, useState } from "react";
 
 const CityAutoDetect = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна.
@@ -53,7 +53,8 @@ const CityAutoDetect = () => {
       <button
         onClick={() => setIsModalOpen(true)}
         className="absolute top-4 right-6 w-[24px] h-[24px] transform -translate-y-1/2 text-lg text-black px-3 py-2 rounded-lg transition-colors"
-      >&#8744;
+      >
+        &#8744;
       </button>
 
       {/* Модальне вікно */}

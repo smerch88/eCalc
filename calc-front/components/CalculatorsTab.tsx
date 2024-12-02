@@ -1,12 +1,12 @@
 "use client";
+import cn from "classnames";
+import dynamic from "next/dynamic";
 import Image, { StaticImageData } from "next/image";
+import { useState } from "react";
 import Boiler from "../public/calculatorDevices/Boiler.png";
 import Light from "../public/calculatorDevices/Light.png";
 import Microwave from "../public/calculatorDevices/Microwave.png";
 import WM from "../public/calculatorDevices/WM.png";
-import { useState } from "react";
-import dynamic from "next/dynamic";
-import cn from "classnames";
 
 const LightComponent = dynamic(() => import("./calculators/LightComponent"));
 const BoilerComponent = dynamic(() => import("./calculators/BoilerComponent"));
@@ -47,7 +47,7 @@ const devices: Device[] = [
   },
 ];
 
-export const Calculator: React.FC = () => {
+export const CalculatorsTab = () => {
   const [activeTab, setActiveTab] = useState<string | undefined>("boiler");
 
   const renderContent = () => {
