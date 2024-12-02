@@ -22,7 +22,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({ onClose }) => {
     "Херсон",
   ]); // Список міст.
 
-  const location = useUnifiedStore((state) => state.location); // Поточне місто.
+  // const location = useUnifiedStore((state) => state.location); // Поточне місто.
   const setLocation = useUnifiedStore((state) => state.setLocation); // Функція для оновлення міста.
 
   const handleCitySelect = (city: string) => {
