@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../public/logo.png";
+import CityAutoDetect from "./CityAutoDetect";
 import { menuItems } from "@/lib/menuItems";
 
 export const Header = () => {
@@ -28,6 +29,7 @@ export const Header = () => {
               </Link>
             ))}
           </nav>
+          <CityAutoDetect />
         </div>
       </div>
     </header>
