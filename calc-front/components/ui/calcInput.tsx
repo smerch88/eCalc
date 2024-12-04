@@ -23,7 +23,6 @@ const CalcInput = forwardRef<HTMLInputElement, CalcInputProps>(
             type={type}
             className={cn(
               "appearance-none border border-solid border-primary focus:border-primary rounded-2xl h-14 w-full pl-4 md:pl-6 pr-8 md:pr-12 py-4 bg-transparent outline-none font-normal text-base md:text-lg text-primary",
-              unit,
               className
             )}
             ref={ref}
@@ -40,26 +39,4 @@ const CalcInput = forwardRef<HTMLInputElement, CalcInputProps>(
   }
 );
 
-CalcInput.displayName = "CalcInput";
-
 export { CalcInput };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

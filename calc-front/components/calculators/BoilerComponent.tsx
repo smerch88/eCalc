@@ -40,7 +40,7 @@ const BoilerComponent = () => {
   const [inputValue, setInputValue] = useState<string>("4.32");
   const [formData, setFormData] = useState<FormData>({
     waterVolume: "3000",
-    initialTemp: 50,
+    initialTemp: 15,
     targetTemp: 60,
     efficiency: 90,
     costPerKWh: "4.32",
@@ -271,8 +271,7 @@ const BoilerComponent = () => {
             onChange={handleInputChange}
             unit="&#37;"
           />
-				</div>
-				
+        </div>
       </div>
       <div className="flex flex-col justify-between">
         <div className="flex flex-col gap-12">
@@ -323,4 +322,3 @@ const BoilerComponent = () => {
 };
 
 export default BoilerComponent;
-
