@@ -44,21 +44,21 @@ const AdvicesList = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
-      <div className="space-y-4">
-        {/* Выводим нечётные элементы */}
-        {oddAdvices.map((advice, index) => (
-          <Dropdown
-            key={index}
-            isOpen={openIndex === index}
-            onToggle={() => toggleDropdown(index)}
-            label={advice.label}
-            content={advice.options}
-          />
-        ))}
-      </div>
-      <div className="space-y-4">
-        {/* Выводим чётные элементы */}
-        {evenAdvices.map((advice, index) => (
+      {/* <div className="space-y-4"> */}
+      {/* Выводим нечётные элементы */}
+      {oddAdvices.map((advice, index) => (
+        <Dropdown
+          key={index}
+          isOpen={openIndex === index}
+          onToggle={() => toggleDropdown(index)}
+          label={advice.label}
+          content={advice.options}
+        />
+      ))}
+      {/* </div> */}
+      {/* <div className="space-y-4"> */}
+      {/* Выводим чётные элементы */}
+      {/* {evenAdvices.map((advice, index) => (
           <Dropdown
             key={oddAdvices.length + index}
             isOpen={openIndex === oddAdvices.length + index}
@@ -66,8 +66,8 @@ const AdvicesList = () => {
             label={advice.label}
             content={advice.options}
           />
-        ))}
-      </div>
+        ))} */}
+      {/* </div> */}
     </div>
   );
 };

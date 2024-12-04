@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
 
 interface CitySelectorProps {
   onClose: () => void; // Функція для закриття модального вікна.
 }
 
-const CitySelector: React.FC<CitySelectorProps> = ({ onClose }) => {
+const CitySelector: FC<CitySelectorProps> = ({ onClose }) => {
   const [searchTerm, setSearchTerm] = useState(""); // Пошуковий запит.
   const [cities] = useState([
     "Київ",

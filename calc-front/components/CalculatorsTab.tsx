@@ -2,7 +2,7 @@
 import cn from "classnames";
 import dynamic from "next/dynamic";
 import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
+import { ComponentType, useState } from "react";
 import Boiler from "../public/calculatorDevices/Boiler.png";
 import Light from "../public/calculatorDevices/Light.png";
 import Microwave from "../public/calculatorDevices/Microwave.png";
@@ -17,7 +17,7 @@ interface Device {
   id: string;
   name: string;
   image: StaticImageData;
-  component: React.ComponentType;
+  component: ComponentType;
 }
 
 const devices: Device[] = [

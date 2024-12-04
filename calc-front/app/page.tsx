@@ -8,7 +8,7 @@ export default function Home() {
     <main className="flex flex-col flex-grow items-center justify-between">
       <HeroSection />
       <CalculatorSection />
-      <PartnersSection />
+      {/* <PartnersSection /> */}
       <AdviceSection />
     </main>
   );

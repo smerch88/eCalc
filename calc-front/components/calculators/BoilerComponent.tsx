@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 import { useUnifiedStore } from "@/stores/stores";
 
@@ -75,9 +75,7 @@ const BoilerComponent = () => {
     }
   }, [boiler]);
 
-  const handleTariffChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
+  const handleTariffChange = (event: ChangeEvent<HTMLSelectElement>): void => {
     const selectedOption = options.find(
       (option) => option.value === event.target.value
     );
@@ -87,9 +85,7 @@ const BoilerComponent = () => {
     setFormData((prev) => ({ ...prev, costPerKWh: tariffValue }));
   };
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = event.target;
 
     setFormData((prev) => {
@@ -119,7 +115,7 @@ const BoilerComponent = () => {
     console.log(result);
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     calculateAndSetResult(formData);
     setCalculationDone(true);

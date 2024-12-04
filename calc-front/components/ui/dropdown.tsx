@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 interface DropdownProps {
   isOpen: boolean;
   onToggle: () => void;
@@ -5,20 +7,15 @@ interface DropdownProps {
   content: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
-  isOpen,
-  onToggle,
-  label,
-  content,
-}) => {
+const Dropdown: FC<DropdownProps> = ({ isOpen, onToggle, label, content }) => {
   return (
     <details
-      open={isOpen}
+      // open={isOpen}
       className="group border-none rounded-2xl overflow-hidden bg-gray-100"
-      onClick={(e) => {
-        e.preventDefault();
-        onToggle();
-      }}
+      // onClick={(e) => {
+      //   e.preventDefault();
+      //   onToggle();
+      // }}
     >
       <summary className="cursor-pointer border rounded-2xl flex items-center justify-between p-4 bg-white">
         {label}
