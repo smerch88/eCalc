@@ -62,6 +62,10 @@ const BoilerComponent = () => {
     (state) => state.setCalculationDone
   );
 
+  const setCalculationType = useUnifiedStore(
+    (state) => state.setCalculationType
+  );
+
   useEffect(() => {
     if (boiler?.efficiency) {
       setFormData((prev) => ({
@@ -119,6 +123,7 @@ const BoilerComponent = () => {
     e.preventDefault();
     calculateAndSetResult(formData);
     setCalculationDone(true);
+    setCalculationType("boiler");
   };
 
   return (

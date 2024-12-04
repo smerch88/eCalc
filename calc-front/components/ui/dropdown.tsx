@@ -1,34 +1,49 @@
-import React, { forwardRef } from "react";
-import { cn } from "@/lib/utils";
-
-interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
-  label: string;
+interface DropdownProps {
   isOpen: boolean;
-  toggleDropdown: () => void;
-  option: string;
+  onToggle: () => void;
+  label: string;
+  content: string;
 }
 
-const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
-  ({ label, isOpen, toggleDropdown, option, className, ...props }, ref) => {
-    return (
-      <div ref={ref} className={cn("relative w-full ", className)} {...props}>
-        <button
-          onClick={toggleDropdown}
-          className="flex items-center justify-between w-full h-[61px] px-6 py-4 bg-white rounded-2xl border border-black"
+const Dropdown: React.FC<DropdownProps> = ({
+  isOpen,
+  onToggle,
+  label,
+  content,
+}) => {
+  return (
+    <details
+      open={isOpen}
+      className="group border-none rounded-2xl overflow-hidden bg-gray-100"
+      onClick={(e) => {
+        e.preventDefault();
+        onToggle();
+      }}
+    >
+      <summary className="cursor-pointer border rounded-2xl flex items-center justify-between p-4 bg-white">
+        {label}
+        <svg
+          width="24"
+          height="25"
+          viewBox="0 0 24 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={`transform transition-transform duration-700 ${
+            isOpen ? "rotate-180" : ""
+          }`}
         >
-          <span className="text-gray-700 font-medium">{label}</span>
-        </button>
-
-        {isOpen && (
-          <ul className="w-full bg-gray-100 rounded-b-2xl">
-            <li className="px-6 py-3 text-gray-700 rounded-2xl">{option}</li>
-          </ul>
-        )}
-      </div>
-    );
-  }
-);
-
-Dropdown.displayName = "Dropdown";
+          <path
+            d="M6 9.5L12 15.5L18 9.5"
+            stroke="#191919"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </summary>
+      <div className="p-4 text-gray-700">{content}</div>
+    </details>
+  );
+};
 
 export default Dropdown;
