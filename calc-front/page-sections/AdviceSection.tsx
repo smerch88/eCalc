@@ -1,3 +1,5 @@
+import AdvicesList from "@/components/AdvicesList";
+
 export const AdviceSection = () => {
   return (
     <section>
@@ -9,7 +11,9 @@ export const AdviceSection = () => {
           Ці поради допоможуть вам оптимізовано використовувати електроенергію
           вдома та заощаджувати кошти.
         </p>
-        <div className="p-12 bg-white rounded-[40px]"></div>
+        <div className="p-12 bg-white rounded-[40px]">
+          <AdvicesList />
+        </div>
       </div>
     </section>
   );

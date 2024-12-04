@@ -58,6 +58,14 @@ const BoilerComponent = () => {
 
   const boiler = useUnifiedStore((state) => state.boiler);
 
+  const setCalculationDone = useUnifiedStore(
+    (state) => state.setCalculationDone
+  );
+
+  const setCalculationType = useUnifiedStore(
+    (state) => state.setCalculationType
+  );
+
   useEffect(() => {
     if (boiler?.efficiency) {
       setFormData((prev) => ({
@@ -114,6 +122,8 @@ const BoilerComponent = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     calculateAndSetResult(formData);
+    setCalculationDone(true);
+    setCalculationType("boiler");
   };
 
   return (
