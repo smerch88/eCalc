@@ -39,4 +39,6 @@ const CalcInput = forwardRef<HTMLInputElement, CalcInputProps>(
   }
 );
 
+CalcInput.displayName = "CalcInput";
+
 export { CalcInput };
