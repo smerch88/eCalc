@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
+import { CalcInput } from "@/components/ui/calcInput";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 import { useUnifiedStore } from "@/stores/stores";
@@ -17,9 +18,9 @@ interface Option {
 
 interface FormData {
   waterVolume: string;
-  initialTemp: string;
-  targetTemp: string;
-  efficiency: string;
+  initialTemp: number;
+  targetTemp: number;
+  efficiency: number;
   costPerKWh: string;
   hotWaterCostPerCubicMeter: string;
   coldWaterCostPerCubicMeter: string;
@@ -39,9 +40,9 @@ const BoilerComponent = () => {
   const [inputValue, setInputValue] = useState<string>("4.32");
   const [formData, setFormData] = useState<FormData>({
     waterVolume: "3000",
-    initialTemp: "15",
-    targetTemp: "60",
-    efficiency: "98",
+    initialTemp: 15,
+    targetTemp: 60,
+    efficiency: 90,
     costPerKWh: "4.32",
     hotWaterCostPerCubicMeter: "97.89",
     coldWaterCostPerCubicMeter: "13.45",
@@ -70,7 +71,7 @@ const BoilerComponent = () => {
     if (boiler?.efficiency) {
       setFormData((prev) => ({
         ...prev,
-        efficiency: boiler.efficiency.toString(),
+        efficiency: boiler.efficiency,
       }));
     }
   }, [boiler]);
@@ -101,9 +102,9 @@ const BoilerComponent = () => {
   const calculateAndSetResult = (updatedInputs: FormData): void => {
     const result = calculateBoilerEnergyConsumption(
       parseFloat(updatedInputs.waterVolume) || 3000,
-      parseFloat(updatedInputs.initialTemp) || 15,
-      parseFloat(updatedInputs.targetTemp) || 60,
-      parseFloat(updatedInputs.efficiency) || 90,
+      updatedInputs.initialTemp || 50,
+      updatedInputs.targetTemp || 60,
+      updatedInputs.efficiency || 90,
       parseFloat(updatedInputs.costPerKWh) * 100 || 43200,
       parseFloat(updatedInputs.hotWaterCostPerCubicMeter) * 100 || 978900,
       parseFloat(updatedInputs.coldWaterCostPerCubicMeter) * 100 || 134500,
@@ -242,53 +243,34 @@ const BoilerComponent = () => {
             </span>
           </div>
         </div>
+
         <div className="flex flex-row gap-12">
-          <div>
-            <label htmlFor="initialTemp">Початкова температура</label>
-            <div className="relative">
-              <Input
-                id="initialTemp"
-                type="text"
-                value={formData.initialTemp}
-                onChange={handleInputChange}
-                className="px-6 py-6 rounded-2xl"
-              />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
-                °C
-              </span>
-            </div>
-          </div>
-          <div>
-            <label htmlFor="targetTemp">Цільова температура</label>
-            <div className="relative">
-              <Input
-                id="targetTemp"
-                type="text"
-                value={formData.targetTemp}
-                onChange={handleInputChange}
-                className="px-6 py-6 rounded-2xl text-lg"
-              />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
-                °C
-              </span>
-            </div>
-          </div>
+          <CalcInput
+            id="initialTemp"
+            type="number"
+            label="Початкова температура"
+            value={formData.initialTemp}
+            onChange={handleInputChange}
+            unit="&deg;C"
+          />
+          <CalcInput
+            id="targetTemp"
+            type="number"
+            label="Цільова температура"
+            value={formData.targetTemp}
+            onChange={handleInputChange}
+            unit="&deg;C"
+          />
         </div>
         <div>
-          <label htmlFor="efficiency">Який ККД бойлера?</label>
-          <div className="relative mt-6">
-            <Input
-              id="efficiency"
-              type="text"
-              value={formData.efficiency}
-              onChange={handleInputChange}
-              placeholder="98"
-              className="px-6 py-6 rounded-2xl text-lg"
-            />
-            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
-              %
-            </span>
-          </div>
+          <CalcInput
+            id="efficiency"
+            type="number"
+            label="Який КПД бойлера?"
+            value={formData.efficiency}
+            onChange={handleInputChange}
+            unit="&#37;"
+          />
         </div>
       </div>
       <div className="flex flex-col justify-between">
