@@ -7,7 +7,7 @@ interface DropdownProps {
   content: string;
 }
 
-const Dropdown: FC<DropdownProps> = ({ isOpen, onToggle, label, content }) => {
+const Dropdown: FC<DropdownProps> = ({ isOpen, label, content }) => {
   return (
     <details
       // open={isOpen}
