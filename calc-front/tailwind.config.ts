@@ -13,7 +13,12 @@ const config: Config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1200px",
+        sm: "480px",
+        md: "768px",
+        xl: "1200px",
+        smOnly: { max: "767.98px" },
+        mdOnly: { min: "768px", max: "1199.98px" },
+        notXl: { max: "1199.98px" },
       },
     },
     extend: {
