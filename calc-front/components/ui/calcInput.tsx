@@ -9,7 +9,7 @@ interface CalcInputProps extends ComponentProps<"input"> {
 const CalcInput = forwardRef<HTMLInputElement, CalcInputProps>(
   ({ className, type, label, unit, ...props }, ref) => {
     return (
-      <div>
+      <div className="mt-6 md:mt-0">
         {label && (
           <label
             htmlFor={props.id}

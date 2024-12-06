@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useUnifiedStore } from "@/stores/stores";
 import { advices as mockAdvices } from "@/lib/advice";
-import Dropdown from "@/components/ui/dropdown";
+import { Dropdown } from "@/components/ui/dropdown";
 
 const AdvicesList = () => {
   const { advices, setAdvices, isCalculationDone, calculationType } =

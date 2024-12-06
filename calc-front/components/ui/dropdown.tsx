@@ -1,23 +1,42 @@
-import { FC } from "react";
+import React, { FC, ReactNode, useRef, ChangeEvent } from "react";
 
 interface DropdownProps {
-  isOpen: boolean;
-  onToggle: () => void;
+  isOpen?: boolean;
+  onToggle?: () => void;
   label: string;
-  content: string;
+  content: ReactNode;
+  className?: string;
+  summaryClassName?: string;
+  onSelect?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Dropdown: FC<DropdownProps> = ({ isOpen, label, content }) => {
+export const Dropdown: FC<DropdownProps> = ({
+  isOpen,
+  label,
+  content,
+  className,
+  summaryClassName,
+}) => {
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  const closeDropdown = () => {
+    if (detailsRef.current) {
+      detailsRef.current.removeAttribute("open");
+    }
+  };
+
   return (
     <details
       // open={isOpen}
-      className="group border-none rounded-2xl overflow-hidden bg-gray-100"
+      className={`group border-none rounded-2xl overflow-hidden bg-gray-100 ${className} ${summaryClassName}`}
       // onClick={(e) => {
       //   e.preventDefault();
       //   onToggle();
       // }}
     >
-      <summary className="cursor-pointer border rounded-2xl flex items-center justify-between p-4 bg-white">
+      <summary
+        className={`cursor-pointer border rounded-2xl flex items-center justify-between h-14 p-4 bg-white ${className}`}
+      >
         {label}
         <svg
           width="24"
@@ -38,9 +57,10 @@ const Dropdown: FC<DropdownProps> = ({ isOpen, label, content }) => {
           />
         </svg>
       </summary>
-      <div className="p-4 text-gray-700">{content}</div>
+      <div className={`p-4 ${className}`}>
+        {content}
+        <button onClick={closeDropdown} />
+      </div>
     </details>
   );
 };
-
-export default Dropdown;
