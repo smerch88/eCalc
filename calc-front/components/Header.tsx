@@ -21,16 +21,19 @@ export const Header = () => {
           />
         </Link>
 
-        <nav className="flex gap-x-4">
-          {menuItems.map((item) => (
-            <Link
-              className="px-6 py-4 text-lg font-normal text-primary"
-              href={item?.href || ""}
-              key={item.href}
-            >
-              {item?.title}
-            </Link>
-          ))}
+        <nav>
+          <ul className="flex gap-x-4">
+            {menuItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  className="px-6 py-4 text-lg font-normal text-primary"
+                  href={item?.href || ""}
+                >
+                  {item?.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
         <CityAutoDetect />
@@ -38,3 +41,4 @@ export const Header = () => {
     </header>
   );
 };
+
