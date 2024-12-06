@@ -9,19 +9,23 @@ const CityAutoDetect = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна.
   const location = useUnifiedStore((state) => state.location); // Поточне місто зі стору.
   const setLocation = useUnifiedStore((state) => state.setLocation); // Функція для оновлення міста.
-
+// const {location,setLocation}=useUnifiedStore((state)=>({location:state.location,setLocation:state.setLocation,}))
   useEffect(() => {
     // Спроба визначити місцезнаходження через Geolocation API
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
+        // console.log({longitude});
+        
         fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=ua`
         )
           .then((res) => res.json())
           .then((data) => {
             const detectedCity =
               data.address.city || data.address.town || "Невідомо";
+              console.log(data.address.city);
+              
             setLocation(detectedCity); // Оновлення стану через zustand.
           });
       },
@@ -31,6 +35,8 @@ const CityAutoDetect = () => {
           .then((res) => res.json())
           .then((data) => {
             const detectedCity = data.city || "Невідомо";
+            console.log(data.city);
+            
             setLocation(detectedCity); // Оновлення стану через zustand.
           });
       }
