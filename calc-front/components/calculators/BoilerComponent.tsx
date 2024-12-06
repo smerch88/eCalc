@@ -57,7 +57,7 @@ const BoilerComponent = () => {
   ];
 
   const boiler = useUnifiedStore((state) => state.boiler);
-
+  const location = useUnifiedStore((state) => state.location);
   useEffect(() => {
     if (boiler?.efficiency) {
       setFormData((prev) => ({
@@ -126,8 +126,10 @@ const BoilerComponent = () => {
               id="city"
               type="text"
               placeholder="Місто"
-              value={formData.city}
+              // value={formData.city}
+              value={location}
               onChange={handleInputChange}
+              readOnly
               className="px-6 py-6 rounded-2xl text-lg"
             />
             <MapPin className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4" />

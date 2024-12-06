@@ -9,39 +9,48 @@ const CityAutoDetect = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна.
   const location = useUnifiedStore((state) => state.location); // Поточне місто зі стору.
   const setLocation = useUnifiedStore((state) => state.setLocation); // Функція для оновлення міста.
-// const {location,setLocation}=useUnifiedStore((state)=>({location:state.location,setLocation:state.setLocation,}))
+
   useEffect(() => {
     // Спроба визначити місцезнаходження через Geolocation API
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        // console.log({longitude});
-        
+
+        // Використання OpenStreetMap API для визначення міста
         fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=ua`
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=uk`
         )
           .then((res) => res.json())
           .then((data) => {
             const detectedCity =
               data.address.city || data.address.town || "Невідомо";
-              console.log(data.address.city);
-              
             setLocation(detectedCity); // Оновлення стану через zustand.
+          })
+          .catch(() => {
+            console.error("Помилка при запиті до OpenStreetMap API");
+            fallbackToIPAPI(setLocation); // Перехід до резервного методу.
           });
       },
       () => {
-        // Якщо геолокація недоступна, fallback на IP API
-        fetch("https://ipapi.co/json/")
-          .then((res) => res.json())
-          .then((data) => {
-            const detectedCity = data.city || "Невідомо";
-            console.log(data.city);
-            
-            setLocation(detectedCity); // Оновлення стану через zustand.
-          });
+        console.warn("Геолокація недоступна. Використовуємо резервний метод.");
+        fallbackToIPAPI(setLocation); // Перехід до резервного методу.
       }
     );
   }, [setLocation]);
+
+  // Резервний метод для отримання міста через IP API
+  const fallbackToIPAPI = (setLocation: (city: string) => void) => {
+    fetch("https://ipapi.co/json/")
+      .then((res) => res.json())
+      .then((data) => {
+        const detectedCity = data.city || "Київ";
+        setLocation(detectedCity); // Оновлення стану через zustand.
+      })
+      .catch(() => {
+        console.error("Помилка при запиті до IP API");
+        setLocation("Київ"); // Fallback до стандартного значення.
+      });
+  };
 
   return (
     <div className="relative">
@@ -59,7 +68,8 @@ const CityAutoDetect = () => {
       <button
         onClick={() => setIsModalOpen(true)}
         className="absolute top-4 right-6 w-[24px] h-[24px] transform -translate-y-1/2 text-lg text-black px-3 py-2 rounded-lg transition-colors"
-      >&#8744;
+      >
+        &#8744;
       </button>
 
       {/* Модальне вікно */}
