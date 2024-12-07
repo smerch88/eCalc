@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
@@ -7,8 +8,10 @@ import { CalcInput } from "@/components/ui/calcInput";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 import { useUnifiedStore } from "@/stores/stores";
+import Icon from "../../public/calculatorDevices/info.png";
 
 import cn from "classnames";
+import Tooltip from "../ui/tooltip";
 
 interface Option {
   value: string;
@@ -51,6 +54,11 @@ const BoilerComponent = () => {
     city: "",
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
+  const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
+
+  const toggleTooltip = () => {
+    setIsTooltipVisible((prev) => !prev);
+  };
 
   const options: Option[] = [
     { value: "single-zone", label: "Однозонний", tariff: "4.32" },
@@ -124,7 +132,7 @@ const BoilerComponent = () => {
   };
 
   return (
-    <form className="flex flex-row gap-16 text-2xl h-full">
+    <form className="relative flex flex-row gap-16 text-2xl h-full">
       <div className="w-7/12 flex-shrink-0 flex flex-col justify-between">
         <div>
           <label htmlFor="city">Тарифи за воду з міста:</label>
@@ -317,8 +325,23 @@ const BoilerComponent = () => {
           Розрахувати
         </Button>
       </div>
+
+      <button
+        className="absolute top-[-24px] right-[-24px]"
+        onClick={toggleTooltip}
+        type="button"
+      >
+        <Image width={24} height={24} src={Icon} alt="Logotype" />
+      </button>
+
+      {isTooltipVisible && (
+        <div className="absolute top-0 right-0 w-[496px] h-[519px]">
+          <Tooltip onClose={toggleTooltip} />
+        </div>
+      )}
     </form>
   );
 };
 
 export default BoilerComponent;
+
