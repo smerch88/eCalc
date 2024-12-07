@@ -35,7 +35,7 @@ export const Dropdown: FC<DropdownProps> = ({
       // }}
     >
       <summary
-        className={`cursor-pointer border rounded-2xl flex items-center justify-between h-14 p-4 bg-white ${className}`}
+        className={`cursor-pointer border border-primary rounded-2xl flex items-center justify-between h-14 p-4 bg-white ${className}`}
       >
         {label}
         <svg

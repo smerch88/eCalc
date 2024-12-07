@@ -43,7 +43,7 @@ const AdvicesList = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
+    <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-6 gap-4">
       <div className="space-y-4">
         {/* Выводим нечётные элементы */}
         {oddAdvices.map((advice, index) => (
