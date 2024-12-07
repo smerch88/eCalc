@@ -56,6 +56,7 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        footer_title: "hsl(var(--footer-text))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -75,6 +76,12 @@ const config: Config = {
       },
       spacing: {
         header_spacing: "var(--header-spacing)",
+      },
+      backgroundPosition: {
+        "center-right": "calc(100% - 15%) center",
+      },
+      boxShadow: {
+        shadow: "var(--shadow)",
       },
     },
   },
