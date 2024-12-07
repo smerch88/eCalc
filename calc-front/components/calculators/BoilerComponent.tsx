@@ -184,7 +184,7 @@ const BoilerComponent = () => {
                 value={inputValue}
                 onChange={handleInputChange}
                 className="px-6 py-6 rounded-2xl text-lg"
-                disabled={ inputValue === "4.32" || inputValue ==="2.16"}
+                disabled={ selectedCostPerKWh !== "custom"}
               />
               <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
                 грн/кВт
