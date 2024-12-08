@@ -152,3 +152,77 @@ export function calculateWMConsumption({
         },
     };
 }
+
+export function calculateMWConsumption({
+    powerRating, // Потужність мікрохвильовки в ватах (W)
+    usageTime, // Час використання мікрохвильовки за одне включення (в хвилинах)
+    dailyUsage, // Кількість використань мікрохвильовки на день
+    electricityCostPerKWh, // Вартість електроенергії за 1 кВт·год у копійках
+    nightRateFactor = 1, // Знижка на нічний тариф
+    ageInYears = 0, // Вік мікрохвильовки в роках (за замовчуванням 0)
+    daysPerMonth = 30, // Кількість днів у місяці (за замовчуванням 30)
+}) {
+    // Конвертуємо потужність в кВт (1 кВт = 1000 Вт)
+    const powerInKW = powerRating / 1000;
+
+    // Переводимо час використання з хвилин в години
+    const usageInHours = usageTime / 60;
+
+    // Якщо є вік мікрохвильовки, враховуємо зниження ефективності
+    const efficiencyFactor = ageInYears > 0 ? Math.max(0.9 - (ageInYears * 0.02), 0.5) : 1; // Знижка на ефективність (по 2% на рік)
+
+    // Річне споживання енергії (кВт·год) = потужність в кВт * час використання в годинах * кількість використань на день * кількість днів на місяць
+    const monthlyEnergyConsumption = powerInKW * usageInHours * dailyUsage * daysPerMonth * efficiencyFactor;
+
+    // Річна вартість енергії
+    const yearlyEnergyConsumption = monthlyEnergyConsumption * 12; // В рік
+
+    const monthlyEnergyCost = monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+    const yearlyEnergyCost = yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+
+    return {
+        yearly: {
+            energyConsumption: yearlyEnergyConsumption, // кВт·год/рік
+            energyCost: yearlyEnergyCost / 100, // Вартість енергії (грн/рік)
+        },
+        monthly: {
+            energyConsumption: monthlyEnergyConsumption, // кВт·год/місяць
+            energyCost: monthlyEnergyCost / 100, // Вартість енергії (грн/місяць)
+        },
+    };
+}
+
+export function calculateLightingConsumption({
+    wattage, // Потужність лампочки в ватах (W)
+    hoursPerDay, // Кількість годин роботи лампочки на день
+    numberOfBulbs, // Кількість лампочек
+    electricityCostPerKWh, // Вартість електроенергії за 1 кВт·год у копійках
+    nightRateFactor = 1, // Знижка на нічний тариф
+    daysPerMonth = 30, // Кількість днів у місяці
+}) {
+    // Переводимо потужність в кВт (1 кВт = 1000 Вт)
+    const powerInKW = wattage / 1000;
+
+    // Переводимо час використання з годин в добу
+    const usageInHours = hoursPerDay;
+
+    // Річне споживання енергії (кВт·год) = потужність в кВт * час використання в годинах * кількість використань на день * кількість днів на місяць
+    const monthlyEnergyConsumption = powerInKW * usageInHours * numberOfBulbs * daysPerMonth;
+
+    // Річна вартість енергії
+    const yearlyEnergyConsumption = monthlyEnergyConsumption * 12; // В рік
+
+    const monthlyEnergyCost = monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+    const yearlyEnergyCost = yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+
+    return {
+        yearly: {
+            energyConsumption: yearlyEnergyConsumption, // кВт·год/рік
+            energyCost: yearlyEnergyCost / 100, // Вартість енергії (грн/рік)
+        },
+        monthly: {
+            energyConsumption: monthlyEnergyConsumption, // кВт·год/місяць
+            energyCost: monthlyEnergyCost / 100, // Вартість енергії (грн/місяць)
+        },
+    };
+}
