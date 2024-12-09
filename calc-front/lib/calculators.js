@@ -7,7 +7,8 @@ export function calculateBoilerEnergyConsumption(
     hotWaterCostPerCubicMeter,
     coldWaterCostPerCubicMeter,
     subscriptionFee,
-    nightRateFactor = 1
+    nightRateFactor = 1,
+    nightRateUsagePercentage = 0 // новий параметр: відсоток використання з нічним тарифом
 ) {
     // waterVolume - кількість води в літрах
     // initialTemp - початкова температура води (°C)
@@ -18,6 +19,7 @@ export function calculateBoilerEnergyConsumption(
     // coldWaterCostPerCubicMeter - вартість 1 кубометра холодної води
     // subscriptionFee - абонентська плата за місяць
     // nightRateFactor - понижуючий коефіцієнт нічного тарифу (необов'язково, за замовчуванням 1)
+    // nightRateUsagePercentage - відсоток використання з нічним тарифом (необов'язково, за замовчуванням 0%)
 
     // Теплоємність води = 4.186 кДж/кг·°C
     const specificHeatWater = 4.186; // кДж/кг·°C
@@ -42,7 +44,11 @@ export function calculateBoilerEnergyConsumption(
     const totalEnergyConsumption = energyRequiredKWh / efficiencyFactor;
 
     // Вартість з урахуванням нічного тарифу
-    const totalCost = totalEnergyConsumption * costPerKWh * nightRateFactor;
+    const totalCost = totalEnergyConsumption * costPerKWh;
+
+    // Розрахунок вартості для використання нічного тарифу
+    const nightRateCost = totalCost * nightRateUsagePercentage * nightRateFactor;
+    const normalRateCost = totalCost * (1 - nightRateUsagePercentage);
 
     // Об'єм води в кубометрах (1 кубометр = 1000 літрів)
     const waterVolumeInCubicMeters = waterVolume / 1000;
@@ -54,7 +60,7 @@ export function calculateBoilerEnergyConsumption(
     const coldWaterCost = waterVolumeInCubicMeters * coldWaterCostPerCubicMeter;
 
     // Додаємо абонентську плату до загальної вартості
-    const totalCostWithSubscription = (totalCost + coldWaterCost) / 100;
+    const totalCostWithSubscription = (normalRateCost + nightRateCost + coldWaterCost) / 100;
 
     return {
         energyConsumption: totalEnergyConsumption, // кВт*год
@@ -63,104 +69,184 @@ export function calculateBoilerEnergyConsumption(
     };
 }
 
-// Викликаємо для літнього періоду (температура холодної води = 15°C)
-function calculateForSummer(
-    waterVolume,
-    targetTemp,
-    efficiency,
-    costPerKWh,
-    hotWaterCostPerCubicMeter,
-    coldWaterCostPerCubicMeter,
-    subscriptionFee,
-    nightRateFactor = 1
-) {
-    const initialTemp = 15; // Початкова температура води влітку (°C)
-    return calculateBoilerEnergyConsumption(
-        waterVolume,
-        initialTemp,
-        targetTemp,
-        efficiency,
-        costPerKWh,
-        hotWaterCostPerCubicMeter,
-        coldWaterCostPerCubicMeter,
-        subscriptionFee,
-        nightRateFactor
-    );
+export function calculateWMConsumption({
+    efficiencyClass,
+    weeklyLoads,
+    loadSize, // Small, Medium, or Large
+    electricityCostPerKWh, // вартість електроенергії за 1 кВт·год у копійках
+    waterCostPerCubicMeter, // вартість води за 1 кубометр у копійках
+    nightRateFactor = 1, // понижуючий коефіцієнт нічного тарифу (необов'язково, за замовчуванням 1)
+    ageInYears = 0, // вік пральної машини в роках (за замовчуванням 0)
+    nightRateUsagePercentage = 0, // відсоток використання з нічним тарифом
+}) {
+    // Константи споживання енергії та води на одне завантаження, залежно від класу ефективності та розміру
+    const energyConsumptionPerLoad = {
+        "A+++": { small: 0.4, medium: 0.5, large: 0.6 },
+        "A++": { small: 0.5, medium: 0.6, large: 0.7 },
+        "A+": { small: 0.6, medium: 0.7, large: 0.8 },
+        A: { small: 0.7, medium: 0.8, large: 0.9 },
+        B: { small: 0.9, medium: 1.0, large: 1.2 },
+        C: { small: 1.1, medium: 1.2, large: 1.4 },
+    };
+
+    const waterUsagePerLoad = {
+        "A+++": { small: 30, medium: 40, large: 50 },
+        "A++": { small: 35, medium: 45, large: 55 },
+        "A+": { small: 40, medium: 50, large: 60 },
+        A: { small: 45, medium: 55, large: 65 },
+        B: { small: 50, medium: 60, large: 70 },
+        C: { small: 60, medium: 70, large: 80 },
+    };
+
+    // Перевірка валідності розміру завантаження
+    const validLoadSizes = ["small", "medium", "large"];
+    if (!validLoadSizes.includes(loadSize)) {
+        throw new Error(`Невірний розмір завантаження. Виберіть один із варіантів: ${validLoadSizes.join(", ")}`);
+    }
+
+    // Отримання енергоспоживання та використання води на одне завантаження
+    let energyPerLoad =
+        energyConsumptionPerLoad[efficiencyClass]?.[loadSize] || energyConsumptionPerLoad.A?.medium; // За замовчуванням A/medium
+    let waterPerLoad =
+        waterUsagePerLoad[efficiencyClass]?.[loadSize] || waterUsagePerLoad.A?.medium; // За замовчуванням A/medium
+
+    // Зменшення ефективності залежно від віку машини
+    const ageFactor = 0.02; // 2% зниження ефективності кожного року
+    if (ageInYears > 0) {
+        energyPerLoad *= (1 + ageFactor * ageInYears);
+        waterPerLoad *= (1 + ageFactor * ageInYears);
+    }
+
+    // Розрахунок річної кількості завантажень
+    const yearlyLoads = weeklyLoads * 52;
+
+    // Загальне споживання енергії (кВт·год) за рік
+    const totalEnergyConsumption = energyPerLoad * yearlyLoads; // в кВт·год
+
+    // Розрахунок вартості енергії з урахуванням нічного тарифу
+    const totalEnergyCost = totalEnergyConsumption * electricityCostPerKWh;
+
+    // Розрахунок вартості для використання нічного тарифу
+    const nightRateEnergyCost = totalEnergyCost * nightRateUsagePercentage * nightRateFactor;
+    const normalRateEnergyCost = totalEnergyCost * (1 - nightRateUsagePercentage);
+
+    // Загальне споживання води (літри) за рік
+    const totalWaterUsageLiters = waterPerLoad * yearlyLoads; // у літрах
+    const totalWaterUsageCubicMeters = totalWaterUsageLiters / 1000; // у кубометрах
+
+    // Вартість води за рік
+    const totalWaterCost = totalWaterUsageCubicMeters * waterCostPerCubicMeter; // у копійках
+
+    // Розрахунок параметрів за місяць
+    const monthlyLoads = yearlyLoads / 12;
+    const energyConsumptionMonthly = totalEnergyConsumption / 12;
+    const energyCostMonthly = (normalRateEnergyCost + nightRateEnergyCost) / 12;
+    const waterUsageLitersMonthly = totalWaterUsageLiters / 12;
+    const waterCostMonthly = totalWaterCost / 12;
+
+    // Повертаємо детальну розбивку споживання та витрат
+    return {
+        yearly: {
+            totalEnergyConsumption, // кВт·год/рік
+            energyCost: (normalRateEnergyCost + nightRateEnergyCost) / 100, // вартість енергії (грн/рік)
+            totalWaterUsageLiters, // літри/рік
+            waterCost: totalWaterCost / 100, // вартість води (грн/рік)
+            totalYearlyCost: ((normalRateEnergyCost + nightRateEnergyCost) + totalWaterCost) / 100, // загальна вартість (грн/рік)
+        },
+        monthly: {
+            loads: monthlyLoads, // кількість завантажень за місяць
+            energyConsumption: energyConsumptionMonthly, // кВт·год/місяць
+            energyCost: energyCostMonthly / 100, // вартість енергії (грн/місяць)
+            waterUsageLiters: waterUsageLitersMonthly, // літри/місяць
+            waterCost: waterCostMonthly / 100, // вартість води (грн/місяць)
+            totalMonthlyCost: (energyCostMonthly + waterCostMonthly) / 100, // загальна вартість (грн/місяць)
+        },
+    };
 }
 
-// Викликаємо для зимового періоду (температура холодної води = 5°C)
-function calculateForWinter(
-    waterVolume,
-    targetTemp,
-    efficiency,
-    costPerKWh,
-    hotWaterCostPerCubicMeter,
-    coldWaterCostPerCubicMeter,
-    subscriptionFee,
-    nightRateFactor = 1
-) {
-    const initialTemp = 5; // Початкова температура води взимку (°C)
-    return calculateBoilerEnergyConsumption(
-        waterVolume,
-        initialTemp,
-        targetTemp,
-        efficiency,
-        costPerKWh,
-        hotWaterCostPerCubicMeter,
-        coldWaterCostPerCubicMeter,
-        subscriptionFee,
-        nightRateFactor
-    );
+export function calculateMWConsumption({
+    powerRating, // Потужність мікрохвильовки в ватах (W)
+    usageTime, // Час використання мікрохвильовки за одне включення (в хвилинах)
+    dailyUsage, // Кількість використань мікрохвильовки на день
+    electricityCostPerKWh, // Вартість електроенергії за 1 кВт·год у копійках
+    nightRateFactor = 1, // Знижка на нічний тариф
+    ageInYears = 0, // Вік мікрохвильовки в роках (за замовчуванням 0)
+    daysPerMonth = 30, // Кількість днів у місяці (за замовчуванням 30)
+}) {
+    // Конвертуємо потужність в кВт (1 кВт = 1000 Вт)
+    const powerInKW = powerRating / 1000;
+
+    // Переводимо час використання з хвилин в години
+    const usageInHours = usageTime / 60;
+
+    // Якщо є вік мікрохвильовки, враховуємо зниження ефективності
+    const efficiencyFactor = ageInYears > 0 ? Math.max(0.9 - (ageInYears * 0.02), 0.5) : 1; // Знижка на ефективність (по 2% на рік)
+
+    // Річне споживання енергії (кВт·год) = потужність в кВт * час використання в годинах * кількість використань на день * кількість днів на місяць
+    const monthlyEnergyConsumption = powerInKW * usageInHours * dailyUsage * daysPerMonth * efficiencyFactor;
+
+    // Річна вартість енергії
+    const yearlyEnergyConsumption = monthlyEnergyConsumption * 12; // В рік
+
+    const monthlyEnergyCost = monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+    const yearlyEnergyCost = yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+
+    // Розрахунок параметрів за місяць
+    const monthlyEnergyConsumptionInKWh = monthlyEnergyConsumption; // кВт·год/місяць
+    const monthlyEnergyCostInUAH = monthlyEnergyCost / 100; // вартість енергії (грн/місяць)
+
+    // Річне споживання і вартість
+    const yearlyEnergyConsumptionInKWh = yearlyEnergyConsumption; // кВт·год/рік
+    const yearlyEnergyCostInUAH = yearlyEnergyCost / 100; // вартість енергії (грн/рік)
+
+    return {
+        yearly: {
+            energyConsumption: yearlyEnergyConsumptionInKWh, // кВт·год/рік
+            energyCost: yearlyEnergyCostInUAH, // Вартість енергії (грн/рік)
+        },
+        monthly: {
+            energyConsumption: monthlyEnergyConsumptionInKWh, // кВт·год/місяць
+            energyCost: monthlyEnergyCostInUAH, // Вартість енергії (грн/місяць)
+        },
+    };
 }
 
-// Приклад використання для літа та зими:
-const waterVolume = 3000; // Об'єм води у літрах
-const targetTemp = 60; // Кінцева температура води (°C)
-const efficiency = 90; // Ефективність бойлера у відсотках
-const costPerKWh = 432; // Вартість 1 кВт*год у копійках
-const hotWaterCostPerCubicMeter = 9789; // Вартість 1 кубометра гарячої води з мережі у копійках
-const coldWaterCostPerCubicMeter = 1345; // Вартість 1 кубометра холодної води у копійках
-const subscriptionFee = 4294; // Абонентська плата за місяць (у копійках)
-const nightRateFactor = 0.5; // Нічний тариф (наприклад, 50% від стандартного)
+export function calculateLightingConsumption({
+    wattage, // Потужність лампочки в ватах (W)
+    hoursPerDay, // Кількість годин роботи лампочки на день
+    numberOfBulbs, // Кількість лампочок
+    electricityCostPerKWh, // Вартість електроенергії за 1 кВт·год у копійках
+    nightRateFactor = 1, // Знижка на нічний тариф
+    daysPerMonth = 30, // Кількість днів у місяці
+}) {
+    // Переводимо потужність в кВт (1 кВт = 1000 Вт)
+    const powerInKW = wattage / 1000;
 
-// Розрахунок для літа
-const summerResult = calculateForSummer(
-    waterVolume,
-    targetTemp,
-    efficiency,
-    costPerKWh,
-    hotWaterCostPerCubicMeter,
-    coldWaterCostPerCubicMeter,
-    subscriptionFee,
-    nightRateFactor
-);
-console.log(
-    `Літнє енергоспоживання для нагрівання води: ${summerResult.energyConsumption.toFixed(2)} кВт*год`
-);
-console.log(
-    `Літня загальна вартість нагріву бойлером: ${summerResult.totalCostInUAH.toFixed(2)} грн`
-);
-console.log(
-    `Літня вартість гарячої води з мережі: ${summerResult.networkHotWaterCostInUAH.toFixed(2)} грн`
-);
+    // Річне споживання енергії (кВт·год) = потужність в кВт * час використання в годинах * кількість лампочок * кількість днів на місяць
+    const monthlyEnergyConsumption = powerInKW * hoursPerDay * numberOfBulbs * daysPerMonth;
 
-// Розрахунок для зими
-const winterResult = calculateForWinter(
-    waterVolume,
-    targetTemp,
-    efficiency,
-    costPerKWh,
-    hotWaterCostPerCubicMeter,
-    coldWaterCostPerCubicMeter,
-    subscriptionFee,
-    nightRateFactor
-);
-console.log(
-    `Зимове енергоспоживання для нагрівання води: ${winterResult.energyConsumption.toFixed(2)} кВт*год`
-);
-console.log(
-    `Зимова загальна вартість нагріву бойлером: ${winterResult.totalCostInUAH.toFixed(2)} грн`
-);
-console.log(
-    `Зимова вартість гарячої води з мережі: ${winterResult.networkHotWaterCostInUAH.toFixed(2)} грн`
-);
+    // Річна вартість енергії
+    const yearlyEnergyConsumption = monthlyEnergyConsumption * 12; // В рік
+
+    const monthlyEnergyCost = monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+    const yearlyEnergyCost = yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+
+    // Розрахунок параметрів за місяць
+    const monthlyEnergyConsumptionInKWh = monthlyEnergyConsumption; // кВт·год/місяць
+    const monthlyEnergyCostInUAH = monthlyEnergyCost / 100; // вартість енергії (грн/місяць)
+
+    // Річне споживання і вартість
+    const yearlyEnergyConsumptionInKWh = yearlyEnergyConsumption; // кВт·год/рік
+    const yearlyEnergyCostInUAH = yearlyEnergyCost / 100; // вартість енергії (грн/рік)
+
+    return {
+        yearly: {
+            energyConsumption: yearlyEnergyConsumptionInKWh, // кВт·год/рік
+            energyCost: yearlyEnergyCostInUAH, // Вартість енергії (грн/рік)
+        },
+        monthly: {
+            energyConsumption: monthlyEnergyConsumptionInKWh, // кВт·год/місяць
+            energyCost: monthlyEnergyCostInUAH, // Вартість енергії (грн/місяць)
+        },
+    };
+}
