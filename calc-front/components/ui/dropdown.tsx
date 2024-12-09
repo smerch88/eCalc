@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useRef, ChangeEvent } from "react";
+import React, { FC, ReactNode, useRef } from "react";
 
 interface DropdownProps {
   isOpen?: boolean;
@@ -6,8 +6,6 @@ interface DropdownProps {
   label: string;
   content: ReactNode;
   className?: string;
-  summaryClassName?: string;
-  onSelect?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export const Dropdown: FC<DropdownProps> = ({
@@ -15,7 +13,6 @@ export const Dropdown: FC<DropdownProps> = ({
   label,
   content,
   className,
-  summaryClassName,
 }) => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
@@ -28,7 +25,7 @@ export const Dropdown: FC<DropdownProps> = ({
   return (
     <details
       // open={isOpen}
-      className={`group border-none rounded-2xl overflow-hidden bg-gray-100 ${className} ${summaryClassName}`}
+      className={`group border-none rounded-2xl overflow-hidden bg-gray-100 ${className}`}
       // onClick={(e) => {
       //   e.preventDefault();
       //   onToggle();

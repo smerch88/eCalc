@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
-import { Dropdown } from "../ui/dropdown";
+import { SelectInput } from "../ui/selectInput";
 import { CalcInput } from "@/components/ui/calcInput";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
@@ -163,6 +163,9 @@ const BoilerComponent = () => {
     icon: icons.day,
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
+  const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const options: Option[] = [
     {
@@ -177,7 +180,7 @@ const BoilerComponent = () => {
       tariff: "2.16",
       icon: icons.night,
     },
-    { value: "three-zone", label: "Тризонний", tariff: "Ввести вручну" },
+    { value: "three-zone", label: "Ввести вручну", tariff: "" },
   ];
 
   const isInputDisabled = selectedCostPerKWh !== "three-zone";
@@ -209,6 +212,10 @@ const BoilerComponent = () => {
     setSelectedCostPerKWh(event.target.value);
     const selectedIcon = selectedOption?.icon;
     // setInputValue(tariffValue);
+
+    setIsValid(true);
+    setErrorMessage("");
+
     setFormData((prev) => ({
       ...prev,
       costPerKWh: tariffValue,
@@ -216,25 +223,24 @@ const BoilerComponent = () => {
     }));
   };
 
-  const simulateChangeEvent = (
-    value: string
-  ): ChangeEvent<HTMLSelectElement> => {
-    return {
-      target: { value },
-    } as ChangeEvent<HTMLSelectElement>;
-  };
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = event.target;
 
-    setFormData((prev) => {
-      if (id === "costPerKWhInput") {
-        return { ...prev, costPerKWh: value };
-      }
-      return { ...prev, [id]: value };
-    });
+    setIsValid(true);
+    setErrorMessage("");
 
-    // setInputValue(value);
+    if (selectedCostPerKWh !== "three-zone") {
+      setFormData((prev) => ({ ...prev, [id]: value }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, costPerKWh: value }));
+
+    const isNumberValid = /^(?!$)(\d+(\.\d{0,2})?)$/.test(value);
+    if (!isNumberValid) {
+      setIsValid(false);
+      setErrorMessage("Введіть число до двох знаків після коми.");
+    }
   };
 
   const calculateAndSetResult = (updatedInputs: FormData): void => {
@@ -256,6 +262,18 @@ const BoilerComponent = () => {
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
+
+    if (selectedCostPerKWh === "three-zone") {
+      const isNumberValid = /^(?!$)(\d+(\.\d{0,2})?)$/.test(
+        formData.costPerKWh
+      );
+      if (!isNumberValid) {
+        setIsValid(false);
+        setErrorMessage("Введіть число до двох знаків після коми.");
+        return;
+      }
+    }
+
     calculateAndSetResult(formData);
     setCalculationDone(true);
     setCalculationType("boiler");
@@ -302,36 +320,15 @@ const BoilerComponent = () => {
           <span>Тариф на електроенергію:</span>
           <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-6 text-base xl:text-lg relative">
             <div>
-              <Dropdown
-                label={
-                  selectedCostPerKWh
-                    ? options.find(
-                        (option) => option.value === selectedCostPerKWh
-                      )?.label || "Оберіть варіант"
-                    : "Оберіть варіант"
-                }
-                content={
-                  <ul className="left-0 z-10 flex flex-col gap-4">
-                    {options.map((option) => (
-                      <li
-                        key={option.value}
-                        onClick={(e) => {
-                          handleTariffChange(simulateChangeEvent(option.value));
-                          // Закриваємо дропдаун через ref
-                          const details =
-                            (e.currentTarget.closest(
-                              "details"
-                            ) as HTMLDetailsElement) || null;
-                          if (details) details.removeAttribute("open");
-                        }}
-                        className="cursor-pointer hover:bg-gray-200 p-2 rounded-md"
-                      >
-                        {option.label}
-                      </li>
-                    ))}
-                  </ul>
-                }
-                summaryClassName="absolute top-0 w-full xl:max-w-[286px] bg-gray-100 bg-opacity-100 z-10 p-0"
+              <SelectInput
+                options={options.map((option) => ({
+                  label: option.label,
+                  value: option.value,
+                }))}
+                selectedValue={selectedCostPerKWh}
+                onChange={handleTariffChange}
+                isOpen={isSelectOpen}
+                setIsOpen={setIsSelectOpen}
               />
             </div>
 
@@ -344,18 +341,22 @@ const BoilerComponent = () => {
                 value={formData.costPerKWh}
                 onChange={handleInputChange}
                 disabled={isInputDisabled}
-                className={`px-4 py-4 w-full mt-[72px] xl:mt-0 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg ${
+                className={`px-4 py-4 w-full mt-4 xl:mt-0 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg ${
                   isInputDisabled ? "bg-gray-200 cursor-not-allowed" : ""
-                }`}
+                } ${!isValid ? "border-2 border-red-500" : ""}`}
               />
-              <span className="absolute mt-[36px] xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
+              <span className="absolute mt-2 xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
                 грн/кВт
               </span>
-              {/* Отображаем иконку */}
               {formData.icon && (
-                <span className="absolute mt-[36px] xl:mt-0 left-14 xl:left-16 top-1/2 transform -translate-y-1/2">
+                <span className="absolute mt-2 xl:mt-0 left-14 xl:left-16 top-1/2 transform -translate-y-1/2">
                   {formData.icon}
                 </span>
+              )}
+              {!isValid && (
+                <div className="text-red-500 absolute text-sm mt-1">
+                  {errorMessage}
+                </div>
               )}
             </div>
           </div>
