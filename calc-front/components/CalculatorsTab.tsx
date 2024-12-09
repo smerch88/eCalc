@@ -7,7 +7,9 @@ import Boiler from "../public/calculatorDevices/Boiler.png";
 import Light from "../public/calculatorDevices/Light.png";
 import Microwave from "../public/calculatorDevices/Microwave.png";
 import WM from "../public/calculatorDevices/WM.png";
-import { Dropdown } from "./ui/dropdown";
+
+// import { Dropdown } from "./ui/dropdown";
+import { SelectInput } from "./ui/selectInput";
 
 const LightComponent = dynamic(() => import("./calculators/LightComponent"));
 const BoilerComponent = dynamic(() => import("./calculators/BoilerComponent"));
@@ -101,8 +103,71 @@ export const CalculatorsTab = () => {
   );
 };
 
+// export const CalculatorsSelect = () => {
+//   const [activeTab, setActiveTab] = useState<string>("");
+
+//   const activeDevice = devices.find((device) => device.id === activeTab);
+
+//   const renderContent = () => {
+//     if (activeDevice && activeDevice.component) {
+//       const ActiveComponent = activeDevice.component;
+//       return <ActiveComponent />;
+//     }
+//     return (
+//       <div className="bg-white rounded-b-[30px] text-center pb-4">
+//         <p>Виберіть пристрій, щоб побачити деталі.</p>
+//       </div>
+//     );
+//   };
+
+//   return (
+//     <>
+//       <div className="bg-white px-4 pb-6 rounded-t-[30px]">
+//         <p className="py-4 text-lg">Прилад для розрахунку:</p>
+//         <Dropdown
+//           className="bg-white"
+//           label={activeDevice?.name || "Пристрій"}
+//           content={
+//             <div className="space-y-4 bg-white">
+//               {devices.map((device) => (
+//                 <div
+//                   key={device.id}
+//                   className={cn(
+//                     "flex items-center p-2 cursor-pointer hover:bg-gray-100 rounded-lg",
+//                     activeTab === device.id && "bg-gray-100"
+//                   )}
+//                   onClick={(e) => {
+//                     setActiveTab(device.id);
+//                     // Закриваємо дропдаун через ref
+//                     const details =
+//                       (e.currentTarget.closest(
+//                         "details"
+//                       ) as HTMLDetailsElement) || null;
+//                     if (details) details.removeAttribute("open");
+//                   }}
+//                 >
+//                   <div className="w-[45px] h-[52px]">
+//                     <Image
+//                       src={device.image}
+//                       alt={device.name}
+//                       className="object-cover"
+//                     />
+//                   </div>
+//                   <span className="ml-4">{device.name}</span>
+//                 </div>
+//               ))}
+//             </div>
+//           }
+//         />
+//       </div>
+//       <div>{renderContent()}</div>
+//     </>
+//   );
+// };
+
 export const CalculatorsSelect = () => {
   const [activeTab, setActiveTab] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const activeDevice = devices.find((device) => device.id === activeTab);
 
@@ -122,40 +187,18 @@ export const CalculatorsSelect = () => {
     <>
       <div className="bg-white px-4 pb-6 rounded-t-[30px]">
         <p className="py-4 text-lg">Прилад для розрахунку:</p>
-        <Dropdown
+        <SelectInput
+          options={devices.map((device) => ({
+            label: device.name,
+            value: device.id,
+            image: device.image,
+          }))}
+          selectedValue={activeTab || "Пристрій"}
+          onChange={(e) => setActiveTab(e.target.value)}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
           className="bg-white"
-          label={activeDevice?.name || "Пристрій"}
-          content={
-            <div className="space-y-4 bg-white">
-              {devices.map((device) => (
-                <div
-                  key={device.id}
-                  className={cn(
-                    "flex items-center p-2 cursor-pointer hover:bg-gray-100 rounded-lg",
-                    activeTab === device.id && "bg-gray-100"
-                  )}
-                  onClick={(e) => {
-                    setActiveTab(device.id);
-                    // Закриваємо дропдаун через ref
-                    const details =
-                      (e.currentTarget.closest(
-                        "details"
-                      ) as HTMLDetailsElement) || null;
-                    if (details) details.removeAttribute("open");
-                  }}
-                >
-                  <div className="w-[45px] h-[52px]">
-                    <Image
-                      src={device.image}
-                      alt={device.name}
-                      className="object-cover"
-                    />
-                  </div>
-                  <span className="ml-4">{device.name}</span>
-                </div>
-              ))}
-            </div>
-          }
+          // dropdownClassName="block border-none shadow-none"
         />
       </div>
       <div>{renderContent()}</div>

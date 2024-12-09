@@ -1,12 +1,20 @@
 import { FC, ChangeEvent } from "react";
+import Image, { StaticImageData } from "next/image";
+
+interface SelectOption {
+  label: string;
+  value: string;
+  image?: StaticImageData | string;
+}
 
 interface SelectInputProps {
-  options: { label: string; value: string }[];
+  options: SelectOption[];
   selectedValue: string;
   className?: string;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
+  dropdownClassName?: string; // Добавляем пропс для кастомных стилей выпадающего списка
 }
 
 export const SelectInput: FC<SelectInputProps> = ({
@@ -16,11 +24,16 @@ export const SelectInput: FC<SelectInputProps> = ({
   className = "",
   isOpen,
   setIsOpen,
+  dropdownClassName = "", // Значение по умолчанию для dropdownClassName
 }) => {
   const handleSelectChange = (value: string) => {
     onChange({ target: { value } } as ChangeEvent<HTMLSelectElement>);
     setIsOpen(false);
   };
+
+  const displayLabel =
+    options.find((option) => option.value === selectedValue)?.label ||
+    selectedValue;
 
   return (
     <div className={`relative ${className}`}>
@@ -28,9 +41,8 @@ export const SelectInput: FC<SelectInputProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className="cursor-pointer w-full h-14 px-4 py-3 rounded-2xl bg-white border border-black text-base xl:text-lg flex items-center justify-between"
       >
-        <span>
-          {options.find((option) => option.value === selectedValue)?.label}
-        </span>
+        <span>{displayLabel}</span>
+
         <svg
           className="ml-2 w-5 h-5"
           fill="none"
@@ -50,14 +62,27 @@ export const SelectInput: FC<SelectInputProps> = ({
 
       {/* Випадаючий список */}
       {isOpen && (
-        <div className="absolute w-full mt-2 bg-white border border-black rounded-2xl shadow-lg z-10">
+        <div
+          className={`${
+            dropdownClassName || "absolute"
+          } w-full mt-2 bg-white border border-black rounded-2xl shadow-lg z-10`}
+        >
           {options.map((option) => (
             <div
               key={option.value}
               onClick={() => handleSelectChange(option.value)}
-              className="px-4 py-2 rounded-2xl hover:bg-gray-100 cursor-pointer"
+              className="flex items-center px-4 py-2 rounded-2xl hover:bg-gray-100 cursor-pointer"
             >
-              {option.label}
+              {option.image && (
+                <Image
+                  src={option.image}
+                  alt={option.label}
+                  width={40}
+                  height={40}
+                  className="object-cover mr-3"
+                />
+              )}
+              <span>{option.label}</span>
             </div>
           ))}
         </div>
