@@ -6,19 +6,24 @@ export const HeroSection = () => {
     <div
       className={cn(
         "hero",
-        "flex flex-col justify-center h-[860px] bg-cover bg-bottom bg-no-repeat"
+        "h-[744px] bg-cover bg-no-repeat bg-center-right mt-24",
+        "md:mt-0 md:border-none md:shadow-none",
+        "xl:h-[860px] xl:bg-bottom"
       )}
     >
-      <div className="container">
-        <div className="flex flex-col gap-16">
-          <h1 className="text-5xl font-bold max-w-[650px]">
-            Контролюй споживання електроенергії легко
-          </h1>
-          <Button className="rounded-2xl py-6 text-2xl w-max" size="lg">
-            Розрахувати
-          </Button>
-        </div>
+      <div className="container flex flex-col h-[744px] pt-16 md:pt-44 pb-24 xl:h-[860px] xl:py-80">
+        <h1 className="w-64 mb-auto text-[32px] font-bold leading-10 xl:mb-12 xl:w-[651px] xl:text-5xl">
+          Контролюй споживання електроенергії легко
+        </h1>
+
+        <Button
+          className="w-full py-6 rounded-2xl text-lg font-normal text-white md:w-max xl:text-2xl"
+          size="lg"
+        >
+          Розрахувати
+        </Button>
       </div>
     </div>
   );
 };
+

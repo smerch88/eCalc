@@ -56,8 +56,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        footer_title: "hsl(var(--footer-text))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        tooltip: "hsl(var(--tooltip))",
         ring: "hsl(var(--ring))",
         chart: {
           "1": "hsl(var(--chart-1))",
@@ -68,12 +70,20 @@ const config: Config = {
         },
       },
       borderRadius: {
+        xlg: "var(--header-radius)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      spacing: {
+        header_spacing: "var(--header-spacing)",
+      },
+      backgroundPosition: {
+        "center-right": "calc(100% - 15%) center",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
 };
 export default config;
+

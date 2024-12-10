@@ -6,11 +6,10 @@ import { Button } from "../ui/button";
 import { SelectInput } from "../ui/selectInput";
 import { CalcInput } from "@/components/ui/calcInput";
 import { MouseEvent, useEffect, useState } from "react";
+import TooltipBtn from "../ui/tooltipBtn";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 import { useUnifiedStore } from "@/stores/stores";
-
 import { TariffChange, options, icons } from "@/components/TariffChange";
-
 import cn from "classnames";
 
 export interface FormData {
@@ -90,7 +89,7 @@ const BoilerComponent = () => {
 
     const result = calculateBoilerEnergyConsumption(
       parseFloat(updatedInputs.waterVolume) || 3000,
-      updatedInputs.initialTemp || 50,
+      updatedInputs.initialTemp || 15,
       updatedInputs.targetTemp || 60,
       updatedInputs.efficiency || 90,
       tariffForCalculation * 100 || 43200,
@@ -126,7 +125,12 @@ const BoilerComponent = () => {
   return (
     <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
       <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
-        <div>
+        <div className="relative">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <label htmlFor="city">Тарифи за воду з міста:</label>
           <div className="relative mt-4 xl:mt-6">
             <Input
@@ -141,7 +145,12 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <label htmlFor="waterVolume">
             Споживання гарячої води на місяць:
           </label>
@@ -160,7 +169,12 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <span>Тариф на електроенергію:</span>
           <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-6 text-base xl:text-lg relative">
             <div>
@@ -212,7 +226,12 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <span>Який тариф на водопостачання використовуєте?</span>
           <div className="flex flex-col xl:flex-row gap-4 xl:gap-12 mt-4 xl:mt-6 text-base xl:text-lg">
             <div className="flex items-center xl:gap-6">
@@ -258,7 +277,12 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <label htmlFor="subscriptionFee">
             Абонплата за підключення гарячої води:
           </label>
@@ -277,33 +301,48 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="flex flex-col xl:flex-row xl:gap-12">
-          <CalcInput
-            id="initialTemp"
-            type="number"
-            label="Початкова температура"
-            value={formData.initialTemp}
-            onChange={handleInputChange}
-            unit="&deg;C"
+        <div className="relative">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
           />
-          <CalcInput
-            id="targetTemp"
-            type="number"
-            label="Цільова температура:"
-            value={formData.targetTemp}
-            onChange={handleInputChange}
-            unit="&deg;C"
-          />
+          <div className="flex flex-col xl:flex-row xl:gap-12">
+            <CalcInput
+              id="initialTemp"
+              type="number"
+              label="Початкова температура"
+              value={formData.initialTemp}
+              onChange={handleInputChange}
+              unit="&deg;C"
+            />
+            <CalcInput
+              id="targetTemp"
+              type="number"
+              label="Цільова температура:"
+              value={formData.targetTemp}
+              onChange={handleInputChange}
+              unit="&deg;C"
+            />
+          </div>
         </div>
-        <div>
-          <CalcInput
-            id="efficiency"
-            type="number"
-            label="Який КПД бойлера?"
-            value={formData.efficiency}
-            onChange={handleInputChange}
-            unit="&#37;"
+
+        <div className="relative">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
           />
+          <div>
+            <CalcInput
+              id="efficiency"
+              type="number"
+              label="Який КПД бойлера?"
+              value={formData.efficiency}
+              onChange={handleInputChange}
+              unit="&#37;"
+            />
+          </div>
         </div>
         <Button
           onClick={handleSubmit}
@@ -368,3 +407,4 @@ const BoilerComponent = () => {
 };
 
 export default BoilerComponent;
+
