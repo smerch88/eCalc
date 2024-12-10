@@ -8,7 +8,7 @@ import { Navbar } from "@/components/Navbar";
 import CityAutoDetect from "./CityAutoDetect";
 import LogoLarge from "../public/header/logo-lg.png";
 import LogoSmall from "../public/header/logo-sm.png";
-import Icon from "../public/header/hamburger.png";
+import Icon from "../public/icons/hamburger.svg";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -18,7 +18,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="absolute top-6 md:top-0 left-0 right-0 xl:py-6 backdrop-blur-md rounded-b-3xl xl:rounded-b-xlg bg-background_header/50">
+    <header className="absolute top-6 md:top-0 left-0 right-0 md:py-6 backdrop-blur-md rounded-b-3xl xl:rounded-b-xlg bg-background_header/50">
       <div className="container flex items-center justify-between">
         <Link href="/" className="flex items-center" prefetch={false}>
           <Image
@@ -49,7 +49,12 @@ export const Header = () => {
           onClick={toggleMenu}
           className="text-primary focus:outline-none lg:hidden"
         >
-          <Image width={24} height={24} src={Icon} alt="Menu" />
+          <Image
+            width={24}
+            height={24}
+            src={Icon}
+            alt="Mobile navigation menu"
+          />
         </button>
       </div>
 
@@ -64,6 +69,4 @@ export const Header = () => {
     </header>
   );
 };
-
-
 

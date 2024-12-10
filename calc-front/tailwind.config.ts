@@ -59,6 +59,7 @@ const config: Config = {
         footer_title: "hsl(var(--footer-text))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        tooltip: "hsl(var(--tooltip))",
         ring: "hsl(var(--ring))",
         chart: {
           "1": "hsl(var(--chart-1))",

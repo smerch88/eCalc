@@ -5,14 +5,11 @@ import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
 import { SelectInput } from "../ui/selectInput";
 import { CalcInput } from "@/components/ui/calcInput";
-import { MouseEvent, useEffect, useState, useRef } from "react";
-import Tooltip from "../ui/tooltip";
+import { MouseEvent, useEffect, useState } from "react";
 import TooltipBtn from "../ui/tooltipBtn";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 import { useUnifiedStore } from "@/stores/stores";
-
 import { TariffChange, options, icons } from "@/components/TariffChange";
-
 import cn from "classnames";
 
 export interface FormData {
@@ -52,23 +49,9 @@ const BoilerComponent = () => {
     icon: icons.day,
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
-  const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
   const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const showTooltip = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setIsTooltipVisible(true);
-  };
-  const hideTooltip = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsTooltipVisible(false);
-    }, 200);
-  };
 
   const isInputDisabled = selectedCostPerKWh !== "three-zone";
 
@@ -143,8 +126,12 @@ const BoilerComponent = () => {
     <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
       <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
         <div className="relative">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <label htmlFor="city">Тарифи за воду з міста:</label>
-          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="relative mt-4 xl:mt-6">
             <Input
               id="city"
@@ -159,10 +146,14 @@ const BoilerComponent = () => {
         </div>
 
         <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <label htmlFor="waterVolume">
             Споживання гарячої води на місяць:
           </label>
-          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="relative mt-4 xl:mt-6">
             <Input
               id="waterVolume"
@@ -179,8 +170,12 @@ const BoilerComponent = () => {
         </div>
 
         <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <span>Тариф на електроенергію:</span>
-          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-6 text-base xl:text-lg relative">
             <div>
               <SelectInput
@@ -232,8 +227,12 @@ const BoilerComponent = () => {
         </div>
 
         <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <span>Який тариф на водопостачання використовуєте?</span>
-          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="flex flex-col xl:flex-row gap-4 xl:gap-12 mt-4 xl:mt-6 text-base xl:text-lg">
             <div className="flex items-center xl:gap-6">
               <label
@@ -279,10 +278,14 @@ const BoilerComponent = () => {
         </div>
 
         <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <label htmlFor="subscriptionFee">
             Абонплата за підключення гарячої води:
           </label>
-          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="relative mt-4 xl:mt-6">
             <Input
               id="subscriptionFee"
@@ -299,7 +302,11 @@ const BoilerComponent = () => {
         </div>
 
         <div className="relative">
-          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <div className="flex flex-col xl:flex-row xl:gap-12">
             <CalcInput
               id="initialTemp"
@@ -321,7 +328,11 @@ const BoilerComponent = () => {
         </div>
 
         <div className="relative">
-          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
           <div>
             <CalcInput
               id="efficiency"
@@ -391,16 +402,6 @@ const BoilerComponent = () => {
           </Button>
         </div>
       </div>
-
-      {isTooltipVisible && (
-        <div
-          className="absolute md:left-[10%] xl:left-[52%] right-0 z-20"
-          onMouseEnter={showTooltip}
-          onMouseLeave={hideTooltip}
-        >
-          <Tooltip />
-        </div>
-      )}
     </form>
   );
 };
