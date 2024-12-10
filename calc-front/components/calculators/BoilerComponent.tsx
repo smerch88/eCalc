@@ -5,7 +5,7 @@ import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
 import { SelectInput } from "../ui/selectInput";
 import { CalcInput } from "@/components/ui/calcInput";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useState } from "react";
 import TooltipBtn from "../ui/tooltipBtn";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 import { useUnifiedStore } from "@/stores/stores";
@@ -22,6 +22,7 @@ export interface FormData {
   coldWaterCostPerCubicMeter: string;
   subscriptionFee: string;
   nightRateFactor: number;
+  nightRateUsagePercentage: number;
   city: string;
   icon?: JSX.Element | JSX.Element[];
 }
@@ -45,6 +46,7 @@ const BoilerComponent = () => {
     coldWaterCostPerCubicMeter: "13.45",
     subscriptionFee: "42.94",
     nightRateFactor: 1,
+    nightRateUsagePercentage: 0,
     city: "",
     icon: icons.day,
   });
@@ -55,8 +57,6 @@ const BoilerComponent = () => {
 
   const isInputDisabled = selectedCostPerKWh !== "three-zone";
 
-  const boiler = useUnifiedStore((state) => state.boiler);
-
   const setCalculationDone = useUnifiedStore(
     (state) => state.setCalculationDone
   );
@@ -64,15 +64,6 @@ const BoilerComponent = () => {
   const setCalculationType = useUnifiedStore(
     (state) => state.setCalculationType
   );
-
-  useEffect(() => {
-    if (boiler?.efficiency) {
-      setFormData((prev) => ({
-        ...prev,
-        efficiency: boiler.efficiency,
-      }));
-    }
-  }, [boiler]);
 
   const { handleTariffChange, handleInputChange, getCalculationValue } =
     TariffChange(
@@ -96,7 +87,8 @@ const BoilerComponent = () => {
       parseFloat(updatedInputs.hotWaterCostPerCubicMeter) * 100 || 978900,
       parseFloat(updatedInputs.coldWaterCostPerCubicMeter) * 100 || 134500,
       parseFloat(updatedInputs.subscriptionFee) * 100 || 4294,
-      updatedInputs.nightRateFactor
+      updatedInputs.nightRateFactor,
+      updatedInputs.nightRateUsagePercentage / 100
     );
 
     setResult(result);
@@ -225,7 +217,30 @@ const BoilerComponent = () => {
             </div>
           </div>
         </div>
-
+        <div className="relative mt-6 xl:mt-0">
+          <TooltipBtn
+            title="Пояснення показників"
+            text="Вкажіть обсяг води, що використовується за місяць."
+            buttonText="Зрозуміло"
+          />
+          <label htmlFor="nightRateUsagePercentage">
+            Яку частину води грієте вночі?
+          </label>
+          <div className="relative mt-4 xl:mt-6">
+            <Input
+              id="nightRateUsagePercentage"
+              type="range"
+              min="0"
+              max="100"
+              value={formData.nightRateUsagePercentage}
+              onChange={handleInputChange}
+              className="w-[90%] px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+            />
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
+              {formData.nightRateUsagePercentage}%
+            </span>
+          </div>
+        </div>
         <div className="relative mt-6 xl:mt-0">
           <TooltipBtn
             title="Пояснення показників"
@@ -289,8 +304,8 @@ const BoilerComponent = () => {
           <div className="relative mt-4 xl:mt-6">
             <Input
               id="subscriptionFee"
-              type="text"
-              placeholder="Місто"
+              type="number"
+              placeholder="42.94"
               value={formData.subscriptionFee}
               onChange={handleInputChange}
               className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
@@ -407,4 +422,3 @@ const BoilerComponent = () => {
 };
 
 export default BoilerComponent;
-
