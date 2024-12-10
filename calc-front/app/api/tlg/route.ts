@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const tgbot = process.env.NEXT_TELEGRAM_TOKEN;
+  const channelId = process.env.NEXT_TELEGRAM_CHANNEL_ID;
+
   if (!tgbot) {
     return NextResponse.json(
       { message: "Telegram token not provided" },
@@ -16,7 +18,6 @@ export async function POST(req: Request) {
 <b>Message:</b> ${data?.message}%0A
 <b>Created At:</b> ${data?.createdAt}
 `;
-  const channelId = "-1002269068212";
 
   try {
     const response = await fetch(

@@ -10,5 +10,9 @@ export async function sendFormToTelegramBot(data: {
     body: JSON.stringify(data),
   });
 
+  if (!res.ok) {
+    throw new Error(`Помилка сервера: ${res.statusText}`);
+  }
+
   return res.json();
 }

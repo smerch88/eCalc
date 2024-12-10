@@ -3,7 +3,7 @@ import AdvicesList from "@/components/AdvicesList";
 export const AdviceSection = () => {
   return (
     <section>
-      <div className="px-4 pb-[35px] pt-6 xl:container">
+      <div className="px-4 pt-6 xl:container">
         <h2 className="text-2xl pr-10 xl:pr-0 xl:text-4xl font-semibold mb-4 xl:mb-6">
           Поради про енергозбереження на основі ваших даних
         </h2>
