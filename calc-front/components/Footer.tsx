@@ -23,14 +23,19 @@ export const Footer = () => {
   const sections = isMobile ? [...footerItems].reverse() : footerItems;
 
   return (
-    <footer className=" pt-4 pb-6 bg-background_header/50 rounded-xlg xl:px-24 xl:py-10">
+    <footer className="pt-4 pb-6 bg-background_header/50 rounded-t-3xl xl:rounded-t-xlg xl:px-24 xl:py-10">
       <div className="container flex flex-col xl:flex-row xl:justify-between">
         <Link
           href="/"
           className="flex items-center justify-center mb-8 xl:py-12 xl:mb-0"
           prefetch={false}
         >
-          <Image width={241} height={60} src={Logo} alt="Logotype" />
+          <Image
+            width={241}
+            height={60}
+            src={Logo}
+            alt="e-Calculator logotype"
+          />
         </Link>
 
         <nav className="flex flex-col gap-y-6 xl:flex-row xl:gap-x-20">
@@ -58,4 +63,6 @@ export const Footer = () => {
     </footer>
   );
 };
+
+
 

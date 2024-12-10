@@ -1,20 +1,19 @@
 "use client";
 
-import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { Button } from "../ui/button";
 import { SelectInput } from "../ui/selectInput";
 import { CalcInput } from "@/components/ui/calcInput";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState, useRef } from "react";
+import Tooltip from "../ui/tooltip";
+import TooltipBtn from "../ui/tooltipBtn";
 import { calculateBoilerEnergyConsumption } from "@/lib/calculators";
 import { useUnifiedStore } from "@/stores/stores";
-import Icon from "../../public/calculatorDevices/info.png";
 
 import { TariffChange, options, icons } from "@/components/TariffChange";
 
 import cn from "classnames";
-import Tooltip from "../ui/tooltip";
 
 export interface FormData {
   waterVolume: string;
@@ -54,13 +53,22 @@ const BoilerComponent = () => {
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
-
-  const toggleTooltip = () => {
-    setIsTooltipVisible((prev) => !prev);
-  };
   const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const showTooltip = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsTooltipVisible(true);
+  };
+  const hideTooltip = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsTooltipVisible(false);
+    }, 200);
+  };
 
   const isInputDisabled = selectedCostPerKWh !== "three-zone";
 
@@ -98,7 +106,7 @@ const BoilerComponent = () => {
 
     const result = calculateBoilerEnergyConsumption(
       parseFloat(updatedInputs.waterVolume) || 3000,
-      updatedInputs.initialTemp || 50,
+      updatedInputs.initialTemp || 15,
       updatedInputs.targetTemp || 60,
       updatedInputs.efficiency || 90,
       tariffForCalculation * 100 || 43200,
@@ -134,8 +142,9 @@ const BoilerComponent = () => {
   return (
     <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
       <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
-        <div>
+        <div className="relative">
           <label htmlFor="city">Тарифи за воду з міста:</label>
+          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="relative mt-4 xl:mt-6">
             <Input
               id="city"
@@ -149,10 +158,11 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
           <label htmlFor="waterVolume">
             Споживання гарячої води на місяць:
           </label>
+          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="relative mt-4 xl:mt-6">
             <Input
               id="waterVolume"
@@ -168,8 +178,9 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
           <span>Тариф на електроенергію:</span>
+          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-6 text-base xl:text-lg relative">
             <div>
               <SelectInput
@@ -220,8 +231,9 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
           <span>Який тариф на водопостачання використовуєте?</span>
+          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="flex flex-col xl:flex-row gap-4 xl:gap-12 mt-4 xl:mt-6 text-base xl:text-lg">
             <div className="flex items-center xl:gap-6">
               <label
@@ -266,10 +278,11 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="mt-6 xl:mt-0">
+        <div className="relative mt-6 xl:mt-0">
           <label htmlFor="subscriptionFee">
             Абонплата за підключення гарячої води:
           </label>
+          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
           <div className="relative mt-4 xl:mt-6">
             <Input
               id="subscriptionFee"
@@ -285,33 +298,40 @@ const BoilerComponent = () => {
           </div>
         </div>
 
-        <div className="flex flex-col xl:flex-row xl:gap-12">
-          <CalcInput
-            id="initialTemp"
-            type="number"
-            label="Початкова температура"
-            value={formData.initialTemp}
-            onChange={handleInputChange}
-            unit="&deg;C"
-          />
-          <CalcInput
-            id="targetTemp"
-            type="number"
-            label="Цільова температура:"
-            value={formData.targetTemp}
-            onChange={handleInputChange}
-            unit="&deg;C"
-          />
+        <div className="relative">
+          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
+          <div className="flex flex-col xl:flex-row xl:gap-12">
+            <CalcInput
+              id="initialTemp"
+              type="number"
+              label="Початкова температура"
+              value={formData.initialTemp}
+              onChange={handleInputChange}
+              unit="&deg;C"
+            />
+            <CalcInput
+              id="targetTemp"
+              type="number"
+              label="Цільова температура:"
+              value={formData.targetTemp}
+              onChange={handleInputChange}
+              unit="&deg;C"
+            />
+          </div>
         </div>
-        <div>
-          <CalcInput
-            id="efficiency"
-            type="number"
-            label="Який КПД бойлера?"
-            value={formData.efficiency}
-            onChange={handleInputChange}
-            unit="&#37;"
-          />
+
+        <div className="relative">
+          <TooltipBtn onMouseEnter={showTooltip} onMouseLeave={hideTooltip} />
+          <div>
+            <CalcInput
+              id="efficiency"
+              type="number"
+              label="Який КПД бойлера?"
+              value={formData.efficiency}
+              onChange={handleInputChange}
+              unit="&#37;"
+            />
+          </div>
         </div>
         <Button
           onClick={handleSubmit}
@@ -372,17 +392,13 @@ const BoilerComponent = () => {
         </div>
       </div>
 
-      <button
-        className="absolute top-[-24px] right-[-24px]"
-        onClick={toggleTooltip}
-        type="button"
-      >
-        <Image width={24} height={24} src={Icon} alt="Logotype" />
-      </button>
-
       {isTooltipVisible && (
-        <div className="absolute top-0 right-0 w-[496px] h-[519px]">
-          <Tooltip onClose={toggleTooltip} />
+        <div
+          className="absolute md:left-[10%] xl:left-[52%] right-0 z-20"
+          onMouseEnter={showTooltip}
+          onMouseLeave={hideTooltip}
+        >
+          <Tooltip />
         </div>
       )}
     </form>

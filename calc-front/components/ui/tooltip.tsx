@@ -1,17 +1,18 @@
 import Image from "next/image";
 
 import { Button } from "./button";
-import Icon from "../../public/calculatorDevices/info.png";
+import Icon from "../../public/icons/info.svg";
 
-interface TooltipProps {
-  onClose: () => void;
-}
-
-export default function Tooltip({ onClose }: TooltipProps) {
+export default function Tooltip() {
   return (
-    <div className="relative p-6 w-[496px] h-[519px] rounded-3xl bg-white">
+    <div className="relative p-6 w-[496px] rounded-xlg bg-[#f0f0f0]">
       <span className="absolute top-5 right-5">
-        <Image width={24} height={24} src={Icon} alt="Logotype" />
+        <Image
+          width={24}
+          height={24}
+          src={Icon}
+          alt="Logotype"
+        />
       </span>
       <h3 className="mb-6 font-bold text-2xl text-primary">
         Пояснення показників
@@ -25,20 +26,21 @@ export default function Tooltip({ onClose }: TooltipProps) {
           luctus tortor. id sodales. Quisque vitae eget nulla, Lorem odio quam
           non Nunc laoreet nec
         </li>
-        <li>
-          luctus tortor. id sodales. Quisque vitae eget nulla, Lorem odio quam
-          non Nunc laoreet nec
-        </li>
       </ul>
 
       <Button
         className="w-[100%] font-normal text-2xl rounded-2xl text-white"
         size="lg"
-        onClick={onClose}
+        disabled
       >
         Зрозуміло
       </Button>
     </div>
   );
 }
+
+
+
+
+
 

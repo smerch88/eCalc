@@ -80,9 +80,6 @@ const config: Config = {
       backgroundPosition: {
         "center-right": "calc(100% - 15%) center",
       },
-      boxShadow: {
-        shadow: "var(--shadow)",
-      },
     },
   },
   plugins: [require("tailwindcss-animate")],

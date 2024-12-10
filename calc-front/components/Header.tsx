@@ -1,37 +1,69 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Navbar } from "@/components/Navbar";
 import CityAutoDetect from "./CityAutoDetect";
-import Logo from "../public/header/logo-lg.png";
-import { menuItems } from "@/lib/menuItems";
+import LogoLarge from "../public/header/logo-lg.png";
+import LogoSmall from "../public/header/logo-sm.png";
+import Icon from "../public/header/hamburger.png";
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <header className="hidden absolute top-6 left-0 right-0 py-6 backdrop-blur-md rounded-xlg bg-background_header/50 lg:inline-block">
+    <header className="absolute top-6 md:top-0 left-0 right-0 xl:py-6 backdrop-blur-md rounded-b-3xl xl:rounded-b-xlg bg-background_header/50">
       <div className="container flex items-center justify-between">
         <Link href="/" className="flex items-center" prefetch={false}>
-          <Image width={241} height={60} src={Logo} alt="Logotype" />
+          <Image
+            width={241}
+            height={60}
+            src={LogoLarge}
+            alt="e-Calculator logotype"
+            className="hidden lg:hidden"
+          />
+          <Image
+            width={217}
+            height={73}
+            src={LogoSmall}
+            alt="e-Calculator logotype"
+            className="block"
+          />
         </Link>
 
-        <nav>
-          <h1 className="sr-only">Navigation Menu</h1>
-          <ul className="flex gap-x-4">
-            {menuItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  className="px-6 py-4 text-lg font-normal text-primary"
-                  href={item?.href || ""}
-                >
-                  {item?.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="hidden lg:block">
+          <Navbar />
+        </div>
 
-        <CityAutoDetect />
+        <div className="hidden lg:block">
+          <CityAutoDetect />
+        </div>
+
+        <button
+          onClick={toggleMenu}
+          className="text-primary focus:outline-none lg:hidden"
+        >
+          <Image width={24} height={24} src={Icon} alt="Menu" />
+        </button>
       </div>
+
+      {isOpen && (
+        <div className="container lg:hidden">
+          <div className="flex justify-center items-center mt-4 mb-6">
+            <CityAutoDetect />
+          </div>
+          <Navbar isMobile={true} closeMenu={() => setIsOpen(false)} />
+        </div>
+      )}
     </header>
   );
 };
+
+
 

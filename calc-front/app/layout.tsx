@@ -5,7 +5,6 @@ import { Header } from "@/components/Header";
 import cn from "classnames";
 import { Footer } from "@/components/Footer";
 import { ReactNode } from "react";
-import Navbar from "@/components/Navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,7 +32,6 @@ export default function RootLayout({
       <body
         className={cn(geistSans.variable, geistMono.variable, "antialiased")}
       >
-        <Navbar />
         <Header />
         {children}
         <Footer />
