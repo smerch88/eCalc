@@ -30,6 +30,7 @@ body {
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+    --footer-text: 0 0% 31%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
@@ -38,7 +39,9 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --header-radius: 2.5rem;
     --radius: 0.5rem;
+    --header-spacing: 2.125rem;
   }
 }
 
@@ -64,10 +67,8 @@ body {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
-    margin: 0;
   }
 
-  /* Firefox */
   input[type="number"] {
     -moz-appearance: textfield;
   }
