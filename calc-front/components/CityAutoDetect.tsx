@@ -5,37 +5,44 @@ import { Input } from "@/components/ui/input"; // Ваш кастомний Inpu
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
 import { useEffect, useState } from "react";
 
+// Словник для перекладу міст
+const cityTranslations: { [key: string]: string } = {
+  Kharkiv: "Харків",
+  Kyiv: "Київ",
+  Odessa: "Одеса",
+  Lviv: "Львів",
+  Dnipro: "Дніпро",
+  Zaporizhzhia: "Запоріжжя",
+  Mykolaiv: "Миколаїв",
+  Vinnytsia: "Вінниця",
+};
+
+const translateCity = (city: string) => {
+  return cityTranslations[city] || city; // Якщо немає перекладу, повертається оригінальна назва
+};
+
 const CityAutoDetect = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна.
+  // const { location, setLocation } = useUnifiedStore((state) => ({
+  //   location: state.location,
+  //   setLocation: state.setLocation,
+  // })); // Один раз отримуємо значення та функцію оновлення зі стору
   const location = useUnifiedStore((state) => state.location); // Поточне місто зі стору.
   const setLocation = useUnifiedStore((state) => state.setLocation); // Функція для оновлення міста.
+  const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна.
 
   useEffect(() => {
-    // Спроба визначити місцезнаходження через Geolocation API
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            const detectedCity =
-              data.address.city || data.address.town || "Невідомо";
-            setLocation(detectedCity); // Оновлення стану через zustand.
-          });
-      },
-      () => {
-        // Якщо геолокація недоступна, fallback на IP API
-        fetch("https://ipapi.co/json/")
-          .then((res) => res.json())
-          .then((data) => {
-            const detectedCity = data.city || "Невідомо";
-            setLocation(detectedCity); // Оновлення стану через zustand.
-          });
-      }
-    );
-  }, [setLocation]);
+    // Викликаємо тільки IP API для отримання міста
+    fetch("https://ipapi.co/json/")
+      .then((res) => res.json())
+      .then((data) => {
+        const detectedCity = translateCity(data.city || "Київ"); // Переклад міста
+        setLocation(detectedCity); // Оновлення стану через zustand.
+      })
+      .catch(() => {
+        console.error("Помилка при запиті до IP API");
+        setLocation("Київ"); // Fallback до стандартного значення.
+      });
+  }, [setLocation]); // setLocation викликається лише один раз
 
   return (
     <div className="relative">
