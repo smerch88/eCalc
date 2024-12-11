@@ -54,7 +54,7 @@ const BoilerComponent = () => {
   const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
+  const location = useUnifiedStore((state) => state.location); // Поточне місто
   const isInputDisabled = selectedCostPerKWh !== "three-zone";
 
   const setCalculationDone = useUnifiedStore(
@@ -131,6 +131,7 @@ const BoilerComponent = () => {
               placeholder="Місто"
               // value={formData.city}
               value={location}
+              readOnly
               onChange={handleInputChange}
               className="px-6 py-6 rounded-2xl text-lg"
             />
