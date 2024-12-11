@@ -13,7 +13,12 @@ const config: Config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1200px",
+        sm: "480px",
+        md: "768px",
+        xl: "1200px",
+        smOnly: { max: "767.98px" },
+        mdOnly: { min: "768px", max: "1199.98px" },
+        notXl: { max: "1199.98px" },
       },
     },
     extend: {
@@ -51,8 +56,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        footer_title: "hsl(var(--footer-text))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        tooltip: "hsl(var(--tooltip))",
         ring: "hsl(var(--ring))",
         chart: {
           "1": "hsl(var(--chart-1))",
@@ -63,12 +70,20 @@ const config: Config = {
         },
       },
       borderRadius: {
+        xlg: "var(--header-radius)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      spacing: {
+        header_spacing: "var(--header-spacing)",
+      },
+      backgroundPosition: {
+        "center-right": "calc(100% - 15%) center",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
 };
 export default config;
+

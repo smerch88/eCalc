@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
 import CitySelector from "@/components/CitySelect";
+import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
+import { useEffect, useState } from "react";
 
 // Словник для перекладу міст
 const cityTranslations: { [key: string]: string } = {
