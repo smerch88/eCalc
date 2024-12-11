@@ -14,7 +14,7 @@ interface SelectInputProps {
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  dropdownClassName?: string; // Добавляем пропс для кастомных стилей выпадающего списка
+  dropdownClassName?: string;
 }
 
 export const SelectInput: FC<SelectInputProps> = ({
@@ -24,7 +24,7 @@ export const SelectInput: FC<SelectInputProps> = ({
   className = "",
   isOpen,
   setIsOpen,
-  dropdownClassName = "", // Значение по умолчанию для dropdownClassName
+  dropdownClassName = "",
 }) => {
   const handleSelectChange = (value: string) => {
     onChange({ target: { value } } as ChangeEvent<HTMLSelectElement>);
@@ -74,13 +74,13 @@ export const SelectInput: FC<SelectInputProps> = ({
               className="flex items-center px-4 py-2 rounded-2xl hover:bg-gray-100 cursor-pointer"
             >
               {option.image && (
-                <Image
-                  src={option.image}
-                  alt={option.label}
-                  width={40}
-                  height={40}
-                  className="object-cover mr-3"
-                />
+                <div className="w-[45px] h-[52px] mr-3">
+                  <Image
+                    src={option.image}
+                    alt={option.label}
+                    className="object-cover"
+                  />
+                </div>
               )}
               <span>{option.label}</span>
             </div>
