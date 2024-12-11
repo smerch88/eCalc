@@ -152,15 +152,20 @@ export const TariffChange = (
     setErrorMessage("");
 
     if (event.target.value === "two-zone" && tariffValue) {
+      const [dayRate, nightRate] = tariffValue.split(/\s+/).map(parseFloat);
+      const nightRateFactor = nightRate / dayRate;
+
       setFormData((prev) => ({
         ...prev,
         costPerKWh: tariffValue,
+        nightRateFactor: nightRateFactor,
         icon: selectedIcon,
       }));
     } else {
       setFormData((prev) => ({
         ...prev,
         costPerKWh: tariffValue,
+        nightRateFactor: 1,
         icon: selectedIcon,
       }));
     }
@@ -189,7 +194,7 @@ export const TariffChange = (
   const getCalculationValue = (): number => {
     if (selectedCostPerKWh === "two-zone") {
       const tariffValues = formData.costPerKWh.trim().split(/\s+/);
-      return parseFloat(tariffValues[1]) || 0;
+      return parseFloat(tariffValues[0]) || 0;
     }
 
     return parseFloat(formData.costPerKWh) || 0;
