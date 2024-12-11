@@ -223,24 +223,27 @@ const BoilerComponent = () => {
             text="Вкажіть обсяг води, що використовується за місяць."
             buttonText="Зрозуміло"
           />
-          <label htmlFor="nightRateUsagePercentage">
-            Яку частину води грієте вночі?
-          </label>
           {selectedCostPerKWh === "two-zone" && (
-            <div className="relative mt-4 xl:mt-6">
-              <Input
-                id="nightRateUsagePercentage"
-                type="range"
-                min="0"
-                max="100"
-                value={formData.nightRateUsagePercentage}
-                onChange={handleInputChange}
-                className="w-[90%] px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
-              />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
-                {formData.nightRateUsagePercentage}%
-              </span>
-            </div>
+            <>
+              <label htmlFor="nightRateUsagePercentage">
+                Яку частину води грієте вночі?
+              </label>
+
+              <div className="relative mt-4 xl:mt-6">
+                <Input
+                  id="nightRateUsagePercentage"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={formData.nightRateUsagePercentage}
+                  onChange={handleInputChange}
+                  className="w-[90%] px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+                />
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
+                  {formData.nightRateUsagePercentage}%
+                </span>
+              </div>
+            </>
           )}
         </div>
         <div className="relative mt-6 xl:mt-0">
