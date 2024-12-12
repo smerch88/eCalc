@@ -45,10 +45,10 @@ const CitySelector: FC<CitySelectorProps> = ({ onClose }) => {
   );
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg w-96 relative">
+    // <div className="fixed inset-10 flex justify-center items-center z-50">
+      <div className="bg-white top-0 rounded-lg w-[200px] relative">
         {/* Заголовок і кнопка закриття */}
-        <div className="flex justify-between items-center mb-4">
+        {/* <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">Виберіть місто</h2>
           <button
             onClick={onClose}
@@ -56,16 +56,16 @@ const CitySelector: FC<CitySelectorProps> = ({ onClose }) => {
           >
             &times;
           </button>
-        </div>
+        </div> */}
 
         {/* Поле вводу для пошуку */}
-        <input
+        {/* <input
           type="text"
           placeholder="Почніть вводити назву міста"
           className="w-full p-2 border rounded-lg mb-4"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        /> */}
 
         {/* Список міст */}
         <ul className="max-h-60 overflow-y-auto border rounded-lg">
@@ -83,8 +83,8 @@ const CitySelector: FC<CitySelectorProps> = ({ onClose }) => {
             <li className="p-2 text-gray-500">Місто не знайдено</li>
           )}
         </ul>
-      </div>
-    </div>
+      {/* </div> */}
+     </div>
   );
 };
 

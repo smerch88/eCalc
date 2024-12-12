@@ -3,6 +3,8 @@
 import CitySelector from "@/components/CitySelect";
 import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
+import Image from "next/image";
+import IconArrowDown from "../public/icons/arrow-down.svg";
 import { useEffect, useState } from "react";
 
 // Словник для перекладу міст
@@ -45,24 +47,26 @@ const CityAutoDetect = () => {
   }, [setLocation]); // setLocation викликається лише один раз
 
   return (
-    <div className="relative">
+    <div className="relative w-[200px] h-[56px] border-#00000014">
       {/* Поле вводу */}
       <Input
         type="text"
         placeholder="Місто"
         value={location} // Значення з zustand store.
-        readOnly
+        // readOnly
         onClick={() => setIsModalOpen(true)} // Відкрити модальне вікно.
-        className="w-[200px] h-[56px] bg-white px-6 py-6 pr-14 rounded-xl text-lg cursor-pointer"
+        className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border border-gray-300 hover:bg-gray-300 focus:outline-none focus:ring-0"
       />
 
-      {/* Кнопка для вибору вручну */}
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="absolute top-4 right-6 w-[24px] h-[24px] transform -translate-y-1/2 text-lg text-black px-3 py-2 rounded-lg transition-colors"
-      >
-        &#8744;
-      </button>
+      {/* Іконка стрілочки */}
+      <Image
+        width={24}
+        height={24}
+        src={IconArrowDown}
+        alt="Arrow Down"
+        onClick={() => setIsModalOpen(true)} // Додайте можливість кліку
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+      />
 
       {/* Модальне вікно */}
       {isModalOpen && (
