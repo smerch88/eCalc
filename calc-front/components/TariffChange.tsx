@@ -1,11 +1,26 @@
 import { ChangeEvent } from "react";
-import { FormData } from "@/components/calculators/BoilerComponent";
 
 interface Option {
   value: string;
   label: string;
   tariff: string;
   icon?: JSX.Element | JSX.Element[];
+}
+
+interface TariffChangeFormData {
+  costPerKWh: string;
+  nightRateFactor?: number;
+  icon?: JSX.Element | JSX.Element[];
+  [key: string]: unknown;
+}
+
+interface TariffChangeProps<T extends TariffChangeFormData> {
+  selectedCostPerKWh: string;
+  setSelectedCostPerKWh: (value: string) => void;
+  formData: T;
+  setFormData: React.Dispatch<React.SetStateAction<T>>;
+  setIsValid: (value: boolean) => void;
+  setErrorMessage: (value: string) => void;
 }
 
 export const icons = {
@@ -132,14 +147,14 @@ export const options: Option[] = [
   { value: "three-zone", label: "Ввести вручну", tariff: "" },
 ];
 
-export const TariffChange = (
-  selectedCostPerKWh: string,
-  setSelectedCostPerKWh: (value: string) => void,
-  formData: FormData,
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>,
-  setIsValid: (value: boolean) => void,
-  setErrorMessage: (value: string) => void
-) => {
+export const TariffChange = <T extends TariffChangeFormData>({
+  selectedCostPerKWh,
+  setSelectedCostPerKWh,
+  formData,
+  setFormData,
+  setIsValid,
+  setErrorMessage,
+}: TariffChangeProps<T>) => {
   const handleTariffChange = (event: ChangeEvent<HTMLSelectElement>): void => {
     const selectedOption = options.find(
       (option) => option.value === event.target.value
@@ -158,7 +173,7 @@ export const TariffChange = (
       setFormData((prev) => ({
         ...prev,
         costPerKWh: tariffValue,
-        nightRateFactor: nightRateFactor,
+        nightRateFactor,
         icon: selectedIcon,
       }));
     } else {
