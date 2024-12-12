@@ -217,14 +217,14 @@ const BoilerComponent = () => {
             </div>
           </div>
         </div>
-        <div className="relative mt-6 xl:mt-0">
-          <TooltipBtn
-            title="Пояснення показників"
-            text="Вкажіть обсяг води, що використовується за місяць."
-            buttonText="Зрозуміло"
-          />
-          {selectedCostPerKWh === "two-zone" && (
-            <>
+        {selectedCostPerKWh === "two-zone" && (
+          <>
+            <div className="relative mt-6 xl:mt-0">
+              <TooltipBtn
+                title="Пояснення показників"
+                text="Вкажіть обсяг води, що використовується за місяць."
+                buttonText="Зрозуміло"
+              />
               <label htmlFor="nightRateUsagePercentage">
                 Яку частину води грієте вночі?
               </label>
@@ -243,9 +243,9 @@ const BoilerComponent = () => {
                   {formData.nightRateUsagePercentage}%
                 </span>
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
         <div className="relative mt-6 xl:mt-0">
           <TooltipBtn
             title="Пояснення показників"
