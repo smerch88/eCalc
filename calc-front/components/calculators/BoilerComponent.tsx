@@ -25,6 +25,7 @@ export interface FormData {
   nightRateUsagePercentage: number;
   city: string;
   icon?: JSX.Element | JSX.Element[];
+  [key: string]: unknown;
 }
 
 interface CalculationResult {
@@ -66,14 +67,14 @@ const BoilerComponent = () => {
   );
 
   const { handleTariffChange, handleInputChange, getCalculationValue } =
-    TariffChange(
+    TariffChange({
       selectedCostPerKWh,
       setSelectedCostPerKWh,
       formData,
       setFormData,
       setIsValid,
-      setErrorMessage
-    );
+      setErrorMessage,
+    });
 
   const calculateAndSetResult = (updatedInputs: FormData): void => {
     const tariffForCalculation = getCalculationValue();
