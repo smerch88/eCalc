@@ -170,6 +170,7 @@ export function calculateMWConsumption({
     dailyUsage, // Кількість використань мікрохвильовки на день
     electricityCostPerKWh, // Вартість електроенергії за 1 кВт·год у копійках
     nightRateFactor = 1, // Знижка на нічний тариф
+    nightRateUsagePercentage = 0, // Відсоток використання енергії за нічним тарифом (0-100)
     ageInYears = 0, // Вік мікрохвильовки в роках (за замовчуванням 0)
     daysPerMonth = 30, // Кількість днів у місяці (за замовчуванням 30)
 }) {
@@ -180,16 +181,26 @@ export function calculateMWConsumption({
     const usageInHours = usageTime / 60;
 
     // Якщо є вік мікрохвильовки, враховуємо зниження ефективності
-    const efficiencyFactor = ageInYears > 0 ? Math.max(0.9 - (ageInYears * 0.02), 0.5) : 1; // Знижка на ефективність (по 2% на рік)
+    const efficiencyFactor = ageInYears > 0 ? Math.max(0.9 - ageInYears * 0.02, 0.5) : 1; // Знижка на ефективність (по 2% на рік)
 
-    // Річне споживання енергії (кВт·год) = потужність в кВт * час використання в годинах * кількість використань на день * кількість днів на місяць
+    // Місячне споживання енергії (кВт·год)
     const monthlyEnergyConsumption = powerInKW * usageInHours * dailyUsage * daysPerMonth * efficiencyFactor;
 
-    // Річна вартість енергії
-    const yearlyEnergyConsumption = monthlyEnergyConsumption * 12; // В рік
+    // Відсоток використання денного та нічного тарифів
+    const dayRateUsagePercentage = 1 - nightRateUsagePercentage / 100;
 
-    const monthlyEnergyCost = monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
-    const yearlyEnergyCost = yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+    // Місячна вартість енергії (з урахуванням денного та нічного тарифів)
+    const monthlyEnergyCost =
+        monthlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
+        monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
+
+    // Річне споживання енергії (кВт·год)
+    const yearlyEnergyConsumption = monthlyEnergyConsumption * 12;
+
+    // Річна вартість енергії (з урахуванням денного та нічного тарифів)
+    const yearlyEnergyCost =
+        yearlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
+        yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
 
     // Розрахунок параметрів за місяць
     const monthlyEnergyConsumptionInKWh = monthlyEnergyConsumption; // кВт·год/місяць
@@ -210,6 +221,7 @@ export function calculateMWConsumption({
         },
     };
 }
+
 
 export function calculateLightingConsumption({
     wattage, // Потужність лампочки в ватах (W)
