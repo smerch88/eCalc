@@ -7,6 +7,7 @@ import { CalcInput } from "@/components/ui/calcInput";
 import { MouseEvent, useState } from "react";
 import TooltipBtn from "../ui/tooltipBtn";
 import { calculateMWConsumption } from "@/lib/calculators";
+import { getDaysInCurrentMonth } from "@/lib/utils";
 import { useUnifiedStore } from "@/stores/stores";
 import { TariffChange, options, icons } from "@/components/TariffChange";
 import cn from "classnames";
@@ -45,7 +46,7 @@ const MWComponent = () => {
     dailyUsage: "2",
     costPerKWh: "4.32",
     ageInYears: 2,
-    daysPerMonth: 30,
+    daysPerMonth: getDaysInCurrentMonth(),
     nightRateFactor: 1,
     nightRateUsagePercentage: 0,
     city: "",
@@ -87,6 +88,7 @@ const MWComponent = () => {
       ageInYears: updatedInputs.ageInYears,
       daysPerMonth: updatedInputs.daysPerMonth,
       nightRateFactor: updatedInputs.nightRateFactor,
+      nightRateUsagePercentage: updatedInputs.nightRateUsagePercentage / 100,
     });
 
     setResult(result);
@@ -190,6 +192,35 @@ const MWComponent = () => {
             </div>
           </div>
         </div>
+        {selectedCostPerKWh === "two-zone" && (
+          <>
+            <div className="relative mt-6 xl:mt-0">
+              <TooltipBtn
+                title="Пояснення показників"
+                text="Вкажіть обсяг води, що використовується за місяць."
+                buttonText="Зрозуміло"
+              />
+              <label htmlFor="nightRateUsagePercentage">
+                Як часто використовуєте микрохвильовку вночі?
+              </label>
+
+              <div className="relative mt-4 xl:mt-6">
+                <Input
+                  id="nightRateUsagePercentage"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={formData.nightRateUsagePercentage}
+                  onChange={handleInputChange}
+                  className="w-[90%] px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+                />
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
+                  {formData.nightRateUsagePercentage}%
+                </span>
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="relative mt-6 xl:mt-0">
           <TooltipBtn
@@ -256,7 +287,9 @@ const MWComponent = () => {
             text="Вкажіть обсяг води, що використовується за місяць."
             buttonText="Зрозуміло"
           />
-          <label htmlFor="daysPerMonth">Кількість днів у місяці:</label>
+          <label htmlFor="daysPerMonth">
+            Кількість днів у поточному місяці:
+          </label>
           <div className="mt-4 xl:mt-6">
             <CalcInput
               id="daysPerMonth"
@@ -284,10 +317,7 @@ const MWComponent = () => {
             <p className="mb-4">Мікрохвильовка</p>
             <p className="mb-4 mt-10">Місячне споживання</p>
             <p
-              className={cn(
-                "text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4",
-                "text-green-500"
-              )}
+              className={cn("text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4")}
             >
               {result?.monthly.energyCost.toFixed(2) || 0} грн/міс
             </p>
@@ -295,10 +325,7 @@ const MWComponent = () => {
           <div className="border-t-2 pt-6 border-black xl:border-none xl:pt-0">
             <p className="mb-4">Річне споживання</p>
             <p
-              className={cn(
-                "text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4",
-                "text-red-600"
-              )}
+              className={cn("text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4")}
             >
               {result?.yearly.energyCost.toFixed(2) || 0} грн/рік
             </p>
