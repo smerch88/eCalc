@@ -222,26 +222,36 @@ export function calculateMWConsumption({
     };
 }
 
-
 export function calculateLightingConsumption({
     wattage, // Потужність лампочки в ватах (W)
     hoursPerDay, // Кількість годин роботи лампочки на день
     numberOfBulbs, // Кількість лампочок
     electricityCostPerKWh, // Вартість електроенергії за 1 кВт·год у копійках
     nightRateFactor = 1, // Знижка на нічний тариф
+    nightRateUsagePercentage = 0, // Відсоток використання енергії за нічним тарифом (0-100)
     daysPerMonth = 30, // Кількість днів у місяці
 }) {
     // Переводимо потужність в кВт (1 кВт = 1000 Вт)
     const powerInKW = wattage / 1000;
 
-    // Річне споживання енергії (кВт·год) = потужність в кВт * час використання в годинах * кількість лампочок * кількість днів на місяць
+    // Місячне споживання енергії (кВт·год) = потужність в кВт * час використання в годинах * кількість лампочок * кількість днів на місяць
     const monthlyEnergyConsumption = powerInKW * hoursPerDay * numberOfBulbs * daysPerMonth;
 
-    // Річна вартість енергії
+    // Відсоток використання денного та нічного тарифів
+    const dayRateUsagePercentage = 1 - nightRateUsagePercentage / 100;
+
+    // Місячна вартість енергії (з урахуванням денного та нічного тарифів)
+    const monthlyEnergyCost =
+        monthlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
+        monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
+
+    // Річне споживання енергії (кВт·год)
     const yearlyEnergyConsumption = monthlyEnergyConsumption * 12; // В рік
 
-    const monthlyEnergyCost = monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
-    const yearlyEnergyCost = yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor;
+    // Річна вартість енергії (з урахуванням денного та нічного тарифів)
+    const yearlyEnergyCost =
+        yearlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
+        yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
 
     // Розрахунок параметрів за місяць
     const monthlyEnergyConsumptionInKWh = monthlyEnergyConsumption; // кВт·год/місяць
