@@ -25,6 +25,7 @@ export interface FormData {
   nightRateUsagePercentage: number;
   city: string;
   icon?: JSX.Element | JSX.Element[];
+  [key: string]: unknown;
 }
 
 interface CalculationResult {
@@ -66,14 +67,14 @@ const BoilerComponent = () => {
   );
 
   const { handleTariffChange, handleInputChange, getCalculationValue } =
-    TariffChange(
+    TariffChange({
       selectedCostPerKWh,
       setSelectedCostPerKWh,
       formData,
       setFormData,
       setIsValid,
-      setErrorMessage
-    );
+      setErrorMessage,
+    });
 
   const calculateAndSetResult = (updatedInputs: FormData): void => {
     const tariffForCalculation = getCalculationValue();
@@ -219,14 +220,14 @@ const BoilerComponent = () => {
             </div>
           </div>
         </div>
-        <div className="relative mt-6 xl:mt-0">
-          <TooltipBtn
-            title="Пояснення показників"
-            text="Вкажіть обсяг води, що використовується за місяць."
-            buttonText="Зрозуміло"
-          />
-          {selectedCostPerKWh === "two-zone" && (
-            <>
+        {selectedCostPerKWh === "two-zone" && (
+          <>
+            <div className="relative mt-6 xl:mt-0">
+              <TooltipBtn
+                title="Пояснення показників"
+                text="Вкажіть обсяг води, що використовується за місяць."
+                buttonText="Зрозуміло"
+              />
               <label htmlFor="nightRateUsagePercentage">
                 Яку частину води грієте вночі?
               </label>
@@ -245,9 +246,9 @@ const BoilerComponent = () => {
                   {formData.nightRateUsagePercentage}%
                 </span>
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
         <div className="relative mt-6 xl:mt-0">
           <TooltipBtn
             title="Пояснення показників"

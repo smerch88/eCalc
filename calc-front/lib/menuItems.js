@@ -23,7 +23,9 @@ export const footerItems = [
   },
   {
     title: "Контакти",
-    links: [{ subtitle: "ecalculator123@gmail.com", href: "" }],
+    links: [{
+      subtitle: "support@e-calc.tech", href: ""
+    }],
   },
 ];
 
