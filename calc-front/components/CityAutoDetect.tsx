@@ -55,7 +55,7 @@ const CityAutoDetect = () => {
         value={location} // Значення з zustand store.
         // readOnly
         onClick={() => setIsModalOpen(true)} // Відкрити модальне вікно.
-        className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border border-gray-300 hover:bg-gray-300 focus:outline-none focus:ring-0"
+        className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border border-gray-300 hover:bg-gray-300 hover:outline-none focus:outline-none focus:ring-0"
       />
 
       {/* Іконка стрілочки */}
