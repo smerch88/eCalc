@@ -34,32 +34,30 @@ interface CalculationResult {
 }
 
 const BoilerComponent = () => {
-  const [selectedCostPerKWh, setSelectedCostPerKWh] =
-    useState<string>("single-zone");
-  // const [inputValue, setInputValue] = useState<string>("4.32");
-  const [formData, setFormData] = useState<FormData>({
-    waterVolume: "3000",
-    initialTemp: 15,
-    targetTemp: 60,
-    efficiency: 90,
-    costPerKWh: "4.32",
-    hotWaterCostPerCubicMeter: "97.89",
-    coldWaterCostPerCubicMeter: "13.45",
-    subscriptionFee: "42.94",
-    nightRateFactor: 1,
-    nightRateUsagePercentage: 0,
-    city: "",
-    icon: icons.day,
-  });
-  const [result, setResult] = useState<CalculationResult | null>(null);
-  const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
-  const [isValid, setIsValid] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const location = useUnifiedStore((state) => state.location); // Поточне місто
-  const isInputDisabled = selectedCostPerKWh !== "three-zone";
+    const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>('single-zone');
+    // const [inputValue, setInputValue] = useState<string>("4.32");
+    const [formData, setFormData] = useState<FormData>({
+        waterVolume: '3000',
+        initialTemp: 15,
+        targetTemp: 60,
+        efficiency: 90,
+        costPerKWh: '4.32',
+        hotWaterCostPerCubicMeter: '97.89',
+        coldWaterCostPerCubicMeter: '13.45',
+        subscriptionFee: '42.94',
+        nightRateFactor: 1,
+        nightRateUsagePercentage: 0,
+        city: '',
+        icon: icons.day,
+    });
+    const [result, setResult] = useState<CalculationResult | null>(null);
+    const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
+    const [isValid, setIsValid] = useState<boolean>(true);
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
-
+    const location = useUnifiedStore(state => state.location); // Поточне місто
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
     const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
@@ -108,106 +106,29 @@ const BoilerComponent = () => {
         setCalculationType('boiler');
     };
 
-  return (
-    <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-      <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
-        <div className="relative">
-          <TooltipBtn
-            title="Пояснення показників"
-            text="Вкажіть обсяг води, що використовується за місяць."
-            buttonText="Зрозуміло"
-          />
-          <label htmlFor="city">Тарифи за воду з міста:</label>
-          <div className="relative mt-4 xl:mt-6">
-            <Input
-              id="city"
-              type="text"
-              placeholder="Місто"
-              // value={formData.city}
-              value={location}
-              readOnly
-              onChange={handleInputChange}
-              className="px-6 py-6 rounded-2xl text-lg"
-            />
-            <MapPin className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4" />
-          </div>
-        </div>
-
-        <div className="relative mt-6 xl:mt-0">
-          <TooltipBtn
-            title="Пояснення показників"
-            text="Вкажіть обсяг води, що використовується за місяць."
-            buttonText="Зрозуміло"
-          />
-          <label htmlFor="waterVolume">
-            Споживання гарячої води на місяць:
-          </label>
-          <div className="relative mt-4 xl:mt-6">
-            <Input
-              id="waterVolume"
-              type="text"
-              placeholder="Літрів"
-              value={formData.waterVolume}
-              onChange={handleInputChange}
-              className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg"
-            />
-            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
-              літрів
-            </span>
-          </div>
-        </div>
-
-        <div className="relative mt-6 xl:mt-0">
-          <TooltipBtn
-            title="Пояснення показників"
-            text="Вкажіть обсяг води, що використовується за місяць."
-            buttonText="Зрозуміло"
-          />
-          <span>Тариф на електроенергію:</span>
-          <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-6 text-base xl:text-lg relative">
-            <div>
-              <SelectInput
-                options={options.map((option) => ({
-                  label: option.label,
-                  value: option.value,
-                }))}
-                selectedValue={selectedCostPerKWh}
-                onChange={handleTariffChange}
-                isOpen={isSelectOpen}
-                setIsOpen={setIsSelectOpen}
-              />
-            </div>
-
-            <span className="hidden xl:block xl:mx-4">-</span>
-
-            <div className="relative">
-              <Input
-                id="costPerKWhInput"
-                type="text"
-                value={formData.costPerKWh}
-                onChange={handleInputChange}
-                disabled={isInputDisabled}
-                className={`px-4 py-4 w-full mt-4 xl:mt-0 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg ${
-                  isInputDisabled ? "bg-gray-200 cursor-not-allowed" : ""
-                } ${!isValid ? "border-2 border-red-500" : ""}`}
-              />
-              <span className="absolute mt-2 xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
-                грн/кВт
-              </span>
-              {formData.icon && Array.isArray(formData.icon) ? (
-                <span className="absolute flex flex-row-reverse gap-12 xl:gap-16 items-center mt-2 xl:mt-0 left-[60px] xl:left-[72px] top-1/2 transform -translate-y-1/2">
-                  {formData.icon.map((iconElement, index) => (
-                    <span key={index}>{iconElement}</span>
-                  ))}
-                </span>
-              ) : (
-                <span className="absolute flex flex-row-reverse gap-12 xl:gap-16 items-center mt-2 xl:mt-0 left-[60px] xl:left-[72px] top-1/2 transform -translate-y-1/2">
-                  {formData.icon}
-                </span>
-              )}
-              {!isValid && (
-                <div className="text-red-500 absolute text-sm mt-1">
-                  {errorMessage}
+    return (
+        <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
+            <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
+                <div className="relative">
+                    <TooltipBtn
+                        title="Пояснення показників"
+                        text="Вкажіть обсяг води, що використовується за місяць."
+                        buttonText="Зрозуміло"
+                    />
+                    <label htmlFor="city">Тарифи за воду з міста:</label>
+                    <div className="relative mt-4 xl:mt-6">
+                        <Input
+                            id="city"
+                            type="text"
+                            placeholder="Місто"
+                            // value={formData.city}
+                            value={location}
+                            readOnly
+                            onChange={handleInputChange}
+                            className="px-6 py-6 rounded-2xl text-lg"
+                        />
+                        <MapPin className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4" />
+                    </div>
                 </div>
 
                 <div className="relative mt-6 xl:mt-0">
