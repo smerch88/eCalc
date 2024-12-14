@@ -11,6 +11,7 @@ import { getDaysInCurrentMonth } from '@/lib/utils';
 import { useUnifiedStore } from '@/stores/stores';
 import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
+import { mwContent } from '@/lib/techContent';
 
 export interface FormData {
     powerRating: number;
@@ -109,8 +110,8 @@ const MWComponent = () => {
             <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={mwContent.powerRating.title}
+                        text={mwContent.powerRating.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="powerRating">Потужність мікрохвильовки:</label>
@@ -128,8 +129,8 @@ const MWComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={mwContent.tariffElectricity.title}
+                        text={mwContent.tariffElectricity.text}
                         buttonText="Зрозуміло"
                     />
                     <span>Тариф на електроенергію:</span>
@@ -185,13 +186,13 @@ const MWComponent = () => {
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
                         <div className="relative mt-6 xl:mt-0">
-                            <TooltipBtn
+                            {/* <TooltipBtn
                                 title="Пояснення показників"
                                 text="Вкажіть обсяг води, що використовується за місяць."
                                 buttonText="Зрозуміло"
-                            />
+                            /> */}
                             <label htmlFor="nightRateUsagePercentage">
-                                Як часто використовуєте микрохвильовку вночі?
+                                Як часто використовуєте мікрохвильовку вночі?
                             </label>
 
                             <div className="relative mt-4 xl:mt-6">
@@ -214,8 +215,8 @@ const MWComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={mwContent.usageTime.title}
+                        text={mwContent.usageTime.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="usageTime">Час роботи мікрохвильовки за раз:</label>
@@ -233,8 +234,8 @@ const MWComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={mwContent.dailyUsage.title}
+                        text={mwContent.dailyUsage.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="dailyUsage">
@@ -254,8 +255,8 @@ const MWComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={mwContent.ageInYears.title}
+                        text={mwContent.ageInYears.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="ageInYears">Вік мікрохвильовки в роках:</label>
@@ -273,8 +274,8 @@ const MWComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={mwContent.daysPerMonth.title}
+                        text={mwContent.daysPerMonth.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="daysPerMonth">Кількість днів у поточному місяці:</label>
