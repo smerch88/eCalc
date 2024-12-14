@@ -50,7 +50,7 @@ export default function TooltipBtn({ title, text, buttonText }: TooltipBtnProps)
     return (
         <div className="relative">
             <span
-                className="absolute top-0 right-0"
+                className="absolute top-1 right-0"
                 onMouseEnter={handleInteraction}
                 onMouseLeave={handleInteraction}
                 onClick={handleInteraction}
