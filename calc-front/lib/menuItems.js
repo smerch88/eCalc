@@ -13,8 +13,8 @@ export const footerItems = [
     {
         title: 'Розділи',
         links: [
-            { subtitle: 'Про нас', href: 'about' },
-            { subtitle: 'Партнери', href: 'partners' },
+            { subtitle: 'Про нас', href: 'about-us' },
+            { subtitle: 'Контакти', href: 'contacts' },
         ],
     },
     {
