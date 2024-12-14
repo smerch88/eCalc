@@ -164,7 +164,7 @@ export const CalculatorsTab = () => {
 // };
 
 export const CalculatorsSelect = () => {
-    const [activeTab, setActiveTab] = useState<string>('');
+    const [activeTab, setActiveTab] = useState<string>('boiler');
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const activeDevice = devices.find(device => device.id === activeTab);
