@@ -1,4 +1,4 @@
 export const WMComponent = () => {
-  return <></>;
+    return <></>;
 };
 export default WMComponent;
