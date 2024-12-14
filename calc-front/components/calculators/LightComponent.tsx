@@ -1,16 +1,17 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
-import { Button } from '../ui/button';
-import { SelectInput } from '../ui/selectInput';
+import { TariffChange, icons, options } from '@/components/TariffChange';
 import { CalcInput } from '@/components/ui/calcInput';
-import { MouseEvent, useState } from 'react';
-import TooltipBtn from '../ui/tooltipBtn';
+import { Input } from '@/components/ui/input';
 import { calculateLightingConsumption } from '@/lib/calculators';
+import { lightContent } from '@/lib/techContent';
 import { getDaysInCurrentMonth } from '@/lib/utils';
 import { useUnifiedStore } from '@/stores/stores';
-import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
+import { MouseEvent, useState } from 'react';
+import { Button } from '../ui/button';
+import { SelectInput } from '../ui/selectInput';
+import TooltipBtn from '../ui/tooltipBtn';
 
 export interface FormData {
     wattage: number;
@@ -106,8 +107,8 @@ const LightComponent = () => {
             <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={lightContent.wattage.title}
+                        text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="wattage">Потужність лампочки:</label>
@@ -125,8 +126,8 @@ const LightComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={lightContent.tariffElectricity.title}
+                        text={lightContent.tariffElectricity.text}
                         buttonText="Зрозуміло"
                     />
                     <span>Тариф на електроенергію:</span>
@@ -182,13 +183,13 @@ const LightComponent = () => {
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
                         <div className="relative mt-6 xl:mt-0">
-                            <TooltipBtn
-                                title="Пояснення показників"
-                                text="Вкажіть обсяг води, що використовується за місяць."
+                            {/* <TooltipBtn
+                                title={lightContent.tariffElectricity.title}
+                                text={lightContent.tariffElectricity.text}
                                 buttonText="Зрозуміло"
-                            />
+                            /> */}
                             <label htmlFor="nightRateUsagePercentage">
-                                Як часто вімкнуто світло вночі?
+                                Як часто ввімкнуто світло вночі?
                             </label>
 
                             <div className="relative mt-4 xl:mt-6">
@@ -211,8 +212,8 @@ const LightComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={lightContent.wattage.title}
+                        text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="hoursPerDay">Кількість годин роботи освітлення на день:</label>
@@ -230,8 +231,8 @@ const LightComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={lightContent.wattage.title}
+                        text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="numberOfBulbs">Кількість лампочок:</label>
@@ -249,8 +250,8 @@ const LightComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={lightContent.wattage.title}
+                        text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="daysPerMonth">Кількість днів у поточному місяці:</label>
