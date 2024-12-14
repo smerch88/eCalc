@@ -8,5 +8,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'monthly',
             priority: 1,
         },
+        {
+            url: process.env.HOSTNAME || 'https://www.e-calc.tech/about-us',
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 1,
+        },
+        {
+            url: process.env.HOSTNAME || 'https://www.e-calc.tech/contacts',
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 1,
+        },
     ];
 }
