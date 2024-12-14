@@ -3,7 +3,7 @@ import { CalculatorsTab, CalculatorsSelect } from '../components/CalculatorsTab'
 export const CalculatorSection = () => {
     return (
         <section id="calculator-section">
-            <div className=" px-4 xl:container mt-6 xl:mt-[80px]">
+            <div className="px-4 xl:container mt-6 xl:mt-[80px]">
                 <h2 className="text-2xl xl:text-4xl font-bold  xl:font-semibold pb-4 xl:pb-6">
                     Ваш калькулятор
                 </h2>

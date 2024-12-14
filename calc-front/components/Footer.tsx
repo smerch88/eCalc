@@ -42,12 +42,21 @@ export const Footer = () => {
                             <ul className="flex flex-col gap-y-6">
                                 {section.links.map((link, index) => (
                                     <li key={index}>
-                                        <Link
-                                            className="py-6 px-6 font-normal text-lg text-primary xl:py-4"
-                                            href={link.href || '#'}
-                                        >
-                                            {link.subtitle}
-                                        </Link>
+                                        {link.subtitle && link.subtitle.includes('@') ? (
+                                            <a
+                                                className="py-6 px-6 font-normal text-lg text-primary xl:py-4"
+                                                href={`mailto:${link.subtitle}`}
+                                            >
+                                                {link.subtitle}
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                className="py-6 px-6 font-normal text-lg text-primary xl:py-4"
+                                                href={link.href || '#'}
+                                            >
+                                                {link.subtitle}
+                                            </Link>
+                                        )}
                                     </li>
                                 ))}
                             </ul>

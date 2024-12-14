@@ -1,15 +1,11 @@
 export const menuItems = [
     {
         title: 'Про нас',
-        href: 'about',
-    },
-    {
-        title: 'Партнери',
-        href: 'partners',
+        href: 'about-us',
     },
     {
         title: 'Контакти',
-        href: 'contancts',
+        href: 'contacts',
     },
 ];
 
@@ -17,8 +13,8 @@ export const footerItems = [
     {
         title: 'Розділи',
         links: [
-            { subtitle: 'Про нас', href: 'about' },
-            { subtitle: 'Партнери', href: 'partners' },
+            { subtitle: 'Про нас', href: 'about-us' },
+            { subtitle: 'Контакти', href: 'contacts' },
         ],
     },
     {
