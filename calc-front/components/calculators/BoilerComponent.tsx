@@ -54,11 +54,10 @@ const BoilerComponent = () => {
     const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
-
     const isInputDisabled = selectedCostPerKWh !== 'three-zone';
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
-
+    const location = useUnifiedStore(state => state.location); // Поточне місто
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
     const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
@@ -122,9 +121,11 @@ const BoilerComponent = () => {
                             id="city"
                             type="text"
                             placeholder="Місто"
-                            value={formData.city}
+                            // value={formData.city}
+                            value={location}
+                            readOnly
                             onChange={handleInputChange}
-                            className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg"
+                            className="px-6 py-6 rounded-2xl text-lg"
                         />
                         <MapPin className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4" />
                     </div>
