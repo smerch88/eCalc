@@ -13,15 +13,14 @@ import { TariffChange, options, icons } from "@/components/TariffChange";
 import cn from "classnames";
 
 export interface FormData {
-  powerRating: string;
-  usageTime: string;
-  dailyUsage: string;
+  powerRating: number;
+  usageTime: number;
+  dailyUsage: number;
   ageInYears: number;
   daysPerMonth: number;
   costPerKWh: string;
   nightRateFactor: number;
   nightRateUsagePercentage: number;
-  city: string;
   icon?: JSX.Element | JSX.Element[];
   [key: string]: unknown;
 }
@@ -41,15 +40,14 @@ const MWComponent = () => {
   const [selectedCostPerKWh, setSelectedCostPerKWh] =
     useState<string>("single-zone");
   const [formData, setFormData] = useState<FormData>({
-    powerRating: "1000",
-    usageTime: "15",
-    dailyUsage: "2",
+    powerRating: 1000,
+    usageTime: 15,
+    dailyUsage: 2,
     costPerKWh: "4.32",
     ageInYears: 2,
     daysPerMonth: getDaysInCurrentMonth(),
     nightRateFactor: 1,
     nightRateUsagePercentage: 0,
-    city: "",
     icon: icons.day,
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
@@ -81,14 +79,14 @@ const MWComponent = () => {
     const tariffForCalculation = getCalculationValue();
 
     const result = calculateMWConsumption({
-      powerRating: parseFloat(updatedInputs.powerRating),
-      usageTime: parseFloat(updatedInputs.usageTime),
-      dailyUsage: parseFloat(updatedInputs.dailyUsage),
+      powerRating: updatedInputs.powerRating,
+      usageTime: updatedInputs.usageTime,
+      dailyUsage: updatedInputs.dailyUsage,
       electricityCostPerKWh: tariffForCalculation * 100,
       ageInYears: updatedInputs.ageInYears,
       daysPerMonth: updatedInputs.daysPerMonth,
       nightRateFactor: updatedInputs.nightRateFactor,
-      nightRateUsagePercentage: updatedInputs.nightRateUsagePercentage / 100,
+      nightRateUsagePercentage: updatedInputs.nightRateUsagePercentage,
     });
 
     setResult(result);
@@ -316,6 +314,9 @@ const MWComponent = () => {
           <div>
             <p className="mb-4">Мікрохвильовка</p>
             <p className="mb-4 mt-10">Місячне споживання</p>
+            <p className="text-lg xl:text-xl text-gray-600">
+              {result?.monthly.energyConsumption.toFixed(2) || 0} кВт·год/міс
+            </p>
             <p
               className={cn("text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4")}
             >
@@ -324,6 +325,9 @@ const MWComponent = () => {
           </div>
           <div className="border-t-2 pt-6 border-black xl:border-none xl:pt-0">
             <p className="mb-4">Річне споживання</p>
+            <p className="text-lg xl:text-xl text-gray-600">
+              {result?.yearly.energyConsumption.toFixed(2) || 0} кВт·год/рік
+            </p>
             <p
               className={cn("text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4")}
             >
