@@ -11,6 +11,7 @@ import { calculateBoilerEnergyConsumption } from '@/lib/calculators';
 import { useUnifiedStore } from '@/stores/stores';
 import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
+import { boilerContent } from '@/lib/techContent';
 
 export interface FormData {
     waterVolume: string;
@@ -111,8 +112,8 @@ const BoilerComponent = () => {
             <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
                 <div className="relative">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={boilerContent.city.title}
+                        text={boilerContent.city.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="city">Тарифи за воду з міста:</label>
@@ -133,8 +134,8 @@ const BoilerComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={boilerContent.waterVolume.title}
+                        text={boilerContent.waterVolume.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="waterVolume">Споживання гарячої води на місяць:</label>
@@ -155,8 +156,8 @@ const BoilerComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={boilerContent.tariffElectricity.title}
+                        text={boilerContent.tariffElectricity.text}
                         buttonText="Зрозуміло"
                     />
                     <span>Тариф на електроенергію:</span>
@@ -212,11 +213,11 @@ const BoilerComponent = () => {
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
                         <div className="relative mt-6 xl:mt-0">
-                            <TooltipBtn
+                            {/* <TooltipBtn
                                 title="Пояснення показників"
                                 text="Вкажіть обсяг води, що використовується за місяць."
                                 buttonText="Зрозуміло"
-                            />
+                            /> */}
                             <label htmlFor="nightRateUsagePercentage">
                                 Яку частину води грієте вночі?
                             </label>
@@ -240,8 +241,8 @@ const BoilerComponent = () => {
                 )}
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={boilerContent.tariffWater.title}
+                        text={boilerContent.tariffWater.text}
                         buttonText="Зрозуміло"
                     />
                     <span>Який тариф на водопостачання використовуєте?</span>
@@ -291,8 +292,8 @@ const BoilerComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={boilerContent.tariffWaterConnection.title}
+                        text={boilerContent.tariffWaterConnection.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="subscriptionFee">Абонплата за підключення гарячої води:</label>
@@ -313,8 +314,8 @@ const BoilerComponent = () => {
 
                 <div className="relative">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={boilerContent.waterTemperatures.title}
+                        text={boilerContent.waterTemperatures.text}
                         buttonText="Зрозуміло"
                     />
                     <div className="flex flex-col xl:flex-row xl:gap-12">
@@ -339,8 +340,8 @@ const BoilerComponent = () => {
 
                 <div className="relative">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={boilerContent.coefficientOfEfficiency.title}
+                        text={boilerContent.coefficientOfEfficiency.text}
                         buttonText="Зрозуміло"
                     />
                     <div>
