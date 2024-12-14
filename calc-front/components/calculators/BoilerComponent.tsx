@@ -89,7 +89,7 @@ const BoilerComponent = () => {
       parseFloat(updatedInputs.coldWaterCostPerCubicMeter) * 100 || 134500,
       parseFloat(updatedInputs.subscriptionFee) * 100 || 4294,
       updatedInputs.nightRateFactor,
-      updatedInputs.nightRateUsagePercentage / 100
+      updatedInputs.nightRateUsagePercentage
     );
 
     setResult(result);
