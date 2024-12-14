@@ -47,14 +47,15 @@ export function calculateBoilerEnergyConsumption(
     const totalCost = totalEnergyConsumption * costPerKWh;
 
     // Розрахунок вартості для використання нічного тарифу
-    const nightRateCost = totalCost * nightRateUsagePercentage * nightRateFactor;
-    const normalRateCost = totalCost * (1 - nightRateUsagePercentage);
+    const nightRateCost = ((totalCost * nightRateUsagePercentage) / 100) * nightRateFactor;
+    const normalRateCost = totalCost * (1 - nightRateUsagePercentage / 100);
 
     // Об'єм води в кубометрах (1 кубометр = 1000 літрів)
     const waterVolumeInCubicMeters = waterVolume / 1000;
 
     // Вартість води з мережі гарячого водопостачання
-    const networkHotWaterCost = waterVolumeInCubicMeters * hotWaterCostPerCubicMeter + subscriptionFee;
+    const networkHotWaterCost =
+        waterVolumeInCubicMeters * hotWaterCostPerCubicMeter + subscriptionFee;
 
     // Вартість холодної води
     const coldWaterCost = waterVolumeInCubicMeters * coldWaterCostPerCubicMeter;
@@ -81,27 +82,29 @@ export function calculateWMConsumption({
 }) {
     // Константи споживання енергії та води на одне завантаження, залежно від класу ефективності та розміру
     const energyConsumptionPerLoad = {
-        "A+++": { small: 0.4, medium: 0.5, large: 0.6 },
-        "A++": { small: 0.5, medium: 0.6, large: 0.7 },
-        "A+": { small: 0.6, medium: 0.7, large: 0.8 },
+        'A+++': { small: 0.4, medium: 0.5, large: 0.6 },
+        'A++': { small: 0.5, medium: 0.6, large: 0.7 },
+        'A+': { small: 0.6, medium: 0.7, large: 0.8 },
         A: { small: 0.7, medium: 0.8, large: 0.9 },
         B: { small: 0.9, medium: 1.0, large: 1.2 },
         C: { small: 1.1, medium: 1.2, large: 1.4 },
     };
 
     const waterUsagePerLoad = {
-        "A+++": { small: 30, medium: 40, large: 50 },
-        "A++": { small: 35, medium: 45, large: 55 },
-        "A+": { small: 40, medium: 50, large: 60 },
+        'A+++': { small: 30, medium: 40, large: 50 },
+        'A++': { small: 35, medium: 45, large: 55 },
+        'A+': { small: 40, medium: 50, large: 60 },
         A: { small: 45, medium: 55, large: 65 },
         B: { small: 50, medium: 60, large: 70 },
         C: { small: 60, medium: 70, large: 80 },
     };
 
     // Перевірка валідності розміру завантаження
-    const validLoadSizes = ["small", "medium", "large"];
+    const validLoadSizes = ['small', 'medium', 'large'];
     if (!validLoadSizes.includes(loadSize)) {
-        throw new Error(`Невірний розмір завантаження. Виберіть один із варіантів: ${validLoadSizes.join(", ")}`);
+        throw new Error(
+            `Невірний розмір завантаження. Виберіть один із варіантів: ${validLoadSizes.join(', ')}`
+        );
     }
 
     // Отримання енергоспоживання та використання води на одне завантаження
@@ -113,8 +116,8 @@ export function calculateWMConsumption({
     // Зменшення ефективності залежно від віку машини
     const ageFactor = 0.02; // 2% зниження ефективності кожного року
     if (ageInYears > 0) {
-        energyPerLoad *= (1 + ageFactor * ageInYears);
-        waterPerLoad *= (1 + ageFactor * ageInYears);
+        energyPerLoad *= 1 + ageFactor * ageInYears;
+        waterPerLoad *= 1 + ageFactor * ageInYears;
     }
 
     // Розрахунок річної кількості завантажень
@@ -151,7 +154,7 @@ export function calculateWMConsumption({
             energyCost: (normalRateEnergyCost + nightRateEnergyCost) / 100, // вартість енергії (грн/рік)
             totalWaterUsageLiters, // літри/рік
             waterCost: totalWaterCost / 100, // вартість води (грн/рік)
-            totalYearlyCost: ((normalRateEnergyCost + nightRateEnergyCost) + totalWaterCost) / 100, // загальна вартість (грн/рік)
+            totalYearlyCost: (normalRateEnergyCost + nightRateEnergyCost + totalWaterCost) / 100, // загальна вартість (грн/рік)
         },
         monthly: {
             loads: monthlyLoads, // кількість завантажень за місяць
@@ -184,7 +187,8 @@ export function calculateMWConsumption({
     const efficiencyFactor = ageInYears > 0 ? Math.max(0.9 - ageInYears * 0.02, 0.5) : 1; // Знижка на ефективність (по 2% на рік)
 
     // Місячне споживання енергії (кВт·год)
-    const monthlyEnergyConsumption = powerInKW * usageInHours * dailyUsage * daysPerMonth * efficiencyFactor;
+    const monthlyEnergyConsumption =
+        powerInKW * usageInHours * dailyUsage * daysPerMonth * efficiencyFactor;
 
     // Відсоток використання денного та нічного тарифів
     const dayRateUsagePercentage = 1 - nightRateUsagePercentage / 100;
@@ -192,7 +196,10 @@ export function calculateMWConsumption({
     // Місячна вартість енергії (з урахуванням денного та нічного тарифів)
     const monthlyEnergyCost =
         monthlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
-        monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
+        monthlyEnergyConsumption *
+            electricityCostPerKWh *
+            nightRateFactor *
+            (nightRateUsagePercentage / 100);
 
     // Річне споживання енергії (кВт·год)
     const yearlyEnergyConsumption = monthlyEnergyConsumption * 12;
@@ -200,7 +207,10 @@ export function calculateMWConsumption({
     // Річна вартість енергії (з урахуванням денного та нічного тарифів)
     const yearlyEnergyCost =
         yearlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
-        yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
+        yearlyEnergyConsumption *
+            electricityCostPerKWh *
+            nightRateFactor *
+            (nightRateUsagePercentage / 100);
 
     // Розрахунок параметрів за місяць
     const monthlyEnergyConsumptionInKWh = monthlyEnergyConsumption; // кВт·год/місяць
@@ -243,7 +253,10 @@ export function calculateLightingConsumption({
     // Місячна вартість енергії (з урахуванням денного та нічного тарифів)
     const monthlyEnergyCost =
         monthlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
-        monthlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
+        monthlyEnergyConsumption *
+            electricityCostPerKWh *
+            nightRateFactor *
+            (nightRateUsagePercentage / 100);
 
     // Річне споживання енергії (кВт·год)
     const yearlyEnergyConsumption = monthlyEnergyConsumption * 12; // В рік
@@ -251,7 +264,10 @@ export function calculateLightingConsumption({
     // Річна вартість енергії (з урахуванням денного та нічного тарифів)
     const yearlyEnergyCost =
         yearlyEnergyConsumption * electricityCostPerKWh * dayRateUsagePercentage +
-        yearlyEnergyConsumption * electricityCostPerKWh * nightRateFactor * (nightRateUsagePercentage / 100);
+        yearlyEnergyConsumption *
+            electricityCostPerKWh *
+            nightRateFactor *
+            (nightRateUsagePercentage / 100);
 
     // Розрахунок параметрів за місяць
     const monthlyEnergyConsumptionInKWh = monthlyEnergyConsumption; // кВт·год/місяць
