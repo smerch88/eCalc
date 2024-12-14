@@ -1,23 +1,27 @@
 "use client";
 
 import CitySelector from "@/components/CitySelect";
-import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
+import { Input } from "@/components/ui/input";
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
 import Image from "next/image";
 import IconArrowDown from "@/public/icons/arrow-down.svg";
-import IconArrowUp from '@/public/icons/arrow-up.svg';
+import IconArrowUp from "@/public/icons/arrow-up.svg";
 import { useEffect, useState } from "react";
 
 // Словник для перекладу міст
 const cityTranslations: { [key: string]: string } = {
-  Kharkiv: "Харків",
-  Kyiv: "Київ",
-  Odessa: "Одеса",
-  Lviv: "Львів",
-  Dnipro: "Дніпро",
-  Zaporizhzhia: "Запоріжжя",
-  Mykolaiv: "Миколаїв",
   Vinnytsia: "Вінниця",
+  Dnipro: "Дніпро",
+  Zhytomyr: "Житомир",
+  Zaporizhzhia: "Запоріжжя",
+  Kyiv: "Київ",
+  Lviv: "Львів",
+  Mykolaiv: "Миколаїв",
+  Odessa: "Одеса",
+  Poltava: "Полтава",
+  Kharkiv: "Харків",
+  Kherson:"Херсон",
+  Cherkasy:"Черкаси",
 };
 
 const translateCity = (city: string) => {
@@ -25,55 +29,71 @@ const translateCity = (city: string) => {
 };
 
 const CityAutoDetect = () => {
-  // const { location, setLocation } = useUnifiedStore((state) => ({
-  //   location: state.location,
-  //   setLocation: state.setLocation,
-  // })); // Один раз отримуємо значення та функцію оновлення зі стору
-  const location = useUnifiedStore((state) => state.location); // Поточне місто зі стору.
-  const setLocation = useUnifiedStore((state) => state.setLocation); // Функція для оновлення міста.
-  const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна.
+  // const location = useUnifiedStore((state) => state.location); // Поточне місто.
+  const setLocation = useUnifiedStore((state) => state.setLocation); // Оновлення міста.
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
+  const [searchTerm, setSearchTerm] = useState(""); // Стан пошуку.
 
   useEffect(() => {
-    // Викликаємо тільки IP API для отримання міста
+    // Визначаємо місто через API при завантаженні компонента.
     fetch("https://ipapi.co/json/")
       .then((res) => res.json())
       .then((data) => {
-        const detectedCity = translateCity(data.city || "Київ"); // Переклад міста
-        setLocation(detectedCity); // Оновлення стану через zustand.
+        const detectedCity = translateCity(data.city || "Київ");
+        setLocation(detectedCity);
+        setSearchTerm(detectedCity); // Початкове значення поля.
       })
       .catch(() => {
-        console.error("Помилка при запиті до IP API");
-        setLocation("Київ"); // Fallback до стандартного значення.
+        setLocation("Київ");
+        setSearchTerm("Київ");
       });
-  }, [setLocation]); // setLocation викликається лише один раз
+  }, [setLocation]);
+
+  const handleInputClick = () => {
+    setSearchTerm(""); // Очищаємо поле вводу
+    setIsDropdownOpen(true); // Відкриваємо список міст
+  };
+
+  const handleCitySelect = (city: string) => {
+    setLocation(city); // Оновлюємо глобальний стан
+    setSearchTerm(city); // Вставляємо місто у поле
+    setIsDropdownOpen(false); // Закриваємо випадаючий список
+  };
 
   return (
-    <div className="relative w-[200px] h-[56px] border-#00000014">
+    <div className="relative w-[200px] h-[56px]">
       {/* Поле вводу */}
       <Input
         type="text"
         placeholder="Місто"
-        value={location} // Значення з zustand store.
-        // readOnly
-        onClick={() => setIsModalOpen(true)} // Відкрити модальне вікно.
-        className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border-gray-200 hover:bg-[#f0f0f0] hover:outline-none focus:outline-none focus-visible:ring-0"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onClick={handleInputClick}
+        className={`w-full h-full bg-white px-4 text-lg cursor-pointer border-gray-200 
+          hover:bg-[#f0f0f0] focus:outline-none focus-visible:ring-0 transition-all 
+          ${isDropdownOpen ? "rounded-t-xl rounded-b-none" : "rounded-xl"}`}
+        // onChange={(e) => setSearchTerm(e.target.value)} // Пошук міст
+        // onClick={handleInputClick} // Очищення та відкриття списку
+        // className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border-gray-200 hover:bg-[#f0f0f0] hover:outline-none focus:outline-none focus-visible:ring-0"
       />
 
-      {/* Іконка стрілочки */}
+      {/* Іконка */}
       <Image
         width={24}
         height={24}
-        src={isModalOpen ? IconArrowUp : IconArrowDown}
-        alt="Arrow Down"
-        onClick={() => setIsModalOpen(true)} // Додайте можливість кліку
+        src={isDropdownOpen ? IconArrowUp : IconArrowDown}
+        alt="Arrow"
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer object-contain"
         style={{ width: "auto", height: "auto" }}
       />
 
-      {/* Модальне вікно */}
-      {isModalOpen && (
+      {/* Список міст */}
+      {isDropdownOpen && (
         <CitySelector
-          onClose={() => setIsModalOpen(false)} // Закриття модального вікна.
+          searchTerm={searchTerm} // Передаємо введене значення
+          onCitySelect={handleCitySelect} // Вибір міста
         />
       )}
     </div>
