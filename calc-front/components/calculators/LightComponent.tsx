@@ -106,7 +106,7 @@ const LightComponent = () => {
 
     calculateAndSetResult(formData);
     setCalculationDone(true);
-    setCalculationType("mw");
+    setCalculationType("light");
   };
 
   return (
