@@ -1,21 +1,22 @@
-"use client";
+'use client';
 
-import { MouseEvent, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { CalcInput } from "@/components/ui/calcInput";
-import { calculateWMConsumption } from "@/lib/calculators";
-import { useUnifiedStore } from "@/stores/stores";
+import { MouseEvent, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { CalcInput } from '@/components/ui/calcInput';
+import { calculateWMConsumption } from '@/lib/calculators';
+import { useUnifiedStore } from '@/stores/stores';
 import {
     TariffChange,
     options,
     efficiencyOptions,
     loadSizeOptions,
     icons,
-} from "@/components/TariffChange";
-import { Button } from "../ui/button";
-import { SelectInput } from "../ui/selectInput";
-import TooltipBtn from "../ui/tooltipBtn";
-import cn from "classnames";
+} from '@/components/TariffChange';
+import { Button } from '../ui/button';
+import { SelectInput } from '../ui/selectInput';
+import TooltipBtn from '../ui/tooltipBtn';
+import cn from 'classnames';
+import { wmContent } from '@/lib/techContent';
 
 export interface FormData {
     efficiencyClass: string;
@@ -50,19 +51,19 @@ interface CalculationResult {
 }
 
 const WMComponent = () => {
-    const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>("single-zone");
-    const [selectedEfficiencyClass, setSelectedEfficiencyClass] = useState<string>("A++");
-    const [selectedLoadSize, setSelectedLoadSize] = useState<string>("medium");
+    const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>('single-zone');
+    const [selectedEfficiencyClass, setSelectedEfficiencyClass] = useState<string>('A++');
+    const [selectedLoadSize, setSelectedLoadSize] = useState<string>('medium');
     const [formData, setFormData] = useState<FormData>({
-        efficiencyClass: "A++",
+        efficiencyClass: 'A++',
         weeklyLoads: 1,
-        loadSize: "medium",
-        costPerKWh: "4.32",
-        waterCostPerCubicMeter: "13.45",
+        loadSize: 'medium',
+        costPerKWh: '4.32',
+        waterCostPerCubicMeter: '13.45',
         ageInYears: 2,
         nightRateFactor: 1,
         nightRateUsagePercentage: 0,
-        city: "",
+        city: '',
         icon: icons.day,
     });
     const [result, setResult] = useState<CalculationResult | null>(null);
@@ -70,9 +71,9 @@ const WMComponent = () => {
     const [isEfficiencySelectOpen, setIsEfficiencySelectOpen] = useState<boolean>(false);
     const [isLoadSizeSelectOpen, setIsLoadSizeSelectOpen] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean>(true);
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
-    const isInputDisabled = selectedCostPerKWh !== "three-zone";
+    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
@@ -115,18 +116,18 @@ const WMComponent = () => {
     const handleSubmit = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
 
-        if (selectedCostPerKWh === "three-zone") {
+        if (selectedCostPerKWh === 'three-zone') {
             const isNumberValid = /^(?!$)(\d+(\.\d{0,2})?)$/.test(formData.costPerKWh);
             if (!isNumberValid) {
                 setIsValid(false);
-                setErrorMessage("Введіть число до двох знаків після коми.");
+                setErrorMessage('Введіть число до двох знаків після коми.');
                 return;
             }
         }
 
         calculateAndSetResult(formData);
         setCalculationDone(true);
-        setCalculationType("wm");
+        setCalculationType('wm');
     };
 
     return (
@@ -134,14 +135,14 @@ const WMComponent = () => {
             <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={wmContent.efficiencyClass.title}
+                        text={wmContent.efficiencyClass.text}
                         buttonText="Зрозуміло"
                     />
-                    <span>Потужність пральної машини:</span>
+                    <span>Клас енергоефективності пральної машини:</span>
                     <div className="mt-4 xl:mt-6 text-base xl:text-lg text-primary">
                         <SelectInput
-                            options={efficiencyOptions.map((option) => ({
+                            options={efficiencyOptions.map(option => ({
                                 label: option.label,
                                 value: option.value,
                             }))}
@@ -155,15 +156,15 @@ const WMComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={wmContent.tariffElectricity.title}
+                        text={wmContent.tariffElectricity.text}
                         buttonText="Зрозуміло"
                     />
                     <span>Тариф на електроенергію:</span>
                     <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-6 text-base xl:text-lg">
                         <div>
                             <SelectInput
-                                options={options.map((option) => ({
+                                options={options.map(option => ({
                                     label: option.label,
                                     value: option.value,
                                 }))}
@@ -184,8 +185,8 @@ const WMComponent = () => {
                                 onChange={handleInputChange}
                                 disabled={isInputDisabled}
                                 className={`px-4 py-4 w-full mt-4 xl:mt-0 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg ${
-                                    isInputDisabled ? "bg-gray-200 cursor-not-allowed" : ""
-                                } ${!isValid ? "border-2 border-red-500" : ""}`}
+                                    isInputDisabled ? 'bg-gray-200 cursor-not-allowed' : ''
+                                } ${!isValid ? 'border-2 border-red-500' : ''}`}
                             />
                             <span className="absolute mt-2 xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
                                 грн/кВт
@@ -209,7 +210,7 @@ const WMComponent = () => {
                         </div>
                     </div>
                 </div>
-                {selectedCostPerKWh === "two-zone" && (
+                {selectedCostPerKWh === 'two-zone' && (
                     <>
                         <div className="relative mt-6 xl:mt-0">
                             <TooltipBtn
@@ -240,8 +241,8 @@ const WMComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={wmContent.tariffWater.title}
+                        text={wmContent.tariffWater.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="waterCostPerCubicMeter">
@@ -261,29 +262,29 @@ const WMComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={wmContent.loadSize.title}
+                        text={wmContent.loadSize.text}
                         buttonText="Зрозуміло"
                     />
                     <span>Об&apos;єм завантажених речей</span>
                     <div className="mt-4 xl:mt-6 text-base xl:text-lg text-primary">
                         <SelectInput
-                        options={loadSizeOptions.map((option) => ({
-                            label: option.label,
-                            value: option.value,
-                        }))}
-                        selectedValue={selectedLoadSize}
-                        onChange={handleLoadSizeChange}
-                        isOpen={isLoadSizeSelectOpen}
-                        setIsOpen={setIsLoadSizeSelectOpen}
+                            options={loadSizeOptions.map(option => ({
+                                label: option.label,
+                                value: option.value,
+                            }))}
+                            selectedValue={selectedLoadSize}
+                            onChange={handleLoadSizeChange}
+                            isOpen={isLoadSizeSelectOpen}
+                            setIsOpen={setIsLoadSizeSelectOpen}
                         />
                     </div>
                 </div>
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={wmContent.weeklyLoads.title}
+                        text={wmContent.weeklyLoads.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="weeklyLoads">
@@ -303,8 +304,8 @@ const WMComponent = () => {
 
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
-                        title="Пояснення показників"
-                        text="Вкажіть обсяг води, що використовується за місяць."
+                        title={wmContent.wmAge.title}
+                        text={wmContent.wmAge.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="ageInYears">Вік пральної машини в роках:</label>
@@ -338,16 +339,16 @@ const WMComponent = () => {
                         </p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.monthly.waterUsageLiters.toFixed(2) || 0} літри/міс
-                        </p>       									
+                        </p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.monthly.energyConsumption.toFixed(2) || 0} кВт·год/міс
                         </p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.monthly.loads.toFixed(2) || 0} завантажень/міс
-                        </p>			
-                        <p className={cn("text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4")}>
+                        </p>
+                        <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
                             {result?.monthly.energyCost.toFixed(2) || 0} грн/міс
-                        </p>			
+                        </p>
                     </div>
 
                     <div className="border-t-2 pt-6 border-black xl:border-none xl:pt-0">
@@ -360,18 +361,22 @@ const WMComponent = () => {
                         </p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.yearly.totalWaterUsageLiters.toFixed(2) || 0} літри/рік
-                        </p>			
+                        </p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.yearly.totalEnergyConsumption.toFixed(2) || 0} кВт·год/рік
                         </p>
-                        <p className={cn("text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4")}>
+                        <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
                             {result?.yearly.energyCost.toFixed(2) || 0} грн/рік
                         </p>
                     </div>
                 </div>
 
                 <div>
-                    <Button size="xl" className="hidden xl:flex xl:text-2xl w-full" onClick={handleSubmit}>
+                    <Button
+                        size="xl"
+                        className="hidden xl:flex xl:text-2xl w-full"
+                        onClick={handleSubmit}
+                    >
                         Розрахувати
                     </Button>
                 </div>
@@ -381,4 +386,3 @@ const WMComponent = () => {
 };
 
 export default WMComponent;
-
