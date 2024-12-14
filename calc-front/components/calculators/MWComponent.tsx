@@ -86,7 +86,7 @@ const MWComponent = () => {
       ageInYears: updatedInputs.ageInYears,
       daysPerMonth: updatedInputs.daysPerMonth,
       nightRateFactor: updatedInputs.nightRateFactor,
-      nightRateUsagePercentage: updatedInputs.nightRateUsagePercentage / 100,
+      nightRateUsagePercentage: updatedInputs.nightRateUsagePercentage,
     });
 
     setResult(result);

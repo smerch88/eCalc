@@ -83,7 +83,7 @@ const LightComponent = () => {
       electricityCostPerKWh: tariffForCalculation * 100,
       daysPerMonth: updatedInputs.daysPerMonth,
       nightRateFactor: updatedInputs.nightRateFactor,
-      nightRateUsagePercentage: updatedInputs.nightRateUsagePercentage / 100,
+      nightRateUsagePercentage: updatedInputs.nightRateUsagePercentage,
     });
 
     setResult(result);
@@ -232,7 +232,7 @@ const LightComponent = () => {
               type="number"
               value={formData.hoursPerDay}
               onChange={handleInputChange}
-              unit="хв"
+              unit="час"
               className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
             />
           </div>
@@ -251,7 +251,7 @@ const LightComponent = () => {
               type="number"
               value={formData.numberOfBulbs}
               onChange={handleInputChange}
-              unit="разів"
+              unit="шт"
               className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
             />
           </div>
