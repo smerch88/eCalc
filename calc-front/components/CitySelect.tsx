@@ -46,7 +46,7 @@ const CitySelector: FC<CitySelectorProps> = ({ onClose }) => {
 
   return (
     // <div className="fixed inset-10 flex justify-center items-center z-50">
-      <div className="bg-white top-0 rounded-lg w-[200px] relative">
+      <div className="bg-white top-0 rounded-lg rounded-tl-none rounded-tr-none w-[200px] relative">
         {/* Заголовок і кнопка закриття */}
         {/* <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">Виберіть місто</h2>
@@ -73,7 +73,7 @@ const CitySelector: FC<CitySelectorProps> = ({ onClose }) => {
             filteredCities.map((city) => (
               <li
                 key={city}
-                className="p-2 hover:bg-gray-200 cursor-pointer"
+                className="p-2 hover:bg-[#f0f0f0] cursor-pointer"
                 onClick={() => handleCitySelect(city)}
               >
                 {city}

@@ -4,7 +4,8 @@ import CitySelector from "@/components/CitySelect";
 import { Input } from "@/components/ui/input"; // Ваш кастомний Input компонент.
 import { useUnifiedStore } from "@/stores/stores"; // Імпорт zustand store.
 import Image from "next/image";
-import IconArrowDown from "../public/icons/arrow-down.svg";
+import IconArrowDown from "@/public/icons/arrow-down.svg";
+import IconArrowUp from '@/public/icons/arrow-up.svg';
 import { useEffect, useState } from "react";
 
 // Словник для перекладу міст
@@ -55,17 +56,18 @@ const CityAutoDetect = () => {
         value={location} // Значення з zustand store.
         // readOnly
         onClick={() => setIsModalOpen(true)} // Відкрити модальне вікно.
-        className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border border-gray-300 hover:bg-gray-300 hover:outline-none focus:outline-none focus:ring-0"
+        className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border-gray-200 hover:bg-[#f0f0f0] hover:outline-none focus:outline-none focus-visible:ring-0"
       />
 
       {/* Іконка стрілочки */}
       <Image
         width={24}
         height={24}
-        src={IconArrowDown}
+        src={isModalOpen ? IconArrowUp : IconArrowDown}
         alt="Arrow Down"
         onClick={() => setIsModalOpen(true)} // Додайте можливість кліку
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer object-contain"
+        style={{ width: "auto", height: "auto" }}
       />
 
       {/* Модальне вікно */}
