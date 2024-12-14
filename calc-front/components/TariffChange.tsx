@@ -1,9 +1,21 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent } from "react";
 
 interface Option {
     value: string;
     label: string;
     tariff: string;
+    icon?: JSX.Element | JSX.Element[];
+}
+
+interface efficiencyOptions {
+    value: string;
+    label: string;
+    icon?: JSX.Element | JSX.Element[];
+}
+
+interface loadSizeOptions {
+    value: string;
+    label: string;
     icon?: JSX.Element | JSX.Element[];
 }
 
@@ -17,6 +29,8 @@ interface TariffChangeFormData {
 interface TariffChangeProps<T extends TariffChangeFormData> {
     selectedCostPerKWh: string;
     setSelectedCostPerKWh: (value: string) => void;
+    setSelectedEfficiencyClass?: (value: string) => void;
+    setSelectedLoadSize?: (value: string) => void;
     formData: T;
     setFormData: React.Dispatch<React.SetStateAction<T>>;
     setIsValid: (value: boolean) => void;
@@ -33,7 +47,12 @@ export const icons = {
             xmlns="http://www.w3.org/2000/svg"
         >
             <circle cx="9" cy="10" r="3.4" stroke="#191919" strokeWidth="1.2" />
-            <path d="M9.04102 4.53577V1" stroke="#191919" strokeWidth="1.2" strokeLinecap="round" />
+            <path
+                d="M9.04102 4.53577V1"
+                stroke="#191919"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+            />
             <path
                 d="M9.04102 18.9999V15.4641"
                 stroke="#191919"
@@ -94,7 +113,11 @@ export const icons = {
                 strokeWidth="1.2"
                 strokeLinecap="round"
             />
-            <path d="M5.83754 5.42736L4.86023 3.89282" stroke="#191919" strokeLinecap="round" />
+            <path
+                d="M5.83754 5.42736L4.86023 3.89282"
+                stroke="#191919"
+                strokeLinecap="round"
+            />
         </svg>
     ),
     night: (
@@ -124,23 +147,67 @@ export const icons = {
 
 export const options: Option[] = [
     {
-        value: 'single-zone',
-        label: 'Однозонний',
-        tariff: '4.32',
+        value: "single-zone",
+        label: "Однозонний",
+        tariff: "4.32",
         icon: icons.day,
     },
     {
-        value: 'two-zone',
-        label: 'Двозонний',
-        tariff: '4.32         2.16',
+        value: "two-zone",
+        label: "Двозонний",
+        tariff: "4.32         2.16",
         icon: [icons.night, icons.day],
     },
-    { value: 'three-zone', label: 'Ввести вручну', tariff: '' },
+    { value: "three-zone", label: "Ввести вручну", tariff: "" },
+];
+
+export const efficiencyOptions: efficiencyOptions[] = [
+    {
+        value: "A+++",
+        label: "A+++",
+    },
+    {
+        value: "A++",
+        label: "A++",
+    },
+    {
+        value: "A+",
+        label: "A+",
+    },
+    {
+        value: "A",
+        label: "A",
+    },
+    {
+        value: "B",
+        label: "B",
+    },
+    {
+        value: "C",
+        label: "C",
+    },
+];
+
+export const loadSizeOptions: loadSizeOptions[] = [
+    {
+        value: "small",
+        label: "Малий об'єм завантажень",
+    },
+    {
+        value: "medium",
+        label: "Середній об'єм завантажень",
+    },
+    {
+        value: "large",
+        label: "Великий об'єм завантажень",
+    },
 ];
 
 export const TariffChange = <T extends TariffChangeFormData>({
     selectedCostPerKWh,
     setSelectedCostPerKWh,
+    setSelectedEfficiencyClass,
+    setSelectedLoadSize,
     formData,
     setFormData,
     setIsValid,
@@ -148,25 +215,25 @@ export const TariffChange = <T extends TariffChangeFormData>({
 }: TariffChangeProps<T>) => {
     const handleTariffChange = (event: ChangeEvent<HTMLSelectElement>): void => {
         const selectedOption = options.find(option => option.value === event.target.value);
-        const tariffValue = selectedOption?.tariff || '';
+        const tariffValue = selectedOption?.tariff || "";
         const selectedIcon = selectedOption?.icon;
 
         setSelectedCostPerKWh(event.target.value);
         setIsValid(true);
-        setErrorMessage('');
+        setErrorMessage("");
 
-        if (event.target.value === 'two-zone' && tariffValue) {
+        if (event.target.value === "two-zone" && tariffValue) {
             const [dayRate, nightRate] = tariffValue.split(/\s+/).map(parseFloat);
             const nightRateFactor = nightRate / dayRate;
 
-            setFormData(prev => ({
+            setFormData((prev) => ({
                 ...prev,
                 costPerKWh: tariffValue,
                 nightRateFactor,
                 icon: selectedIcon,
             }));
         } else {
-            setFormData(prev => ({
+            setFormData((prev) => ({
                 ...prev,
                 costPerKWh: tariffValue,
                 nightRateFactor: 1,
@@ -175,28 +242,52 @@ export const TariffChange = <T extends TariffChangeFormData>({
         }
     };
 
+    const handleEfficiencyChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        setSelectedEfficiencyClass?.(event.target.value);
+        setIsValid(true);
+        setErrorMessage("");
+
+        const selectedOption = event.target.value;
+        setFormData((prev) => ({
+            ...prev,
+            efficiencyClass: selectedOption,
+        }));
+    };
+
+    const handleLoadSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        setSelectedLoadSize?.(event.target.value);
+        setIsValid(true);
+        setErrorMessage("");
+
+        const selectedOption = event.target.value;
+        setFormData((prev) => ({
+            ...prev,
+            loadSize: selectedOption,
+        }));
+    };
+
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const { id, value } = event.target;
 
         setIsValid(true);
-        setErrorMessage('');
+        setErrorMessage("");
 
-        if (selectedCostPerKWh !== 'three-zone') {
-            setFormData(prev => ({ ...prev, [id]: value }));
+        if (selectedCostPerKWh !== "three-zone") {
+            setFormData((prev) => ({ ...prev, [id]: value }));
             return;
         }
 
-        setFormData(prev => ({ ...prev, costPerKWh: value }));
+        setFormData((prev) => ({ ...prev, costPerKWh: value }));
 
         const isNumberValid = /^(?!$)(\d+(\.\d{0,2})?)$/.test(value);
         if (!isNumberValid) {
             setIsValid(false);
-            setErrorMessage('Введіть число до двох знаків після коми.');
+            setErrorMessage("Введіть число до двох знаків після коми.");
         }
     };
 
     const getCalculationValue = (): number => {
-        if (selectedCostPerKWh === 'two-zone') {
+        if (selectedCostPerKWh === "two-zone") {
             const tariffValues = formData.costPerKWh.trim().split(/\s+/);
             return parseFloat(tariffValues[0]) || 0;
         }
@@ -204,5 +295,12 @@ export const TariffChange = <T extends TariffChangeFormData>({
         return parseFloat(formData.costPerKWh) || 0;
     };
 
-    return { handleTariffChange, handleInputChange, getCalculationValue };
+    return {
+        handleTariffChange,
+        handleInputChange,
+        handleLoadSizeChange,
+        handleEfficiencyChange,
+        getCalculationValue,
+    };
 };
+
