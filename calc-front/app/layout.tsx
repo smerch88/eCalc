@@ -26,31 +26,31 @@ export const metadata: Metadata = {
             rel: 'icon',
             type: 'image/png',
             sizes: '96x96',
-            url: `/favicon/favicon-96x96.png`,
+            url: '/favicon/favicon-96x96.png',
         },
         {
             rel: 'icon',
             type: 'image/png',
             sizes: '192x192',
-            url: `/favicon/web-app-manifest-192x192.png`,
+            url: '/favicon/web-app-manifest-192x192.png',
         },
         {
             rel: 'icon',
             type: 'image/png',
             sizes: '512x512',
-            url: `/favicon/web-app-manifest-512x512.png`,
+            url: '/favicon/web-app-manifest-512x512.png',
         },
         {
             rel: 'apple-touch-icon',
             sizes: '180x180',
-            url: `/favicon/apple-touch-icon.png`,
+            url: '/favicon/apple-touch-icon.png',
         },
     ],
     manifest: '/favicon/site.webmanifest',
     openGraph: {
         images: [
             {
-                url: `/public/favicon/web-app-manifest-512x512.png`,
+                url: '/favicon/web-app-manifest-512x512.png',
                 width: 512,
                 height: 512,
                 alt: 'logo E-calculator',
