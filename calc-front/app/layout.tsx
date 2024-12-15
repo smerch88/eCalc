@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     openGraph: {
         images: [
             {
-                url: `${process.env.HOSTNAME}/public/favicon/web-app-manifest-512x512.jpg`,
+                url: `${process.env.HOSTNAME}/public/favicon/web-app-manifest-512x512.png`,
                 width: 512,
                 height: 512,
                 alt: 'logo E-calculator',
