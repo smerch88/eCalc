@@ -32,13 +32,13 @@ export const metadata: Metadata = {
             rel: 'icon',
             type: 'image/png',
             sizes: '192x192',
-            url: `${process.env.HOSTNAME}/favicon/favicon-192x192.png`,
+            url: `${process.env.HOSTNAME}/favicon/web-app-manifest-192x192.png`,
         },
         {
             rel: 'icon',
             type: 'image/png',
             sizes: '512x512',
-            url: `${process.env.HOSTNAME}/favicon/favicon-512x512.png`,
+            url: `${process.env.HOSTNAME}/favicon/web-app-manifest-512x512.png`,
         },
         {
             rel: 'apple-touch-icon',
@@ -46,6 +46,22 @@ export const metadata: Metadata = {
             url: `${process.env.HOSTNAME}/favicon/apple-touch-icon.png`,
         },
     ],
+    openGraph: {
+        images: [
+            {
+                url: `${process.env.HOSTNAME}/public/favicon/web-app-manifest-512x512.jpg`,
+                width: 512,
+                height: 512,
+                alt: 'logo E-calculator',
+            },
+        ],
+        title: 'E-calculator. Легко контролюйте своє споживання електроенергії.',
+        description:
+            'E-calculator допомагає вам відстежувати та оптимізувати споживання електроенергії. Використовуйте наші інструменти для розрахунку енергоспоживання різних приладів та заощаджуйте на комунальних платежах.',
+        siteName: 'E-calculator',
+        locale: 'uk-UA',
+        type: 'website',
+    },
 };
 
 export default function RootLayout({
