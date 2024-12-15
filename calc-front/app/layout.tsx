@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import cn from 'classnames';
 import { Footer } from '@/components/Footer';
 import { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -75,6 +76,7 @@ export default function RootLayout({
             <body className={cn(geistSans.variable, geistMono.variable, 'antialiased')}>
                 <Header />
                 {children}
+                <Analytics />
                 <Footer />
             </body>
         </html>
