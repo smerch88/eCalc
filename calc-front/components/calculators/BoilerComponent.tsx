@@ -320,7 +320,7 @@ const BoilerComponent = () => {
                     />	
                     <div className="flex flex-col xl:flex-row xl:gap-12">
                         <div className="text-lg xl:text-2xl text-primary mb-4 xl:mb-0">
-                        <label htmlFor="initialTemp">
+                        <label htmlFor="initialTemp" className="block xl:mb-6">
                             Початкова температура:
                         </label>                  
                             <CalcInput
@@ -333,7 +333,7 @@ const BoilerComponent = () => {
                         </div>
                     
                         <div className="text-lg xl:text-2xl text-primary mb-4 xl:mb-0">                      
-                        <label htmlFor="targetTemp">
+                        <label htmlFor="targetTemp" className="block xl:mb-6">
                             Цільова температура:
                         </label> 
                             <CalcInput
@@ -353,7 +353,7 @@ const BoilerComponent = () => {
                         text={boilerContent.coefficientOfEfficiency.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="efficiency">
+                    <label htmlFor="efficiency" className="block xl:mb-6">
                         Який КПД бойлера?
                     </label>
                     <div>
