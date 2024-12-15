@@ -78,7 +78,7 @@ export const CalculatorsTab = () => {
                                     ? 'decorated-left'
                                     : '',
                                 activeTab === item.id ? 'bg-white' : '',
-                                'flex flex-col items-center pt-16 pb-12 rounded-tl-[40px] rounded-tr-[40px]'
+                                'flex flex-col items-center pt-16 pb-12 rounded-tl-xlg rounded-tr-xlg'
                             )}
                             onClick={() => setActiveTab(item.id)}
                         >
@@ -92,7 +92,7 @@ export const CalculatorsTab = () => {
                 className={cn(
                     activeTab === 'light' && '!rounded-tl-[0px]',
                     activeTab === 'mw' && '!rounded-tr-[0px]',
-                    'p-4 md:p-12 md:bg-white rounded-[40px] md:h-[1100px]'
+                    'p-4 md:p-12 md:bg-white rounded-xlg md:h-[1100px]'
                 )}
             >
                 {renderContent()}

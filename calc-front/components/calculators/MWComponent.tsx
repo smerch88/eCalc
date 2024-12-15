@@ -107,14 +107,14 @@ const MWComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
                         title={mwContent.powerRating.title}
                         text={mwContent.powerRating.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="powerRating">Потужність мікрохвильовки:</label>
+                    <label htmlFor="powerRating" className="block pr-6 xl:pr-0">Потужність мікрохвильовки:</label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="powerRating"
@@ -191,7 +191,7 @@ const MWComponent = () => {
                                 text="Вкажіть обсяг води, що використовується за місяць."
                                 buttonText="Зрозуміло"
                             /> */}
-                            <label htmlFor="nightRateUsagePercentage">
+                            <label htmlFor="nightRateUsagePercentage" className="block pr-6 xl:pr-0">
                                 Як часто використовуєте мікрохвильовку вночі?
                             </label>
 
@@ -219,7 +219,7 @@ const MWComponent = () => {
                         text={mwContent.usageTime.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="usageTime">Час роботи мікрохвильовки за раз:</label>
+                    <label htmlFor="usageTime" className="block pr-6 xl:pr-0">Час роботи мікрохвильовки за раз:</label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="usageTime"
@@ -238,7 +238,7 @@ const MWComponent = () => {
                         text={mwContent.dailyUsage.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="dailyUsage">
+                    <label htmlFor="dailyUsage" className="block pr-6 xl:pr-0">
                         Кількість використань мікрохвильовки на день:
                     </label>
                     <div className="mt-4 xl:mt-6">
@@ -259,7 +259,7 @@ const MWComponent = () => {
                         text={mwContent.ageInYears.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="ageInYears">Вік мікрохвильовки в роках:</label>
+                    <label htmlFor="ageInYears" className="block pr-6 xl:pr-0">Вік мікрохвильовки в роках:</label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="ageInYears"
@@ -278,7 +278,7 @@ const MWComponent = () => {
                         text={mwContent.daysPerMonth.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="daysPerMonth">Кількість днів у поточному місяці:</label>
+                    <label htmlFor="daysPerMonth" className="block pr-6 xl:pr-0">Кількість днів у поточному місяці:</label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="daysPerMonth"
@@ -296,7 +296,7 @@ const MWComponent = () => {
                 </Button>
             </div>
 
-            <div className="bg-white rounded-[30px] p-4 xl:p-0 flex flex-col justify-between">
+            <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
                 <div className="flex flex-col gap-6 xl:gap-12">
                     <div>
                         <p className="mb-4">Мікрохвильовка</p>

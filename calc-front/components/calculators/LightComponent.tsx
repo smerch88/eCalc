@@ -104,7 +104,7 @@ const LightComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
                         title={lightContent.wattage.title}
@@ -216,7 +216,7 @@ const LightComponent = () => {
                         text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="hoursPerDay">Кількість годин роботи освітлення на день:</label>
+                    <label htmlFor="hoursPerDay" className="block pr-6 xl:pr-0">Кількість годин роботи освітлення на день:</label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="hoursPerDay"
@@ -254,7 +254,7 @@ const LightComponent = () => {
                         text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="daysPerMonth">Кількість днів у поточному місяці:</label>
+                    <label htmlFor="daysPerMonth" className="block pr-6 xl:pr-0">Кількість днів у поточному місяці:</label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="daysPerMonth"
@@ -272,7 +272,7 @@ const LightComponent = () => {
                 </Button>
             </div>
 
-            <div className="bg-white rounded-[30px] p-4 xl:p-0 flex flex-col justify-between">
+            <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
                 <div className="flex flex-col gap-6 xl:gap-12">
                     <div>
                         <p className="mb-4">Освітлення</p>

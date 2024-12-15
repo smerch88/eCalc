@@ -8,6 +8,7 @@ interface SelectOption {
 }
 
 interface SelectInputProps {
+    id?: string;
     options: SelectOption[];
     selectedValue: string;
     className?: string;

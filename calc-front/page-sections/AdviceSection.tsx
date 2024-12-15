@@ -11,7 +11,7 @@ export const AdviceSection = () => {
                     Ці поради допоможуть вам оптимізовано використовувати електроенергію вдома та
                     заощаджувати кошти.
                 </p>
-                <div className="p-4 xl:p-12 bg-white rounded-[30px] xl:rounded-[40px]">
+                <div className="p-4 xl:p-12 bg-white rounded-xmd xl:rounded-xlg">
                     <AdvicesList />
                 </div>
             </div>
