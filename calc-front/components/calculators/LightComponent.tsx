@@ -216,7 +216,9 @@ const LightComponent = () => {
                         text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="hoursPerDay" className="block pr-6 xl:pr-0">Кількість годин роботи освітлення на день:</label>
+                    <label htmlFor="hoursPerDay" className="block pr-6 xl:pr-0">
+                        Кількість годин роботи освітлення на день:
+                    </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="hoursPerDay"
@@ -254,7 +256,9 @@ const LightComponent = () => {
                         text={lightContent.wattage.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="daysPerMonth" className="block pr-6 xl:pr-0">Кількість днів у поточному місяці:</label>
+                    <label htmlFor="daysPerMonth" className="block pr-6 xl:pr-0">
+                        Кількість днів у поточному місяці:
+                    </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="daysPerMonth"

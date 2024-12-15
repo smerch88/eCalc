@@ -139,7 +139,9 @@ const WMComponent = () => {
                         text={wmContent.efficiencyClass.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="efficiencyClass" className="block pr-6 xl:pr-0">Клас енергоефективності пральної машини:</label>
+                    <label htmlFor="efficiencyClass" className="block pr-6 xl:pr-0">
+                        Клас енергоефективності пральної машини:
+                    </label>
                     <div className="mt-4 xl:mt-6 text-base xl:text-lg text-primary">
                         <SelectInput
                             id="efficiencyClass"
@@ -219,7 +221,10 @@ const WMComponent = () => {
                                 text="Вкажіть обсяг води, що використовується за місяць."
                                 buttonText="Зрозуміло"
                             /> */}
-                            <label htmlFor="nightRateUsagePercentage" className="block pr-6 xl:pr-0">
+                            <label
+                                htmlFor="nightRateUsagePercentage"
+                                className="block pr-6 xl:pr-0"
+                            >
                                 Як часто використовуєте пральну машину вночі?
                             </label>
                             <div className="mt-4 xl:mt-6">
@@ -310,7 +315,9 @@ const WMComponent = () => {
                         text={wmContent.wmAge.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="ageInYears" className="block pr-6 xl:pr-0">Вік пральної машини в роках:</label>
+                    <label htmlFor="ageInYears" className="block pr-6 xl:pr-0">
+                        Вік пральної машини в роках:
+                    </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="ageInYears"

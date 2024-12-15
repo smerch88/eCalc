@@ -114,7 +114,9 @@ const MWComponent = () => {
                         text={mwContent.powerRating.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="powerRating" className="block pr-6 xl:pr-0">Потужність мікрохвильовки:</label>
+                    <label htmlFor="powerRating" className="block pr-6 xl:pr-0">
+                        Потужність мікрохвильовки:
+                    </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="powerRating"
@@ -191,7 +193,10 @@ const MWComponent = () => {
                                 text="Вкажіть обсяг води, що використовується за місяць."
                                 buttonText="Зрозуміло"
                             /> */}
-                            <label htmlFor="nightRateUsagePercentage" className="block pr-6 xl:pr-0">
+                            <label
+                                htmlFor="nightRateUsagePercentage"
+                                className="block pr-6 xl:pr-0"
+                            >
                                 Як часто використовуєте мікрохвильовку вночі?
                             </label>
 
@@ -219,7 +224,9 @@ const MWComponent = () => {
                         text={mwContent.usageTime.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="usageTime" className="block pr-6 xl:pr-0">Час роботи мікрохвильовки за раз:</label>
+                    <label htmlFor="usageTime" className="block pr-6 xl:pr-0">
+                        Час роботи мікрохвильовки за раз:
+                    </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="usageTime"
@@ -259,7 +266,9 @@ const MWComponent = () => {
                         text={mwContent.ageInYears.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="ageInYears" className="block pr-6 xl:pr-0">Вік мікрохвильовки в роках:</label>
+                    <label htmlFor="ageInYears" className="block pr-6 xl:pr-0">
+                        Вік мікрохвильовки в роках:
+                    </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="ageInYears"
@@ -278,7 +287,9 @@ const MWComponent = () => {
                         text={mwContent.daysPerMonth.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="daysPerMonth" className="block pr-6 xl:pr-0">Кількість днів у поточному місяці:</label>
+                    <label htmlFor="daysPerMonth" className="block pr-6 xl:pr-0">
+                        Кількість днів у поточному місяці:
+                    </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="daysPerMonth"
