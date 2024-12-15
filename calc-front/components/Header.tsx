@@ -18,7 +18,7 @@ export const Header = () => {
     };
 
     return (
-        <header className="absolute xl:top-0 left-0 right-0 py-6 backdrop-blur-md rounded-b-3xl xl:rounded-b-xlg bg-background_header/50">
+        <header className="absolute top-6 xl:top-0 left-0 right-0 py-3 xl:py-6 backdrop-blur-md rounded-b-xmd xl:rounded-b-xlg bg-background_header/50">
             <div className="container flex items-center justify-between">
                 <Link href="/" className="flex items-center" prefetch={false}>
                     <Image

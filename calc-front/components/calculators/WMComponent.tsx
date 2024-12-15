@@ -132,16 +132,17 @@ const WMComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-[30px] px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
                 <div className="relative mt-6 xl:mt-0">
                     <TooltipBtn
                         title={wmContent.efficiencyClass.title}
                         text={wmContent.efficiencyClass.text}
                         buttonText="Зрозуміло"
                     />
-                    <span>Клас енергоефективності пральної машини:</span>
+                    <label htmlFor="efficiencyClass" className="block pr-6 xl:pr-0">Клас енергоефективності пральної машини:</label>
                     <div className="mt-4 xl:mt-6 text-base xl:text-lg text-primary">
                         <SelectInput
+                            id="efficiencyClass"
                             options={efficiencyOptions.map(option => ({
                                 label: option.label,
                                 value: option.value,
@@ -218,7 +219,7 @@ const WMComponent = () => {
                                 text="Вкажіть обсяг води, що використовується за місяць."
                                 buttonText="Зрозуміло"
                             /> */}
-                            <label htmlFor="nightRateUsagePercentage">
+                            <label htmlFor="nightRateUsagePercentage" className="block pr-6 xl:pr-0">
                                 Як часто використовуєте пральну машину вночі?
                             </label>
                             <div className="mt-4 xl:mt-6">
@@ -245,7 +246,7 @@ const WMComponent = () => {
                         text={wmContent.tariffWater.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="waterCostPerCubicMeter">
+                    <label htmlFor="waterCostPerCubicMeter" className="block pr-6 xl:pr-0">
                         Який тариф на водопостачання використовуєте?
                     </label>
                     <div className="mt-4 xl:mt-6">
@@ -266,9 +267,10 @@ const WMComponent = () => {
                         text={wmContent.loadSize.text}
                         buttonText="Зрозуміло"
                     />
-                    <span>Об&apos;єм завантажених речей</span>
+                    <label htmlFor="loadSize">Об&apos;єм завантажених речей</label>
                     <div className="mt-4 xl:mt-6 text-base xl:text-lg text-primary">
                         <SelectInput
+                            id="loadSize"
                             options={loadSizeOptions.map(option => ({
                                 label: option.label,
                                 value: option.value,
@@ -287,7 +289,7 @@ const WMComponent = () => {
                         text={wmContent.weeklyLoads.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="weeklyLoads">
+                    <label htmlFor="weeklyLoads" className="block pr-6 xl:pr-0">
                         Кількість використань пральної машини на тиждень:
                     </label>
                     <div className="mt-4 xl:mt-6">
@@ -308,7 +310,7 @@ const WMComponent = () => {
                         text={wmContent.wmAge.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="ageInYears">Вік пральної машини в роках:</label>
+                    <label htmlFor="ageInYears" className="block pr-6 xl:pr-0">Вік пральної машини в роках:</label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
                             id="ageInYears"
@@ -326,7 +328,7 @@ const WMComponent = () => {
                 </Button>
             </div>
 
-            <div className="bg-white rounded-[30px] p-4 xl:p-0 flex flex-col justify-between">
+            <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
                 <div className="flex flex-col gap-6 xl:gap-12">
                     <div>
                         <p className="mb-4">Пральна машина</p>

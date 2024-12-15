@@ -56,7 +56,7 @@ export const FeedbackForm: FC = () => {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white rounded-[40px] p-4 xl:p-12 w-full"
+            className="bg-white rounded-xmd xl:rounded-xlg p-4 xl:p-12 w-full"
         >
             <div className="flex flex-col gap-6 xl:flex-row">
                 {/* Name Input */}
