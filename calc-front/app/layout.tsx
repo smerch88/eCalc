@@ -50,9 +50,9 @@ export const metadata: Metadata = {
     openGraph: {
         images: [
             {
-                url: '/favicon/web-app-manifest-512x512.png',
-                width: 512,
-                height: 512,
+                url: '/header/logo-lg.png',
+                width: 241,
+                height: 60,
                 alt: 'logo E-calculator',
             },
         ],
