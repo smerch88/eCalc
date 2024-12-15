@@ -50,7 +50,7 @@ export default function TooltipBtn({ title, text, buttonText }: TooltipBtnProps)
     return (
         <div className="relative">
             <span
-                className="absolute top-1 right-0"
+                className="absolute top-[2px] xl:top-[3px] right-0"
                 onMouseEnter={handleInteraction}
                 onMouseLeave={handleInteraction}
                 onClick={handleInteraction}
@@ -72,7 +72,8 @@ export default function TooltipBtn({ title, text, buttonText }: TooltipBtnProps)
                     <div
                         className={`absolute ${
                             interactionType === 'click' ? 'bg-white' : 'bg-tooltip'
-                        } p-6 w-[496px] rounded-xlg top-8 right-[-3.5%] z-50`}
+                        } p-6 w-[320px] xl:w-[496px] rounded-xmd xl:rounded-xlg top-8 z-50 left-1/2 transform -translate-x-1/2 
+                        xl:left-auto xl:right-[-3.5%] xl:translate-x-0`}
                     >
                         <Tooltip
                             title={title}
