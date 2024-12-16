@@ -2,7 +2,7 @@
 import cn from 'classnames';
 import dynamic from 'next/dynamic';
 import Image, { StaticImageData } from 'next/image';
-import { ComponentType, useState } from 'react';
+import { ComponentType, useState, useEffect } from 'react';
 import Boiler from '../public/calculatorDevices/Boiler.png';
 import Light from '../public/calculatorDevices/Light.png';
 import Microwave from '../public/calculatorDevices/Microwave.png';
@@ -10,6 +10,8 @@ import WM from '../public/calculatorDevices/WM.png';
 
 // import { Dropdown } from "./ui/dropdown";
 import { SelectInput } from './ui/selectInput';
+import { useUnifiedStore } from '@/stores/stores';
+import { CalculationType } from '@/types/common';
 
 const LightComponent = dynamic(() => import('./calculators/LightComponent'));
 const BoilerComponent = dynamic(() => import('./calculators/BoilerComponent'));
@@ -52,6 +54,12 @@ const devices: Device[] = [
 
 export const CalculatorsTab = () => {
     const [activeTab, setActiveTab] = useState<string | undefined>('boiler');
+    const { setAdvices, setCalculationDone } = useUnifiedStore();
+
+    useEffect(() => {
+        setCalculationDone(false);
+        setAdvices(activeTab as CalculationType, []);
+    }, [activeTab, setAdvices, setCalculationDone]);
 
     const renderContent = () => {
         const activeDevice = devices.find(device => device.id === activeTab);
@@ -166,8 +174,13 @@ export const CalculatorsTab = () => {
 export const CalculatorsSelect = () => {
     const [activeTab, setActiveTab] = useState<string>('boiler');
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
+    const { setAdvices, setCalculationDone } = useUnifiedStore();
     const activeDevice = devices.find(device => device.id === activeTab);
+
+    useEffect(() => {
+        setCalculationDone(false);
+        setAdvices(activeTab as CalculationType, []);
+    }, [activeTab, setAdvices, setCalculationDone]);
 
     const renderContent = () => {
         if (activeDevice && activeDevice.component) {
