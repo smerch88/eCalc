@@ -12,6 +12,7 @@ import { useUnifiedStore } from '@/stores/stores';
 import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
 import { boilerContent } from '@/lib/techContent';
+import { smoothScroll } from '@/lib/utils';
 
 export interface FormData {
     waterVolume: string;
@@ -61,15 +62,6 @@ const BoilerComponent = () => {
     const location = useUnifiedStore(state => state.location); // Поточне місто
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
-    const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
-        selectedCostPerKWh,
-        setSelectedCostPerKWh,
-        formData,
-        setFormData,
-        setIsValid,
-        setErrorMessage,
-    });
-
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
 
@@ -90,6 +82,16 @@ const BoilerComponent = () => {
         console.log(result);
     };
 
+    const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
+        selectedCostPerKWh,
+        setSelectedCostPerKWh,
+        formData,
+        setFormData,
+        setIsValid,
+        setErrorMessage,
+        calculateAndSetResult,
+    });
+
     const handleSubmit = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
 
@@ -105,6 +107,7 @@ const BoilerComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('boiler');
+        smoothScroll('calculator-section', 50);
     };
 
     return (

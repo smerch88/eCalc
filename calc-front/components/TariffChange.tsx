@@ -203,7 +203,8 @@ export const TariffChange = <T extends TariffChangeFormData>({
     setFormData,
     setIsValid,
     setErrorMessage,
-}: TariffChangeProps<T>) => {
+    calculateAndSetResult,
+}: TariffChangeProps<T> & { calculateAndSetResult: (updatedInputs: T) => void }) => {
     const handleTariffChange = (event: ChangeEvent<HTMLSelectElement>): void => {
         const selectedOption = options.find(option => option.value === event.target.value);
         const tariffValue = selectedOption?.tariff || '';
@@ -262,6 +263,19 @@ export const TariffChange = <T extends TariffChangeFormData>({
 
         setIsValid(true);
         setErrorMessage('');
+
+        if (selectedCostPerKWh === 'two-zone' && id === 'nightRateUsagePercentage') {
+            const updatedValue = parseInt(value, 10);
+
+            setFormData(prevState => {
+                const updatedFormData = { ...prevState, [id]: updatedValue };
+
+                calculateAndSetResult(updatedFormData);
+
+                return updatedFormData;
+            });
+            return;
+        }
 
         if (selectedCostPerKWh !== 'three-zone') {
             setFormData(prev => ({ ...prev, [id]: value }));

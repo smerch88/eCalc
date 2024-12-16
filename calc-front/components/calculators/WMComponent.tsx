@@ -17,6 +17,7 @@ import { SelectInput } from '../ui/selectInput';
 import TooltipBtn from '../ui/tooltipBtn';
 import cn from 'classnames';
 import { wmContent } from '@/lib/techContent';
+import { smoothScroll } from '@/lib/utils';
 
 export interface FormData {
     efficiencyClass: string;
@@ -79,23 +80,6 @@ const WMComponent = () => {
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
-    const {
-        handleTariffChange,
-        handleInputChange,
-        handleEfficiencyChange,
-        handleLoadSizeChange,
-        getCalculationValue,
-    } = TariffChange({
-        selectedCostPerKWh,
-        setSelectedCostPerKWh,
-        setSelectedEfficiencyClass,
-        setSelectedLoadSize,
-        formData,
-        setFormData,
-        setIsValid,
-        setErrorMessage,
-    });
-
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
 
@@ -114,6 +98,24 @@ const WMComponent = () => {
         console.log(result);
     };
 
+    const {
+        handleTariffChange,
+        handleInputChange,
+        handleEfficiencyChange,
+        handleLoadSizeChange,
+        getCalculationValue,
+    } = TariffChange({
+        selectedCostPerKWh,
+        setSelectedCostPerKWh,
+        setSelectedEfficiencyClass,
+        setSelectedLoadSize,
+        formData,
+        setFormData,
+        setIsValid,
+        setErrorMessage,
+        calculateAndSetResult,
+    });
+
     const handleSubmit = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
 
@@ -129,6 +131,7 @@ const WMComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('wm');
+        smoothScroll('calculator-section', 50);
     };
 
     return (
