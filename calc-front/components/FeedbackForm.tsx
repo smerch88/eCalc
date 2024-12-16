@@ -107,7 +107,7 @@ export const FeedbackForm: FC = () => {
                     maxLength={400}
                     placeholder="Вітаю..."
                     {...register('message', { required: "Це поле є обов'язковим" })}
-                    className={`border border-black xl:text-lg rounded-2xl px-6 py-4 mt-4 xl:mt-6 ${
+                    className={`border border-black xl:text-lg rounded-2xl px-4 xl:px-6 py-4 mt-4 xl:mt-6 ${
                         errors.message ? errorClass : ''
                     }`}
                 />

@@ -130,8 +130,9 @@ export function calculateWMConsumption({
     const totalEnergyCost = totalEnergyConsumption * electricityCostPerKWh;
 
     // Розрахунок вартості для використання нічного тарифу
-    const nightRateEnergyCost = totalEnergyCost * nightRateUsagePercentage * nightRateFactor;
-    const normalRateEnergyCost = totalEnergyCost * (1 - nightRateUsagePercentage);
+    const nightRateEnergyCost =
+        ((totalEnergyCost * nightRateUsagePercentage) / 100) * nightRateFactor;
+    const normalRateEnergyCost = totalEnergyCost * (1 - nightRateUsagePercentage / 100);
 
     // Загальне споживання води (літри) за рік
     const totalWaterUsageLiters = waterPerLoad * yearlyLoads; // у літрах
