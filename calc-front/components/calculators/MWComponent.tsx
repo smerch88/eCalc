@@ -7,7 +7,7 @@ import { CalcInput } from '@/components/ui/calcInput';
 import { MouseEvent, useState } from 'react';
 import TooltipBtn from '../ui/tooltipBtn';
 import { calculateMWConsumption } from '@/lib/calculators';
-import { getDaysInCurrentMonth } from '@/lib/utils';
+import { getDaysInCurrentMonth, smoothScroll } from '@/lib/utils';
 import { useUnifiedStore } from '@/stores/stores';
 import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
@@ -61,15 +61,6 @@ const MWComponent = () => {
 
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
-    const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
-        selectedCostPerKWh,
-        setSelectedCostPerKWh,
-        formData,
-        setFormData,
-        setIsValid,
-        setErrorMessage,
-    });
-
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
 
@@ -88,6 +79,16 @@ const MWComponent = () => {
         console.log(result);
     };
 
+    const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
+        selectedCostPerKWh,
+        setSelectedCostPerKWh,
+        formData,
+        setFormData,
+        setIsValid,
+        setErrorMessage,
+        calculateAndSetResult,
+    });
+
     const handleSubmit = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
 
@@ -103,6 +104,7 @@ const MWComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('mw');
+        smoothScroll('calculator-section', 50);
     };
 
     return (

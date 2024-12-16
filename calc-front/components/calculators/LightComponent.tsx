@@ -5,13 +5,14 @@ import { CalcInput } from '@/components/ui/calcInput';
 import { Input } from '@/components/ui/input';
 import { calculateLightingConsumption } from '@/lib/calculators';
 import { lightContent } from '@/lib/techContent';
-import { getDaysInCurrentMonth } from '@/lib/utils';
+import { getDaysInCurrentMonth, smoothScroll } from '@/lib/utils';
 import { useUnifiedStore } from '@/stores/stores';
 import cn from 'classnames';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { SelectInput } from '../ui/selectInput';
 import TooltipBtn from '../ui/tooltipBtn';
+import { Loader } from 'react-feather';
 
 export interface FormData {
     wattage: number;
@@ -52,21 +53,20 @@ const LightComponent = () => {
     const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+    }, [isLoading]);
 
     const isInputDisabled = selectedCostPerKWh !== 'three-zone';
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
 
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
-
-    const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
-        selectedCostPerKWh,
-        setSelectedCostPerKWh,
-        formData,
-        setFormData,
-        setIsValid,
-        setErrorMessage,
-    });
 
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
@@ -85,6 +85,16 @@ const LightComponent = () => {
         console.log(result);
     };
 
+    const { handleTariffChange, handleInputChange, getCalculationValue } = TariffChange({
+        selectedCostPerKWh,
+        setSelectedCostPerKWh,
+        formData,
+        setFormData,
+        setIsValid,
+        setErrorMessage,
+        calculateAndSetResult,
+    });
+
     const handleSubmit = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
 
@@ -100,6 +110,8 @@ const LightComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('light');
+        smoothScroll('calculator-section', 50);
+        setIsLoading(true);
     };
 
     return (
@@ -305,7 +317,7 @@ const LightComponent = () => {
                         className="hidden xl:flex xl:text-2xl w-full"
                         onClick={handleSubmit}
                     >
-                        Розрахувати
+                        {isLoading ? <Loader className="animate-spin w-6 h-6" /> : 'Розрахувати'}
                     </Button>
                 </div>
             </div>
