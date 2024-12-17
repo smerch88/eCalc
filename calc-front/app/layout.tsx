@@ -9,16 +9,12 @@ import { Analytics } from '@vercel/analytics/react';
 
 const montserrat = localFont({
     src: [
-        {
-            path: './fonts/Montserrat-Regular.woff2',
-            weight: '100 900',
-            style: 'normal',
-        },
-        {
-            path: './fonts/Montserrat-Regular.woff',
-            weight: '100 900',
-            style: 'normal',
-        },
+        { path: './fonts/Montserrat-Regular.woff', weight: '400', style: 'normal' },
+        { path: './fonts/Montserrat-Regular.woff2', weight: '400', style: 'normal' },
+        { path: './fonts/Montserrat-SemiBold.woff', weight: '600', style: 'normal' },
+        { path: './fonts/Montserrat-SemiBold.woff2', weight: '600', style: 'normal' },
+        { path: './fonts/Montserrat-Bold.woff', weight: '700', style: 'normal' },
+        { path: './fonts/Montserrat-Bold.woff2', weight: '700', style: 'normal' },
     ],
     variable: '--montserrat',
 });
