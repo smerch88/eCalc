@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { CalcInput } from '@/components/ui/calcInput';
 import { calculateWMConsumption } from '@/lib/calculators';
@@ -18,6 +18,7 @@ import TooltipBtn from '../ui/tooltipBtn';
 import cn from 'classnames';
 import { wmContent } from '@/lib/techContent';
 import { smoothScroll } from '@/lib/utils';
+import { Loader } from 'react-feather';
 
 export interface FormData {
     efficiencyClass: string;
@@ -73,12 +74,30 @@ const WMComponent = () => {
     const [isLoadSizeSelectOpen, setIsLoadSizeSelectOpen] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
+    useEffect(() => {
+        if (!isLoading) return;
+
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+            const isMobile = window.innerWidth < 1200;
+
+            if (isMobile) {
+                smoothScroll('mob-calc-result', -30);
+            } else {
+                smoothScroll('calculator-section', 50);
+            }
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [isLoading]);
 
     const location = useUnifiedStore(state => state.location);
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
+
+    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
 
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
@@ -131,7 +150,7 @@ const WMComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('wm');
-        smoothScroll('calculator-section', 50);
+        setIsLoading(true);
     };
 
     return (
@@ -368,22 +387,29 @@ const WMComponent = () => {
                 </div>
 
                 <Button onClick={handleSubmit} size="xl" className="mt-6 py-4 xl:hidden text-lg">
-                    Розрахувати
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
                 </Button>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
-                <div className="flex flex-col gap-6 xl:gap-12">
+                <div id="mob-calc-result" className="flex flex-col gap-6 xl:gap-12">
                     <div>
                         <p className="mb-4">Пральна машина</p>
-                        <p className="mb-4 mt-10">Місячне споживання</p>
+                        <p className="mb-4">Місячне споживання</p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.monthly.waterUsageLiters.toFixed(2) || 0} літри/міс
                         </p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.monthly.energyConsumption.toFixed(2) || 0} кВт·год/міс
                         </p>
-                        <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
+                        <p className={cn('text-2xl xl:text-4xl font-semibold')}>
                             {result?.monthly.totalMonthlyCost.toFixed(2) || 0} грн/міс
                         </p>
                     </div>
@@ -408,7 +434,14 @@ const WMComponent = () => {
                         className="hidden xl:flex xl:text-2xl w-full"
                         onClick={handleSubmit}
                     >
-                        Розрахувати
+                        {isLoading ? (
+                            <Loader
+                                style={{ width: '24px', height: '24px' }}
+                                className="animate-spin"
+                            />
+                        ) : (
+                            'Розрахувати'
+                        )}
                     </Button>
                 </div>
             </div>

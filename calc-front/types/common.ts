@@ -31,4 +31,6 @@ export interface UnifiedStoreState {
     setCalculationDone: (done: boolean) => void;
     calculationType: CalculationType;
     setCalculationType: (type: CalculationType) => void;
+    activeTab: CalculationType;
+    setActiveTab: (tab: CalculationType) => void;
 }

@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '../ui/button';
 import { SelectInput } from '../ui/selectInput';
 import { CalcInput } from '@/components/ui/calcInput';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 import TooltipBtn from '../ui/tooltipBtn';
 import { calculateMWConsumption } from '@/lib/calculators';
 import { getDaysInCurrentMonth, smoothScroll } from '@/lib/utils';
@@ -12,6 +12,7 @@ import { useUnifiedStore } from '@/stores/stores';
 import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
 import { mwContent } from '@/lib/techContent';
+import { Loader } from 'react-feather';
 
 export interface FormData {
     powerRating: number;
@@ -54,12 +55,29 @@ const MWComponent = () => {
     const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
+    useEffect(() => {
+        if (!isLoading) return;
+
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+            const isMobile = window.innerWidth < 1200;
+
+            if (isMobile) {
+                smoothScroll('mob-calc-result', -30);
+            } else {
+                smoothScroll('calculator-section', 50);
+            }
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [isLoading]);
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
-
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
+
+    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
 
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
@@ -104,7 +122,7 @@ const MWComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('mw');
-        smoothScroll('calculator-section', 50);
+        setIsLoading(true);
     };
 
     return (
@@ -305,19 +323,26 @@ const MWComponent = () => {
                 </div>
 
                 <Button onClick={handleSubmit} size="xl" className="mt-6 py-4 xl:hidden text-lg">
-                    Розрахувати
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
                 </Button>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
-                <div className="flex flex-col gap-6 xl:gap-12">
+                <div id="mob-calc-result" className="flex flex-col gap-6 xl:gap-12">
                     <div>
                         <p className="mb-4">Мікрохвильовка</p>
-                        <p className="mb-4 mt-10">Місячне споживання</p>
+                        <p className="mb-4">Місячне споживання</p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.monthly.energyConsumption.toFixed(2) || 0} кВт·год/міс
                         </p>
-                        <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
+                        <p className={cn('text-2xl xl:text-4xl font-semibold')}>
                             {result?.monthly.energyCost.toFixed(2) || 0} грн/міс
                         </p>
                     </div>
@@ -326,7 +351,7 @@ const MWComponent = () => {
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.yearly.energyConsumption.toFixed(2) || 0} кВт·год/рік
                         </p>
-                        <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
+                        <p className={cn('text-2xl xl:text-4xl font-semibold')}>
                             {result?.yearly.energyCost.toFixed(2) || 0} грн/рік
                         </p>
                     </div>
@@ -338,7 +363,14 @@ const MWComponent = () => {
                         className="hidden xl:flex xl:text-2xl w-full"
                         onClick={handleSubmit}
                     >
-                        Розрахувати
+                        {isLoading ? (
+                            <Loader
+                                style={{ width: '24px', height: '24px' }}
+                                className="animate-spin"
+                            />
+                        ) : (
+                            'Розрахувати'
+                        )}
                     </Button>
                 </div>
             </div>

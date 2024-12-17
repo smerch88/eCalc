@@ -19,7 +19,7 @@ const WMComponent = dynamic(() => import('./calculators/WMComponent'));
 const MWComponent = dynamic(() => import('./calculators/MWComponent'));
 
 interface Device {
-    id: string;
+    id: CalculationType;
     name: string;
     image: StaticImageData;
     component: ComponentType;
@@ -53,8 +53,8 @@ const devices: Device[] = [
 ];
 
 export const CalculatorsTab = () => {
-    const [activeTab, setActiveTab] = useState<string | undefined>('boiler');
-    const { setAdvices, setCalculationDone } = useUnifiedStore();
+    // const [activeTab, setActiveTab] = useState<string | undefined>('boiler');
+    const { activeTab, setActiveTab, setAdvices, setCalculationDone } = useUnifiedStore();
 
     useEffect(() => {
         setCalculationDone(false);
@@ -172,9 +172,9 @@ export const CalculatorsTab = () => {
 // };
 
 export const CalculatorsSelect = () => {
-    const [activeTab, setActiveTab] = useState<string>('boiler');
+    // const [activeTab, setActiveTab] = useState<string>('boiler');
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { setAdvices, setCalculationDone } = useUnifiedStore();
+    const { activeTab, setActiveTab, setAdvices, setCalculationDone } = useUnifiedStore();
     const activeDevice = devices.find(device => device.id === activeTab);
 
     useEffect(() => {
@@ -205,7 +205,7 @@ export const CalculatorsSelect = () => {
                         image: device.image,
                     }))}
                     selectedValue={activeTab || 'Пристрій'}
-                    onChange={e => setActiveTab(e.target.value)}
+                    onChange={e => setActiveTab(e.target.value as CalculationType)}
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
                     className="bg-white"
