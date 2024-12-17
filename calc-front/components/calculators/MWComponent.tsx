@@ -254,7 +254,7 @@ const MWComponent = () => {
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="dailyUsage" className="block pr-6 xl:pr-0">
-                        Кількість використань мікрохвильовки на день:
+                        Кількість використань мікрохвильовки:
                     </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput

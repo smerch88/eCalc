@@ -338,7 +338,7 @@ const WMComponent = () => {
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="weeklyLoads" className="block pr-6 xl:pr-0">
-                        Кількість використань пральної машини на тиждень:
+                        Кількість використань пральної машини:
                     </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput

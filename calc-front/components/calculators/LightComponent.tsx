@@ -225,7 +225,7 @@ const LightComponent = () => {
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="hoursPerDay" className="block pr-6 xl:pr-0">
-                        Кількість годин роботи освітлення на день:
+                        Кількість годин роботи освітлення:
                     </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
@@ -233,7 +233,7 @@ const LightComponent = () => {
                             type="number"
                             value={formData.hoursPerDay}
                             onChange={handleInputChange}
-                            unit="час"
+                            unit="час/день"
                             className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
                         />
                     </div>
