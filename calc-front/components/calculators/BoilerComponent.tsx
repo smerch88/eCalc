@@ -132,7 +132,7 @@ const BoilerComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col gap-6 xl:gap-12">
                 <div className="relative">
                     <TooltipBtn
                         title={boilerContent.city.title}
@@ -166,7 +166,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.waterVolume.title}
                         text={boilerContent.waterVolume.text}
@@ -190,7 +190,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.tariffElectricity.title}
                         text={boilerContent.tariffElectricity.text}
@@ -248,7 +248,7 @@ const BoilerComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative mt-6 xl:mt-0">
+                        <div className="relative">
                             <TooltipBtn
                                 title={boilerContent.nightRateUsagePercentage.title}
                                 text={boilerContent.nightRateUsagePercentage.text}
@@ -278,7 +278,7 @@ const BoilerComponent = () => {
                         </div>
                     </>
                 )}
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.tariffWater.title}
                         text={boilerContent.tariffWater.text}
@@ -331,7 +331,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.tariffWaterConnection.title}
                         text={boilerContent.tariffWaterConnection.text}
