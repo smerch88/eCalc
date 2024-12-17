@@ -5,14 +5,15 @@ import { CalcInput } from '@/components/ui/calcInput';
 import { Input } from '@/components/ui/input';
 import { calculateLightingConsumption } from '@/lib/calculators';
 import { lightContent } from '@/lib/techContent';
-import { getDaysInCurrentMonth, smoothScroll } from '@/lib/utils';
+import { getDaysInCurrentMonth } from '@/lib/utils';
 import { useUnifiedStore } from '@/stores/stores';
 import cn from 'classnames';
-import { MouseEvent, useState, useEffect } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Button } from '../ui/button';
 import { SelectInput } from '../ui/selectInput';
 import TooltipBtn from '../ui/tooltipBtn';
 import { Loader } from 'react-feather';
+import { Link as Scroll } from 'react-scroll';
 
 export interface FormData {
     wattage: number;
@@ -55,28 +56,10 @@ const LightComponent = () => {
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        if (!isLoading) return;
-
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-            const isMobile = window.innerWidth < 1200;
-
-            if (isMobile) {
-                smoothScroll('mob-calc-result', -30);
-            } else {
-                smoothScroll('calculator-section', 50);
-            }
-        }, 500);
-
-        return () => clearTimeout(timer);
-    }, [isLoading]);
+    const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
+    const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
     const isInputDisabled = selectedCostPerKWh !== 'three-zone';
-
-    const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
-
-    const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
@@ -117,15 +100,19 @@ const LightComponent = () => {
             }
         }
 
-        calculateAndSetResult(formData);
-        setCalculationDone(true);
-        setCalculationType('light');
         setIsLoading(true);
+        setTimeout(() => {
+            calculateAndSetResult(formData);
+            setCalculationDone(true);
+            setCalculationType('light');
+
+            setIsLoading(false);
+        }, 500);
     };
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col gap-6 xl:gap-12">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
                 <div className="relative">
                     <TooltipBtn
                         title={lightContent.wattage.title}
@@ -292,16 +279,22 @@ const LightComponent = () => {
                     </div>
                 </div>
 
-                <Button onClick={handleSubmit} size="xl" className="mt-6 py-4 xl:hidden text-lg">
-                    {isLoading ? (
-                        <Loader
-                            style={{ width: '24px', height: '24px' }}
-                            className="animate-spin"
-                        />
-                    ) : (
-                        'Розрахувати'
-                    )}
-                </Button>
+                <Scroll to="mob-calc-result" smooth={true} offset={-30} duration={1500}>
+                    <Button
+                        onClick={handleSubmit}
+                        size="xl"
+                        className="mt-6 py-4 xl:hidden text-lg w-full"
+                    >
+                        {isLoading ? (
+                            <Loader
+                                style={{ width: '24px', height: '24px' }}
+                                className="animate-spin"
+                            />
+                        ) : (
+                            'Розрахувати'
+                        )}
+                    </Button>
+                </Scroll>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
@@ -327,7 +320,7 @@ const LightComponent = () => {
                     </div>
                 </div>
 
-                <div>
+                <Scroll to="calculator-section" smooth={true} offset={250} duration={1500}>
                     <Button
                         size="xl"
                         className="hidden xl:flex xl:text-2xl w-full"
@@ -342,7 +335,7 @@ const LightComponent = () => {
                             'Розрахувати'
                         )}
                     </Button>
-                </div>
+                </Scroll>
             </div>
         </form>
     );

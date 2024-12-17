@@ -5,14 +5,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '../ui/button';
 import { SelectInput } from '../ui/selectInput';
 import { CalcInput } from '@/components/ui/calcInput';
-import { MouseEvent, useState, useEffect } from 'react';
+import { MouseEvent, useState } from 'react';
 import TooltipBtn from '../ui/tooltipBtn';
 import { calculateBoilerEnergyConsumption } from '@/lib/calculators';
 import { useUnifiedStore } from '@/stores/stores';
 import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
 import { boilerContent } from '@/lib/techContent';
-import { smoothScroll } from '@/lib/utils';
+import { Link as Scroll } from 'react-scroll';
 import { Loader } from 'react-feather';
 
 export interface FormData {
@@ -58,23 +58,6 @@ const BoilerComponent = () => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        if (!isLoading) return;
-
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-            const isMobile = window.innerWidth < 1200;
-
-            if (isMobile) {
-                smoothScroll('mob-calc-result', -30);
-            } else {
-                smoothScroll('calculator-section', 50);
-            }
-        }, 500);
-
-        return () => clearTimeout(timer);
-    }, [isLoading]);
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const location = useUnifiedStore(state => state.location); // Поточне місто
@@ -124,15 +107,19 @@ const BoilerComponent = () => {
             }
         }
 
-        calculateAndSetResult(formData);
-        setCalculationDone(true);
-        setCalculationType('boiler');
         setIsLoading(true);
+        setTimeout(() => {
+            calculateAndSetResult(formData);
+            setCalculationDone(true);
+            setCalculationType('light');
+
+            setIsLoading(false);
+        }, 500);
     };
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col gap-6 xl:gap-12">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
                 <div className="relative">
                     <TooltipBtn
                         title={boilerContent.city.title}
@@ -409,16 +396,23 @@ const BoilerComponent = () => {
                         />
                     </div>
                 </div>
-                <Button onClick={handleSubmit} size="xl" className="mt-6 py-4 xl:hidden text-lg">
-                    {isLoading ? (
-                        <Loader
-                            style={{ width: '24px', height: '24px' }}
-                            className="animate-spin"
-                        />
-                    ) : (
-                        'Розрахувати'
-                    )}
-                </Button>
+
+                <Scroll to="mob-calc-result" smooth={true} offset={-30} duration={1500}>
+                    <Button
+                        onClick={handleSubmit}
+                        size="xl"
+                        className="mt-6 py-4 xl:hidden text-lg w-full"
+                    >
+                        {isLoading ? (
+                            <Loader
+                                style={{ width: '24px', height: '24px' }}
+                                className="animate-spin"
+                            />
+                        ) : (
+                            'Розрахувати'
+                        )}
+                    </Button>
+                </Scroll>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
@@ -478,7 +472,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div>
+                <Scroll to="calculator-section" smooth={true} offset={250} duration={1500}>
                     <Button
                         size="xl"
                         className="hidden xl:flex xl:text-2xl w-full"
@@ -493,7 +487,7 @@ const BoilerComponent = () => {
                             'Розрахувати'
                         )}
                     </Button>
-                </div>
+                </Scroll>
             </div>
         </form>
     );
