@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useUnifiedStore } from '@/stores/stores';
 import { advices as mockAdvices } from '@/lib/advice';
 import { Dropdown } from '@/components/ui/dropdown';
+import { Link as Scroll } from 'react-scroll';
 
 const AdvicesList = () => {
     const { advices, setAdvices, isCalculationDone, calculationType } = useUnifiedStore();
@@ -27,13 +28,13 @@ const AdvicesList = () => {
 
     if (!isCalculationDone) {
         return (
-            <p className="text-xl text-center text-gray-300">
-                Будь ласка, натисніть{' '}
-                <a href="#calculator-section" className="text-black">
-                    &#34;Розрахувати&#34;
-                </a>
-                , щоб отримати поради.
-            </p>
+            <Scroll to="calculator-section" smooth={true} offset={10} duration={1500}>
+                <p className="text-xl text-center cursor-pointer text-gray-300">
+                    Будь ласка, натисніть{' '}
+                    <span className="text-black text-lg xl:text-2xl">&#34;Розрахувати&#34;</span>,
+                    щоб отримати поради.
+                </p>
+            </Scroll>
         );
     }
 

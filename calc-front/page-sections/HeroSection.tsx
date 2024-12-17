@@ -1,7 +1,6 @@
 'use client';
 
 import { Link as Scroll } from 'react-scroll';
-
 import { Button } from '../components/ui/button';
 import cn from 'classnames';
 
@@ -20,7 +19,7 @@ export const HeroSection = () => {
                     Контролюй споживання електроенергії легко
                 </h1>
 
-                <Scroll to="calculator-section" smooth={true} offset={250} duration={1500}>
+                <Scroll to="calculator-section" smooth={true} offset={10} duration={1500}>
                     <Button
                         className="w-full py-6 rounded-2xl text-lg font-normal text-white xl:w-max xl:text-2xl"
                         size="lg"
