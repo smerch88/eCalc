@@ -56,9 +56,19 @@ const LightComponent = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        if (!isLoading) return;
+
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 4000);
+            const isMobile = window.innerWidth < 1200;
+
+            if (isMobile) {
+                smoothScroll('mob-calc-result', -30);
+            } else {
+                smoothScroll('calculator-section', 50);
+            }
+        }, 500);
+
         return () => clearTimeout(timer);
     }, [isLoading]);
 
@@ -110,7 +120,6 @@ const LightComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('light');
-        smoothScroll('calculator-section', 50);
         setIsLoading(true);
     };
 
@@ -284,19 +293,26 @@ const LightComponent = () => {
                 </div>
 
                 <Button onClick={handleSubmit} size="xl" className="mt-6 py-4 xl:hidden text-lg">
-                    Розрахувати
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
                 </Button>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
-                <div className="flex flex-col gap-6 xl:gap-12">
+                <div id="mob-calc-result" className="flex flex-col gap-6 xl:gap-12">
                     <div>
                         <p className="mb-4">Освітлення</p>
-                        <p className="mb-4 mt-10">Місячне споживання</p>
+                        <p className="mb-4">Місячне споживання</p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.monthly.energyConsumption.toFixed(2) || 0} кВт·год/міс
                         </p>
-                        <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
+                        <p className={cn('text-2xl xl:text-4xl font-semibold')}>
                             {result?.monthly.energyCost.toFixed(2) || 0} грн/міс
                         </p>
                     </div>
@@ -305,7 +321,7 @@ const LightComponent = () => {
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.yearly.energyConsumption.toFixed(2) || 0} кВт·год/рік
                         </p>
-                        <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
+                        <p className={cn('text-2xl xl:text-4xl font-semibold')}>
                             {result?.yearly.energyCost.toFixed(2) || 0} грн/рік
                         </p>
                     </div>
@@ -317,7 +333,14 @@ const LightComponent = () => {
                         className="hidden xl:flex xl:text-2xl w-full"
                         onClick={handleSubmit}
                     >
-                        {isLoading ? <Loader className="animate-spin w-6 h-6" /> : 'Розрахувати'}
+                        {isLoading ? (
+                            <Loader
+                                style={{ width: '24px', height: '24px' }}
+                                className="animate-spin"
+                            />
+                        ) : (
+                            'Розрахувати'
+                        )}
                     </Button>
                 </div>
             </div>
