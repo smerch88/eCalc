@@ -155,7 +155,7 @@ const WMComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col gap-6 xl:gap-12">
                 <div className="relative">
                     <TooltipBtn
                         title={wmContent.city.title}
@@ -189,7 +189,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.efficiencyClass.title}
                         text={wmContent.efficiencyClass.text}
@@ -213,7 +213,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.tariffElectricity.title}
                         text={wmContent.tariffElectricity.text}
@@ -271,7 +271,7 @@ const WMComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative mt-6 xl:mt-0">
+                        <div className="relative">
                             <TooltipBtn
                                 title={wmContent.nightRateUsagePercentage.title}
                                 text={wmContent.nightRateUsagePercentage.text}
@@ -301,7 +301,7 @@ const WMComponent = () => {
                     </>
                 )}
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.tariffWater.title}
                         text={wmContent.tariffWater.text}
@@ -322,7 +322,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.loadSize.title}
                         text={wmContent.loadSize.text}
@@ -344,7 +344,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.weeklyLoads.title}
                         text={wmContent.weeklyLoads.text}
@@ -365,7 +365,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.wmAge.title}
                         text={wmContent.wmAge.text}

@@ -100,7 +100,7 @@ export const CalculatorsTab = () => {
                 className={cn(
                     activeTab === 'light' && '!rounded-tl-[0px]',
                     activeTab === 'mw' && '!rounded-tr-[0px]',
-                    'p-4 md:p-12 md:bg-white rounded-xlg md:h-[1100px]'
+                    'p-4 md:p-12 md:bg-white rounded-xlg'
                 )}
             >
                 {renderContent()}
@@ -188,7 +188,7 @@ export const CalculatorsSelect = () => {
             return <ActiveComponent />;
         }
         return (
-            <div className="bg-white rounded-b-[30px] text-center pb-4">
+            <div className="bg-white rounded-b-[30px] text-center">
                 <p>Виберіть пристрій, щоб побачити деталі.</p>
             </div>
         );

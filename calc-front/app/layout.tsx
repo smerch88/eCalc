@@ -8,9 +8,15 @@ import { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 
 const montserrat = localFont({
-    src: './fonts/Montserrat-Regular.woff',
+    src: [
+        { path: './fonts/Montserrat-Regular.woff', weight: '400', style: 'normal' },
+        { path: './fonts/Montserrat-Regular.woff2', weight: '400', style: 'normal' },
+        { path: './fonts/Montserrat-SemiBold.woff', weight: '600', style: 'normal' },
+        { path: './fonts/Montserrat-SemiBold.woff2', weight: '600', style: 'normal' },
+        { path: './fonts/Montserrat-Bold.woff', weight: '700', style: 'normal' },
+        { path: './fonts/Montserrat-Bold.woff2', weight: '700', style: 'normal' },
+    ],
     variable: '--montserrat',
-    weight: '100 900',
 });
 
 export const metadata: Metadata = {
