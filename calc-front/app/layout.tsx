@@ -7,14 +7,9 @@ import { Footer } from '@/components/Footer';
 import { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 
-const geistSans = localFont({
-    src: './fonts/GeistVF.woff',
-    variable: '--font-geist-sans',
-    weight: '100 900',
-});
-const geistMono = localFont({
-    src: './fonts/GeistMonoVF.woff',
-    variable: '--font-geist-mono',
+const montserrat = localFont({
+    src: './fonts/Montserrat-Regular.woff',
+    variable: '--montserrat',
     weight: '100 900',
 });
 
@@ -73,7 +68,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={cn(geistSans.variable, geistMono.variable, 'antialiased')}>
+            <body className={cn(montserrat.variable, 'antialiased')}>
                 <Header />
                 {children}
                 <Analytics />

@@ -204,16 +204,16 @@ const LightComponent = () => {
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
                         <div className="relative mt-6 xl:mt-0">
-                            {/* <TooltipBtn
-                                title={lightContent.tariffElectricity.title}
-                                text={lightContent.tariffElectricity.text}
+                            <TooltipBtn
+                                title={lightContent.nightRateUsagePercentage.title}
+                                text={lightContent.nightRateUsagePercentage.text}
                                 buttonText="Зрозуміло"
-                            /> */}
+                            />
                             <label htmlFor="nightRateUsagePercentage">
                                 Як часто ввімкнуто світло вночі?
                             </label>
 
-                            <div className="relative mt-4 xl:mt-6">
+                            <div className="flex items-start mt-4 xl:mt-6">
                                 <Input
                                     id="nightRateUsagePercentage"
                                     type="range"
@@ -221,10 +221,10 @@ const LightComponent = () => {
                                     max="100"
                                     value={formData.nightRateUsagePercentage}
                                     onChange={handleInputChange}
-                                    className="w-[90%] px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+                                    className="mr-6 border-b-[1px] rounded-none border-t-0 border-x-0 border-black border-solid shadow-none"
                                 />
-                                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
-                                    {formData.nightRateUsagePercentage}%
+                                <span className="text-base font-normal xl:text-lg">
+                                    {formData.nightRateUsagePercentage}&#37;
                                 </span>
                             </div>
                         </div>

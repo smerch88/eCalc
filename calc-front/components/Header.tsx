@@ -6,8 +6,7 @@ import Link from 'next/link';
 
 import { Navbar } from '@/components/Navbar';
 import CityAutoDetect from './CityAutoDetect';
-import LogoLarge from '../public/header/logo-lg.png';
-import LogoSmall from '../public/header/logo-sm.png';
+import Logo from '../public/header/logo.png';
 import Icon from '../public/icons/hamburger.svg';
 
 export const Header = () => {
@@ -18,23 +17,34 @@ export const Header = () => {
     };
 
     return (
-        <header className="absolute left-0 right-0 py-3 xl:py-6 backdrop-blur-md rounded-b-xmd xl:rounded-b-xlg bg-background_header/50">
+        <header className="absolute left-0 right-0 py-4 xl:py-6 backdrop-blur-md rounded-b-xmd xl:rounded-b-xlg bg-background_header/50">
             <div className="container flex items-center justify-between">
                 <Link href="/" className="flex items-center" prefetch={false}>
                     <Image
-                        width={241}
-                        height={60}
-                        src={LogoLarge}
+                        width={38}
+                        height={39}
+                        src={Logo}
+                        quality={100}
+                        priority
                         alt="e-Calculator logotype"
-                        className="hidden lg:hidden"
+                        className="block lg:hidden mr-2"
                     />
+                    <span className="block lg:hidden text-xl font-bold text-black leading-6">
+                        Калькулятор
+                    </span>
+
                     <Image
-                        width={217}
-                        height={73}
-                        src={LogoSmall}
+                        width={46}
+                        height={40}
+                        src={Logo}
+                        quality={100}
+                        priority
                         alt="e-Calculator logotype"
-                        className="block"
+                        className="hidden lg:block mr-2"
                     />
+                    <span className="hidden lg:block text-xl font-bold text-black leading-6">
+                        Калькулятор
+                    </span>
                 </Link>
 
                 <div className="hidden lg:block">
