@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Logo from '../public/header/logo-lg.png';
+import Logo from '../public/header/logo.png';
 import { footerItems } from '@/lib/menuItems';
 
 export const Footer = () => {
@@ -30,7 +30,18 @@ export const Footer = () => {
                     className="flex items-center justify-center mb-8 xl:py-12 xl:mb-0"
                     prefetch={false}
                 >
-                    <Image width={241} height={60} src={Logo} alt="e-Calculator logotype" />
+                    <Image
+                        width={46}
+                        height={40}
+                        src={Logo}
+                        quality={100}
+                        priority
+                        alt="e-Calculator logotype"
+                        className="mr-2"
+                    />
+                    <span className="text-xl font-bold text-black leading-6">
+                        Калькулятор
+                    </span>
                 </Link>
 
                 <nav className="flex flex-col gap-y-6 xl:flex-row xl:gap-x-20">
