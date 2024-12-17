@@ -78,11 +78,17 @@ body {
     /* Стилізація основного повзунка */
     input[type='range'] {
         position: relative;
-        top: 2px;
+        top: 5px;
         -webkit-appearance: none;
         width: 100%;
         background-color: transparent;
         height: 0px;
+    }
+
+    @media screen and (max-width: 768px) {
+        input[type='range'] {
+            top: 3px;
+        }
     }
 
     /* Стилізація "пальця" повзунка для WebKit (Chrome, Safari) */

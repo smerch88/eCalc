@@ -22,7 +22,7 @@ export const footerItems = [
         links: [
             {
                 subtitle: 'support@e-calc.tech',
-                href: '',
+                href: 'mailto:support@e-calc.tech',
             },
         ],
     },

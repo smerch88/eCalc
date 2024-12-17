@@ -39,9 +39,7 @@ export const Footer = () => {
                         alt="e-Calculator logotype"
                         className="mr-2"
                     />
-                    <span className="text-xl font-bold text-black leading-6">
-                        Калькулятор
-                    </span>
+                    <span className="text-xl font-bold text-black leading-6">Калькулятор</span>
                 </Link>
 
                 <nav className="flex flex-col gap-y-6 xl:flex-row xl:gap-x-20">

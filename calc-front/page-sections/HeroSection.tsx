@@ -11,8 +11,7 @@ export const HeroSection = () => {
             className={cn(
                 'hero',
                 'h-[744px] max-h-[100lvh] bg-cover bg-no-repeat bg-center-right mt-14',
-                'xl:mt-0 xl:border-none xl:shadow-none',
-                'xl:h-[860px] xl:bg-bottom'
+                'xl:mt-0 xl:h-[860px] xl:bg-bottom'
             )}
         >
             <div className="container flex flex-col h-[744px] max-h-[100lvh] pt-16 pb-24 xl:h-[860px] xl:py-80">
