@@ -22,4 +22,6 @@ export const useUnifiedStore = create<UnifiedStoreState>(set => ({
     setCalculationDone: (done: boolean) => set({ isCalculationDone: done }),
     calculationType: 'boiler',
     setCalculationType: type => set({ calculationType: type }),
+    activeTab: 'boiler',
+    setActiveTab: tab => set({ activeTab: tab }),
 }));

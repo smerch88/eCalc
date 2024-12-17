@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '../ui/button';
 import { SelectInput } from '../ui/selectInput';
 import { CalcInput } from '@/components/ui/calcInput';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 import TooltipBtn from '../ui/tooltipBtn';
 import { calculateBoilerEnergyConsumption } from '@/lib/calculators';
 import { useUnifiedStore } from '@/stores/stores';
@@ -13,6 +13,7 @@ import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
 import { boilerContent } from '@/lib/techContent';
 import { smoothScroll } from '@/lib/utils';
+import { Loader } from 'react-feather';
 
 export interface FormData {
     waterVolume: string;
@@ -56,11 +57,30 @@ const BoilerComponent = () => {
     const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
-    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!isLoading) return;
+
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+            const isMobile = window.innerWidth < 1200;
+
+            if (isMobile) {
+                smoothScroll('mob-calc-result', -30);
+            } else {
+                smoothScroll('calculator-section', 50);
+            }
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [isLoading]);
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const location = useUnifiedStore(state => state.location); // Поточне місто
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
+
+    const isInputDisabled = selectedCostPerKWh !== 'three-zone';
 
     const calculateAndSetResult = (updatedInputs: FormData): void => {
         const tariffForCalculation = getCalculationValue();
@@ -107,7 +127,7 @@ const BoilerComponent = () => {
         calculateAndSetResult(formData);
         setCalculationDone(true);
         setCalculationType('boiler');
-        smoothScroll('calculator-section', 50);
+        setIsLoading(true);
     };
 
     return (
@@ -390,12 +410,19 @@ const BoilerComponent = () => {
                     </div>
                 </div>
                 <Button onClick={handleSubmit} size="xl" className="mt-6 py-4 xl:hidden text-lg">
-                    Розрахувати
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
                 </Button>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
-                <div className="flex flex-col gap-6 xl:gap-12">
+                <div id="mob-calc-result" className="flex flex-col gap-6 xl:gap-12">
                     <div>
                         <p className="mb-4">Бойлер</p>
                         <p
@@ -457,7 +484,14 @@ const BoilerComponent = () => {
                         className="hidden xl:flex xl:text-2xl w-full"
                         onClick={handleSubmit}
                     >
-                        Розрахувати
+                        {isLoading ? (
+                            <Loader
+                                style={{ width: '24px', height: '24px' }}
+                                className="animate-spin"
+                            />
+                        ) : (
+                            'Розрахувати'
+                        )}
                     </Button>
                 </div>
             </div>
