@@ -190,11 +190,11 @@ const MWComponent = () => {
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
                         <div className="relative mt-6 xl:mt-0">
-                            {/* <TooltipBtn
-                                title="Пояснення показників"
-                                text="Вкажіть обсяг води, що використовується за місяць."
+                            <TooltipBtn
+                                title={mwContent.nightRateUsagePercentage.title}
+                                text={mwContent.nightRateUsagePercentage.text}
                                 buttonText="Зрозуміло"
-                            /> */}
+                            />
                             <label
                                 htmlFor="nightRateUsagePercentage"
                                 className="block pr-6 xl:pr-0"
@@ -202,7 +202,7 @@ const MWComponent = () => {
                                 Як часто використовуєте мікрохвильовку вночі?
                             </label>
 
-                            <div className="relative mt-4 xl:mt-6">
+                            <div className="flex items-start mt-4 xl:mt-6">
                                 <Input
                                     id="nightRateUsagePercentage"
                                     type="range"
@@ -210,10 +210,10 @@ const MWComponent = () => {
                                     max="100"
                                     value={formData.nightRateUsagePercentage}
                                     onChange={handleInputChange}
-                                    className="w-[90%] px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+                                    className="mr-6 border-b-[1px] rounded-none border-t-0 border-x-0 border-black border-solid shadow-none"
                                 />
-                                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
-                                    {formData.nightRateUsagePercentage}%
+                                <span className="text-base font-normal xl:text-lg">
+                                    {formData.nightRateUsagePercentage}&#37;
                                 </span>
                             </div>
                         </div>
