@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useState, useEffect } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { CalcInput } from '@/components/ui/calcInput';
 import { calculateWMConsumption } from '@/lib/calculators';
@@ -17,7 +17,7 @@ import { SelectInput } from '../ui/selectInput';
 import TooltipBtn from '../ui/tooltipBtn';
 import cn from 'classnames';
 import { wmContent } from '@/lib/techContent';
-import { smoothScroll } from '@/lib/utils';
+import { Link as Scroll } from 'react-scroll';
 import { Loader } from 'react-feather';
 
 export interface FormData {
@@ -76,23 +76,6 @@ const WMComponent = () => {
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        if (!isLoading) return;
-
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-            const isMobile = window.innerWidth < 1200;
-
-            if (isMobile) {
-                smoothScroll('mob-calc-result', -30);
-            } else {
-                smoothScroll('calculator-section', 50);
-            }
-        }, 500);
-
-        return () => clearTimeout(timer);
-    }, [isLoading]);
-
     const location = useUnifiedStore(state => state.location);
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
@@ -147,15 +130,19 @@ const WMComponent = () => {
             }
         }
 
-        calculateAndSetResult(formData);
-        setCalculationDone(true);
-        setCalculationType('wm');
         setIsLoading(true);
+        setTimeout(() => {
+            calculateAndSetResult(formData);
+            setCalculationDone(true);
+            setCalculationType('light');
+
+            setIsLoading(false);
+        }, 500);
     };
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-7/12 flex-shrink-0 flex flex-col justify-between">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
                 <div className="relative">
                     <TooltipBtn
                         title={wmContent.city.title}
@@ -189,7 +176,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.efficiencyClass.title}
                         text={wmContent.efficiencyClass.text}
@@ -213,7 +200,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.tariffElectricity.title}
                         text={wmContent.tariffElectricity.text}
@@ -271,7 +258,7 @@ const WMComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative mt-6 xl:mt-0">
+                        <div className="relative">
                             <TooltipBtn
                                 title={wmContent.nightRateUsagePercentage.title}
                                 text={wmContent.nightRateUsagePercentage.text}
@@ -301,7 +288,7 @@ const WMComponent = () => {
                     </>
                 )}
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.tariffWater.title}
                         text={wmContent.tariffWater.text}
@@ -322,7 +309,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.loadSize.title}
                         text={wmContent.loadSize.text}
@@ -344,14 +331,14 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.weeklyLoads.title}
                         text={wmContent.weeklyLoads.text}
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="weeklyLoads" className="block pr-6 xl:pr-0">
-                        Кількість використань пральної машини на тиждень:
+                        Кількість використань пральної машини:
                     </label>
                     <div className="mt-4 xl:mt-6">
                         <CalcInput
@@ -359,13 +346,13 @@ const WMComponent = () => {
                             type="number"
                             value={formData.weeklyLoads}
                             onChange={handleInputChange}
-                            unit="разів"
+                            unit="раз/тиждень"
                             className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
                         />
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-0">
+                <div className="relative">
                     <TooltipBtn
                         title={wmContent.wmAge.title}
                         text={wmContent.wmAge.text}
@@ -386,16 +373,22 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <Button onClick={handleSubmit} size="xl" className="mt-6 py-4 xl:hidden text-lg">
-                    {isLoading ? (
-                        <Loader
-                            style={{ width: '24px', height: '24px' }}
-                            className="animate-spin"
-                        />
-                    ) : (
-                        'Розрахувати'
-                    )}
-                </Button>
+                <Scroll to="mob-calc-result" smooth={true} offset={-30} duration={1500}>
+                    <Button
+                        onClick={handleSubmit}
+                        size="xl"
+                        className="mt-6 py-4 xl:hidden text-lg w-full"
+                    >
+                        {isLoading ? (
+                            <Loader
+                                style={{ width: '24px', height: '24px' }}
+                                className="animate-spin"
+                            />
+                        ) : (
+                            'Розрахувати'
+                        )}
+                    </Button>
+                </Scroll>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
@@ -428,7 +421,7 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <div>
+                <Scroll to="calculator-section" smooth={true} offset={250} duration={1500}>
                     <Button
                         size="xl"
                         className="hidden xl:flex xl:text-2xl w-full"
@@ -443,7 +436,7 @@ const WMComponent = () => {
                             'Розрахувати'
                         )}
                     </Button>
-                </div>
+                </Scroll>
             </div>
         </form>
     );
