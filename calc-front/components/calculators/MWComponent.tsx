@@ -14,6 +14,7 @@ import cn from 'classnames';
 import { mwContent } from '@/lib/techContent';
 import { Loader } from 'react-feather';
 import { Link as Scroll } from 'react-scroll';
+import { useSpring, animated } from '@react-spring/web';
 
 export interface FormData {
     powerRating: number;
@@ -38,6 +39,16 @@ interface CalculationResult {
         energyCost: number;
     };
 }
+
+const AnimatedNumber = ({ value }: { value: number }) => {
+    const { number } = useSpring({
+        from: { number: 0 },
+        number: value,
+        config: { duration: 1000 },
+    });
+
+    return <animated.span>{number.to(n => n.toFixed(2))}</animated.span>;
+};
 
 const MWComponent = () => {
     const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>('single-zone');
@@ -337,7 +348,7 @@ const MWComponent = () => {
                             {result?.monthly.energyConsumption.toFixed(2) || 0} кВт·год/міс
                         </p>
                         <p className={cn('text-2xl xl:text-4xl font-semibold')}>
-                            {result?.monthly.energyCost.toFixed(2) || 0} грн/міс
+                            <AnimatedNumber value={result?.monthly.energyCost || 0} /> грн/міс
                         </p>
                     </div>
                     <div className="border-t-2 pt-6 border-black xl:border-none xl:pt-0">
@@ -346,7 +357,7 @@ const MWComponent = () => {
                             {result?.yearly.energyConsumption.toFixed(2) || 0} кВт·год/рік
                         </p>
                         <p className={cn('text-2xl xl:text-4xl font-semibold')}>
-                            {result?.yearly.energyCost.toFixed(2) || 0} грн/рік
+                            <AnimatedNumber value={result?.yearly.energyCost || 0} /> грн/рік
                         </p>
                     </div>
                 </div>

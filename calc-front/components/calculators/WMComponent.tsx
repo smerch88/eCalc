@@ -19,6 +19,7 @@ import cn from 'classnames';
 import { wmContent } from '@/lib/techContent';
 import { Link as Scroll } from 'react-scroll';
 import { Loader } from 'react-feather';
+import { useSpring, animated } from '@react-spring/web';
 
 export interface FormData {
     efficiencyClass: string;
@@ -51,6 +52,16 @@ interface CalculationResult {
         totalMonthlyCost: number;
     };
 }
+
+const AnimatedNumber = ({ value }: { value: number }) => {
+    const { number } = useSpring({
+        from: { number: 0 },
+        number: value,
+        config: { duration: 1000 },
+    });
+
+    return <animated.span>{number.to(n => n.toFixed(2))}</animated.span>;
+};
 
 const WMComponent = () => {
     const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>('single-zone');
@@ -403,7 +414,7 @@ const WMComponent = () => {
                             {result?.monthly.energyConsumption.toFixed(2) || 0} кВт·год/міс
                         </p>
                         <p className={cn('text-2xl xl:text-4xl font-semibold')}>
-                            {result?.monthly.totalMonthlyCost.toFixed(2) || 0} грн/міс
+                            <AnimatedNumber value={result?.monthly.totalMonthlyCost || 0} /> грн/міс
                         </p>
                     </div>
 
@@ -416,7 +427,7 @@ const WMComponent = () => {
                             {result?.yearly.totalEnergyConsumption.toFixed(2) || 0} кВт·год/рік
                         </p>
                         <p className={cn('text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4')}>
-                            {result?.yearly.totalYearlyCost.toFixed(2) || 0} грн/рік
+                            <AnimatedNumber value={result?.yearly.totalYearlyCost || 0} /> грн/рік
                         </p>
                     </div>
                 </div>

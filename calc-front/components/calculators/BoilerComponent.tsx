@@ -14,6 +14,7 @@ import cn from 'classnames';
 import { boilerContent } from '@/lib/techContent';
 import { Link as Scroll } from 'react-scroll';
 import { Loader } from 'react-feather';
+import { useSpring, animated } from '@react-spring/web';
 
 export interface FormData {
     waterVolume: string;
@@ -35,6 +36,16 @@ interface CalculationResult {
     totalCostInUAH: number;
     networkHotWaterCostInUAH: number;
 }
+
+const AnimatedNumber = ({ value }: { value: number }) => {
+    const { number } = useSpring({
+        from: { number: 0 },
+        number: value,
+        config: { duration: 1000 },
+    });
+
+    return <animated.span>{number.to(n => n.toFixed(2))}</animated.span>;
+};
 
 const BoilerComponent = () => {
     const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>('single-zone');
@@ -430,23 +441,28 @@ const BoilerComponent = () => {
                                 'text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4'
                             )}
                         >
-                            {result?.totalCostInUAH !== undefined
-                                ? result?.totalCostInUAH.toFixed(2)
-                                : 0}{' '}
-                            грн/міс
+                            {result?.totalCostInUAH !== undefined ? (
+                                <>
+                                    <AnimatedNumber value={result.totalCostInUAH} /> грн/міс
+                                </>
+                            ) : (
+                                '0 грн/міс'
+                            )}
                         </p>
                         {result?.totalCostInUAH !== undefined &&
                             result?.networkHotWaterCostInUAH !== undefined && (
                                 <p className="xl:mb-4">
                                     на{' '}
                                     <span className="font-semibold">
-                                        {Math.abs(
-                                            result?.totalCostInUAH -
-                                                result?.networkHotWaterCostInUAH
-                                        ).toFixed(2)}{' '}
+                                        <AnimatedNumber
+                                            value={Math.abs(
+                                                result.totalCostInUAH -
+                                                    result.networkHotWaterCostInUAH
+                                            )}
+                                        />{' '}
                                         грн
                                     </span>{' '}
-                                    {result?.totalCostInUAH - result?.networkHotWaterCostInUAH < 0
+                                    {result.totalCostInUAH - result.networkHotWaterCostInUAH < 0
                                         ? 'дешевше'
                                         : 'дорожче'}
                                 </p>
@@ -465,10 +481,14 @@ const BoilerComponent = () => {
                                 'text-2xl xl:text-4xl font-semibold mb-2 xl:mb-4'
                             )}
                         >
-                            {result?.networkHotWaterCostInUAH !== undefined
-                                ? result?.networkHotWaterCostInUAH.toFixed(2)
-                                : 0}{' '}
-                            грн/міс
+                            {result?.networkHotWaterCostInUAH !== undefined ? (
+                                <>
+                                    <AnimatedNumber value={result.networkHotWaterCostInUAH} />{' '}
+                                    грн/міс
+                                </>
+                            ) : (
+                                '0 грн/міс'
+                            )}
                         </p>
                     </div>
                 </div>
