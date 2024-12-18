@@ -62,7 +62,7 @@ const CityAutoDetect = () => {
     };
 
     return (
-        <div className="relative w-full xl:w-[200px] h-[56px]">
+        <div className="relative w-full xl:w-[282px] h-[56px]">
             {/* Поле вводу */}
             <Input
                 type="text"

@@ -24,7 +24,7 @@ export const Footer = () => {
 
     return (
         <footer className="pt-4 pb-6 bg-background_header/50 rounded-t-xmd xl:rounded-t-xlg xl:px-24 xl:py-10">
-            <div className="container flex flex-col xl:flex-row xl:justify-between">
+            <div className="container flex flex-col xl:flex-row xl:gap-60">
                 <Link
                     href="/"
                     className="flex items-center justify-center mb-8 xl:py-12 xl:mb-0"
@@ -39,9 +39,7 @@ export const Footer = () => {
                         alt="e-Calculator logotype"
                         className="mr-2"
                     />
-                    <span className="text-xl font-bold text-black leading-6">
-                        Калькулятор
-                    </span>
+                    <span className="text-xl font-bold text-black leading-6">Калькулятор</span>
                 </Link>
 
                 <nav className="flex flex-col gap-y-6 xl:flex-row xl:gap-x-20">

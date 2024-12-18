@@ -407,7 +407,7 @@ const WMComponent = () => {
                         </p>
                     </div>
 
-                    <div className="border-t-2 pt-6 border-black xl:border-none xl:pt-0">
+                    <div className="border-t-[1px] pt-6 border-black xl:border-none xl:pt-0">
                         <p className="mb-4">Річне споживання</p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.yearly.totalWaterUsageLiters.toFixed(2) || 0} літри/рік

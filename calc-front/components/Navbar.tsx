@@ -16,7 +16,7 @@ export const Navbar = ({ isMobile = false, closeMenu }: NavbarProps) => {
             )}
             <ul
                 className={`flex ${
-                    isMobile ? 'items-center flex-row justify-between mb-6' : 'gap-x-4'
+                    isMobile ? 'items-center flex-row justify-center gap-2 mb-6' : 'lg:gap-4'
                 }`}
             >
                 {menuItems.map(item => (
@@ -24,7 +24,7 @@ export const Navbar = ({ isMobile = false, closeMenu }: NavbarProps) => {
                         <Link
                             href={item.href || '#'}
                             className={`${
-                                isMobile ? 'py-4 text-base' : 'xl:px-6 xl:py-4 text-lg'
+                                isMobile ? 'p-4 text-base' : 'xl:px-6 xl:py-4 text-lg'
                             } font-normal text-primary`}
                             onClick={isMobile && closeMenu ? closeMenu : undefined}
                         >

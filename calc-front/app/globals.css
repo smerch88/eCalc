@@ -33,6 +33,7 @@ body {
         --footer-text: 0 0% 31%;
         --border: 0 0% 89.8%;
         --input: 0 0% 89.8%;
+        --placeholder: 0 0% 60%;
         --tooltip: 0 0% 94%;
         --ring: 0 0% 3.9%;
         --chart-1: 12 76% 61%;
@@ -78,11 +79,17 @@ body {
     /* Стилізація основного повзунка */
     input[type='range'] {
         position: relative;
-        top: 2px;
+        top: 5px;
         -webkit-appearance: none;
         width: 100%;
         background-color: transparent;
         height: 0px;
+    }
+
+    @media screen and (max-width: 768px) {
+        input[type='range'] {
+            top: 3px;
+        }
     }
 
     /* Стилізація "пальця" повзунка для WebKit (Chrome, Safari) */
@@ -128,7 +135,19 @@ body {
     }
 
     .hero {
-        background-image: url('../public/heroBG.png');
+        background-image: url('../public/bgImages/hero.webp');
+    }
+
+    @media (min-width: 768px) and (max-width: 1279px) {
+        .hero {
+            background-image: url('../public/bgImages/heroMd.webp');
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .hero {
+            background-image: url('../public/bgImages/heroLg.webp');
+        }
     }
 
     .decorated-left {
