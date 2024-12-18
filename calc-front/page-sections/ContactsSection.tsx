@@ -10,7 +10,7 @@ export const ContactsSection = () => {
                 {contacts.map((contact, index) => (
                     <li
                         key={index}
-                        className="flex flex-col bg-white rounded-xlg shadow-md p-6 h-60 xl:h-72"
+                        className="flex flex-col bg-white rounded-xlg shadow-md p-6 h-[310px] xl:h-[350px]"
                     >
                         <div className="flex items-center mb-8">
                             <Link
@@ -19,11 +19,7 @@ export const ContactsSection = () => {
                                 rel="noopener noreferrer"
                                 className="flex items-center mr-2"
                             >
-                                <span
-                                    className={`flex justify-center lg:hidden items-center w-10 h-10 rounded-2xl ${
-                                        index === 0 ? 'bg-black' : 'bg-blue-500'
-                                    }`}
-                                >
+                                <span className="flex justify-center lg:hidden items-center w-10 h-10 rounded-2xl bg-blue-500">
                                     <Image
                                         width={16}
                                         height={16}
@@ -31,11 +27,7 @@ export const ContactsSection = () => {
                                         alt={contact.alt}
                                     />
                                 </span>
-                                <span
-                                    className={`hidden justify-center lg:flex items-center w-11 h-11 rounded-2xl ${
-                                        index === 0 ? 'bg-black' : 'bg-blue-500'
-                                    }`}
-                                >
+                                <span className="hidden justify-center lg:flex items-center w-11 h-11 rounded-2xl bg-blue-500">
                                     <Image
                                         width={24}
                                         height={24}
