@@ -119,7 +119,7 @@ const BoilerComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col">
                 <div className="relative">
                     <TooltipBtn
                         title={boilerContent.city.title}
@@ -153,7 +153,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={boilerContent.waterVolume.title}
                         text={boilerContent.waterVolume.text}
@@ -177,7 +177,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={boilerContent.tariffElectricity.title}
                         text={boilerContent.tariffElectricity.text}
@@ -235,7 +235,7 @@ const BoilerComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative">
+                        <div className="relative mt-6 xl:mt-12">
                             <TooltipBtn
                                 title={boilerContent.nightRateUsagePercentage.title}
                                 text={boilerContent.nightRateUsagePercentage.text}
@@ -265,7 +265,8 @@ const BoilerComponent = () => {
                         </div>
                     </>
                 )}
-                <div className="relative">
+
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={boilerContent.tariffWater.title}
                         text={boilerContent.tariffWater.text}
@@ -318,7 +319,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={boilerContent.tariffWaterConnection.title}
                         text={boilerContent.tariffWaterConnection.text}
@@ -334,7 +335,7 @@ const BoilerComponent = () => {
                             placeholder="42.94"
                             value={formData.subscriptionFee}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg mb-4 xl:mb-6"
+                            className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
                         />
                         <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
                             грн/міс
@@ -342,7 +343,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={boilerContent.waterTemperatures.title}
                         text={boilerContent.waterTemperatures.text}
@@ -377,7 +378,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={boilerContent.coefficientOfEfficiency.title}
                         text={boilerContent.coefficientOfEfficiency.text}
@@ -401,7 +402,7 @@ const BoilerComponent = () => {
                     <Button
                         onClick={handleSubmit}
                         size="xl"
-                        className="mt-6 py-4 xl:hidden text-lg w-full"
+                        className="py-4 xl:hidden text-lg w-full"
                     >
                         {isLoading ? (
                             <Loader

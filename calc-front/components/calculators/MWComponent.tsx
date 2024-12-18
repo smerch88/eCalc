@@ -115,7 +115,7 @@ const MWComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col">
                 <div className="relative">
                     <TooltipBtn
                         title={mwContent.powerRating.title}
@@ -137,7 +137,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={mwContent.tariffElectricity.title}
                         text={mwContent.tariffElectricity.text}
@@ -195,7 +195,7 @@ const MWComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative">
+                        <div className="relative mt-6 xl:mt-12">
                             <TooltipBtn
                                 title={mwContent.nightRateUsagePercentage.title}
                                 text={mwContent.nightRateUsagePercentage.text}
@@ -226,7 +226,7 @@ const MWComponent = () => {
                     </>
                 )}
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={mwContent.usageTime.title}
                         text={mwContent.usageTime.text}
@@ -247,7 +247,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={mwContent.dailyUsage.title}
                         text={mwContent.dailyUsage.text}
@@ -268,7 +268,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={mwContent.ageInYears.title}
                         text={mwContent.ageInYears.text}
@@ -289,7 +289,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={mwContent.daysPerMonth.title}
                         text={mwContent.daysPerMonth.text}

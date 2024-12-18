@@ -112,7 +112,7 @@ const LightComponent = () => {
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col">
                 <div className="relative">
                     <TooltipBtn
                         title={lightContent.wattage.title}
@@ -132,7 +132,7 @@ const LightComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={lightContent.tariffElectricity.title}
                         text={lightContent.tariffElectricity.text}
@@ -190,7 +190,7 @@ const LightComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative">
+                        <div className="relative mt-6 xl:mt-12">
                             <TooltipBtn
                                 title={lightContent.nightRateUsagePercentage.title}
                                 text={lightContent.nightRateUsagePercentage.text}
@@ -218,7 +218,7 @@ const LightComponent = () => {
                     </>
                 )}
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={lightContent.wattage.title}
                         text={lightContent.wattage.text}
@@ -239,7 +239,7 @@ const LightComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={lightContent.wattage.title}
                         text={lightContent.wattage.text}
@@ -258,7 +258,7 @@ const LightComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative mt-6 xl:mt-12">
                     <TooltipBtn
                         title={lightContent.wattage.title}
                         text={lightContent.wattage.text}
