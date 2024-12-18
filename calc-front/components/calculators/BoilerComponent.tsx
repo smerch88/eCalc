@@ -138,16 +138,18 @@ const BoilerComponent = () => {
     };
 
     return (
-        <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
+        <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-lg h-full">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-4 xl:gap-8">
                 <div className="relative">
                     <TooltipBtn
                         title={boilerContent.city.title}
                         text={boilerContent.city.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="city">Тарифи за воду з міста:</label>
-                    <div className="relative mt-4 xl:mt-6">
+                    <label className="text-shadow" htmlFor="city">
+                        Тарифи за воду з міста:
+                    </label>
+                    <div className="relative mt-4 xl:mt-3">
                         <Input
                             id="city"
                             type="text"
@@ -179,19 +181,19 @@ const BoilerComponent = () => {
                         text={boilerContent.waterVolume.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="waterVolume" className="block pr-6 xl:pr-0">
+                    <label htmlFor="waterVolume" className="block pr-6 xl:pr-0 text-shadow">
                         Споживання гарячої води на місяць:
                     </label>
-                    <div className="relative mt-4 xl:mt-6">
+                    <div className="relative mt-4 xl:mt-3">
                         <Input
                             id="waterVolume"
                             type="text"
                             placeholder="Літрів"
                             value={formData.waterVolume}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg"
+                            className="w-full px-4 xl:px-6 rounded-2xl text-base"
                         />
-                        <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
+                        <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-sm">
                             літрів
                         </span>
                     </div>
@@ -203,8 +205,8 @@ const BoilerComponent = () => {
                         text={boilerContent.tariffElectricity.text}
                         buttonText="Зрозуміло"
                     />
-                    <span className="block pr-6 xl:pr-0">Тариф на електроенергію:</span>
-                    <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-6 text-base xl:text-lg relative">
+                    <span className="block pr-6 xl:pr-0 text-shadow">Тариф на електроенергію:</span>
+                    <div className="flex flex-col items-center xl:flex-row mt-4 xl:mt-3 text-base xl:text-lg relative">
                         <div>
                             <SelectInput
                                 options={options.map(option => ({
@@ -227,11 +229,11 @@ const BoilerComponent = () => {
                                 value={formData.costPerKWh}
                                 onChange={handleInputChange}
                                 disabled={isInputDisabled}
-                                className={`px-4 py-4 w-full mt-4 xl:mt-0 xl:px-6 xl:py-6 rounded-2xl text-base xl:text-lg ${
+                                className={`px-4 w-full mt-4 xl:mt-0 xl:px-6 rounded-2xl text-base xl:text-lg ${
                                     isInputDisabled ? 'bg-gray-200 cursor-not-allowed' : ''
                                 } ${!isValid ? 'border-2 border-red-500' : ''}`}
                             />
-                            <span className="absolute mt-2 xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
+                            <span className="absolute mt-2 xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-sm">
                                 грн/кВт
                             </span>
                             {formData.icon && Array.isArray(formData.icon) ? (
@@ -263,7 +265,7 @@ const BoilerComponent = () => {
                             />
                             <label
                                 htmlFor="nightRateUsagePercentage"
-                                className="block pr-6 xl:pr-0"
+                                className="block pr-6 xl:pr-0 text-shadow"
                             >
                                 Яку частину води грієте вночі?
                             </label>
@@ -292,13 +294,13 @@ const BoilerComponent = () => {
                         text={boilerContent.tariffWater.text}
                         buttonText="Зрозуміло"
                     />
-                    <span className="block pr-6 xl:pr-0">
+                    <span className="block pr-6 xl:pr-0 text-shadow">
                         Який тариф на водопостачання використовуєте?
                     </span>
-                    <div className="flex flex-col xl:flex-row gap-4 xl:gap-12 mt-4 xl:mt-6 text-base xl:text-lg">
+                    <div className="flex flex-col xl:flex-row gap-4 xl:gap-12 mt-4 xl:mt-3">
                         <div className="flex items-center xl:gap-6">
                             <label
-                                className="w-[128px] xl:w-auto"
+                                className="w-[128px] xl:w-auto text-base"
                                 htmlFor="coldWaterCostPerCubicMeter"
                             >
                                 Холодна
@@ -309,16 +311,16 @@ const BoilerComponent = () => {
                                     type="text"
                                     value={formData.coldWaterCostPerCubicMeter}
                                     onChange={handleInputChange}
-                                    className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+                                    className="w-full px-4 xl:px-6 rounded-2xl"
                                 />
-                                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap xl:text-lg">
+                                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-sm">
                                     грн/м³
                                 </span>
                             </div>
                         </div>
                         <div className="flex items-center xl:gap-6">
                             <label
-                                className="w-[128px] xl:w-auto"
+                                className="w-[128px] xl:w-auto text-base"
                                 htmlFor="hotWaterCostPerCubicMeter"
                             >
                                 Гаряча
@@ -329,9 +331,9 @@ const BoilerComponent = () => {
                                     type="text"
                                     value={formData.hotWaterCostPerCubicMeter}
                                     onChange={handleInputChange}
-                                    className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+                                    className="w-full px-4 xl:px-6 rounded-2xl"
                                 />
-                                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap xl:text-lg">
+                                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-sm">
                                     грн/м³
                                 </span>
                             </div>
@@ -345,19 +347,19 @@ const BoilerComponent = () => {
                         text={boilerContent.tariffWaterConnection.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="subscriptionFee" className="block pr-6 xl:pr-0">
+                    <label htmlFor="subscriptionFee" className="block pr-6 xl:pr-0 text-shadow">
                         Абонплата за підключення гарячої води:
                     </label>
-                    <div className="relative mt-4 xl:mt-6">
+                    <div className="relative mt-4 xl:mt-3">
                         <Input
                             id="subscriptionFee"
                             type="number"
                             placeholder="42.94"
                             value={formData.subscriptionFee}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-4 xl:px-6 xl:py-6 rounded-2xl xl:text-lg"
+                            className="w-full px-4 xl:px-6 rounded-2xl"
                         />
-                        <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-lg">
+                        <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-sm">
                             грн/міс
                         </span>
                     </div>
@@ -370,8 +372,8 @@ const BoilerComponent = () => {
                         buttonText="Зрозуміло"
                     />
                     <div className="flex flex-col xl:flex-row xl:gap-12">
-                        <div className="text-lg xl:text-2xl text-primary mb-4 xl:mb-0">
-                            <label htmlFor="initialTemp" className="block xl:mb-6">
+                        <div className="mb-4 xl:mb-0">
+                            <label htmlFor="initialTemp" className="block xl:mb-3 text-shadow">
                                 Початкова температура:
                             </label>
                             <CalcInput
@@ -383,8 +385,8 @@ const BoilerComponent = () => {
                             />
                         </div>
 
-                        <div className="text-lg xl:text-2xl text-primary mb-4 xl:mb-0">
-                            <label htmlFor="targetTemp" className="block xl:mb-6">
+                        <div className="mb-4 xl:mb-0">
+                            <label htmlFor="targetTemp" className="block xl:mb-3 text-shadow">
                                 Цільова температура:
                             </label>
                             <CalcInput
@@ -404,7 +406,7 @@ const BoilerComponent = () => {
                         text={boilerContent.coefficientOfEfficiency.text}
                         buttonText="Зрозуміло"
                     />
-                    <label htmlFor="efficiency" className="block xl:mb-6">
+                    <label htmlFor="efficiency" className="block xl:mb-3 text-shadow">
                         Який КПД бойлера?
                     </label>
                     <div>

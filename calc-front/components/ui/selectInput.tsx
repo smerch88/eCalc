@@ -39,7 +39,7 @@ export const SelectInput: FC<SelectInputProps> = ({
         <div className={`relative ${className}`}>
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className="cursor-pointer w-full h-14 px-4 py-3 rounded-2xl bg-white border border-black text-base xl:text-lg flex items-center justify-between"
+                className="cursor-pointer w-full h-12 px-6 py-3 rounded-2xl bg-white border border-black text-base xl:text-base flex items-center justify-between"
             >
                 <span>{displayLabel}</span>
 
@@ -67,13 +67,13 @@ export const SelectInput: FC<SelectInputProps> = ({
                 <div
                     className={`${
                         dropdownClassName || 'absolute'
-                    } w-full mt-2 bg-white border border-black rounded-2xl shadow-lg z-10`}
+                    } w-full mt-2 bg-white border border-black rounded-2xl shadow-lg z-10 text-sm`}
                 >
                     {options.map(option => (
                         <div
                             key={option.value}
                             onClick={() => handleSelectChange(option.value)}
-                            className="flex items-center px-4 py-2 rounded-2xl hover:bg-gray-100 cursor-pointer"
+                            className="flex items-center px-6 py-2 rounded-2xl hover:bg-gray-100 cursor-pointer"
                         >
                             {option.image && (
                                 <div className="w-[45px] h-[52px] mr-3">
