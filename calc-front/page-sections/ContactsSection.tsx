@@ -12,12 +12,12 @@ export const ContactsSection = () => {
                         key={index}
                         className="flex flex-col bg-white rounded-xlg shadow-md p-6 h-[310px] xl:h-[350px]"
                     >
-                        <div className="flex items-center mb-8">
+                        <div className="flex mb-8">
                             <Link
                                 href={contact.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center mr-2"
+                                className="flex mr-4"
                             >
                                 <span className="flex justify-center lg:hidden items-center w-10 h-10 rounded-2xl bg-blue-500">
                                     <Image

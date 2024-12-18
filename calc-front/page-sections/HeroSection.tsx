@@ -20,7 +20,7 @@ export const HeroSection = () => {
 
                 <Scroll to="calculator-section" smooth={true} offset={10} duration={1500}>
                     <Button
-                        className="w-full py-6 rounded-2xl text-lg font-normal text-white xl:w-max xl:text-2xl"
+                        className="w-full h-[56px] py-4 px-[62.5px] rounded-2xl text-lg font-normal text-white xl:w-[282px] xl:h-[61px] xl:text-2xl"
                         size="lg"
                     >
                         Розрахувати

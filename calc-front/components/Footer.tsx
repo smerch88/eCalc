@@ -24,7 +24,7 @@ export const Footer = () => {
 
     return (
         <footer className="pt-4 pb-6 bg-background_header/50 rounded-t-xmd xl:rounded-t-xlg xl:px-24 xl:py-10">
-            <div className="container flex flex-col xl:flex-row xl:justify-between">
+            <div className="container flex flex-col xl:flex-row xl:gap-60">
                 <Link
                     href="/"
                     className="flex items-center justify-center mb-8 xl:py-12 xl:mb-0"

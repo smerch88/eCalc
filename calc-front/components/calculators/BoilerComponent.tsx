@@ -451,8 +451,8 @@ const BoilerComponent = () => {
                                 </p>
                             )}
                     </div>
-                    <span className="hidden xl:block text-center text-base">проти</span>
-                    <div className="border-t-2 pt-6 border-black xl:border-none xl:pt-0">
+                    <span className="hidden xl:block text-center text-base ">проти</span>
+                    <div className="border-t-[1px] pt-6 border-black xl:border-none xl:pt-0">
                         <p className="mb-4">Централізована мережа</p>
                         <p
                             className={cn(
