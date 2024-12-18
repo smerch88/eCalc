@@ -13,7 +13,7 @@ import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
 import { mwContent } from '@/lib/techContent';
 import { Loader } from 'react-feather';
-import { Link as Scroll } from 'react-scroll';
+import { scroller } from 'react-scroll';
 import { useSpring, animated } from '@react-spring/web';
 
 export interface FormData {
@@ -122,11 +122,20 @@ const MWComponent = () => {
 
             setIsLoading(false);
         }, 500);
+
+        const isMobile = window.matchMedia('(max-width: 1280px)').matches;
+        const offset = isMobile ? -30 : 250;
+
+        scroller.scrollTo(isMobile ? 'mob-calc-result' : 'calculator-section', {
+            smooth: true,
+            offset: offset,
+            duration: 1500,
+        });
     };
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
                 <div className="relative">
                     <TooltipBtn
                         title={mwContent.powerRating.title}
@@ -148,7 +157,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative">
                     <TooltipBtn
                         title={mwContent.tariffElectricity.title}
                         text={mwContent.tariffElectricity.text}
@@ -206,7 +215,7 @@ const MWComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative mt-6 xl:mt-12">
+                        <div className="relative">
                             <TooltipBtn
                                 title={mwContent.nightRateUsagePercentage.title}
                                 text={mwContent.nightRateUsagePercentage.text}
@@ -237,7 +246,7 @@ const MWComponent = () => {
                     </>
                 )}
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative mt-6">
                     <TooltipBtn
                         title={mwContent.usageTime.title}
                         text={mwContent.usageTime.text}
@@ -258,7 +267,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative mt-6">
                     <TooltipBtn
                         title={mwContent.dailyUsage.title}
                         text={mwContent.dailyUsage.text}
@@ -279,7 +288,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative mt-6">
                     <TooltipBtn
                         title={mwContent.ageInYears.title}
                         text={mwContent.ageInYears.text}
@@ -300,7 +309,7 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative mt-6">
                     <TooltipBtn
                         title={mwContent.daysPerMonth.title}
                         text={mwContent.daysPerMonth.text}
@@ -321,22 +330,20 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <Scroll to="mob-calc-result" smooth={true} offset={-30} duration={1500}>
-                    <Button
-                        onClick={handleSubmit}
-                        size="xl"
-                        className="mt-6 py-4 xl:hidden text-lg w-full"
-                    >
-                        {isLoading ? (
-                            <Loader
-                                style={{ width: '24px', height: '24px' }}
-                                className="animate-spin"
-                            />
-                        ) : (
-                            'Розрахувати'
-                        )}
-                    </Button>
-                </Scroll>
+                <Button
+                    onClick={handleSubmit}
+                    size="xl"
+                    className="mt-6 py-4 xl:hidden text-lg w-full"
+                >
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
+                </Button>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
@@ -362,22 +369,20 @@ const MWComponent = () => {
                     </div>
                 </div>
 
-                <Scroll to="calculator-section" smooth={true} offset={250} duration={1500}>
-                    <Button
-                        size="xl"
-                        className="hidden xl:flex xl:text-2xl w-full"
-                        onClick={handleSubmit}
-                    >
-                        {isLoading ? (
-                            <Loader
-                                style={{ width: '24px', height: '24px' }}
-                                className="animate-spin"
-                            />
-                        ) : (
-                            'Розрахувати'
-                        )}
-                    </Button>
-                </Scroll>
+                <Button
+                    size="xl"
+                    className="hidden xl:flex xl:text-2xl w-full"
+                    onClick={handleSubmit}
+                >
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
+                </Button>
             </div>
         </form>
     );

@@ -125,7 +125,7 @@ export const FeedbackForm: FC = () => {
                 }`}
             >
                 {isLoading ? (
-                    <Loader className="animate-spin" />
+                    <Loader className="animate-spin" style={{ width: '24px', height: '24px' }} />
                 ) : isSent ? (
                     <Check className="text-white" />
                 ) : error ? (

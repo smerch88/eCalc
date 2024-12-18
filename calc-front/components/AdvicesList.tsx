@@ -29,11 +29,11 @@ const AdvicesList = () => {
     if (!isCalculationDone) {
         return (
             <Scroll to="calculator-section" smooth={true} offset={10} duration={1500}>
-                <p className="text-xl text-center cursor-pointer text-gray-300">
+                <span className="text-xl text-center cursor-pointer text-gray-300">
                     Будь ласка, натисніть{' '}
                     <span className="text-black text-lg xl:text-2xl">&#34;Розрахувати&#34;</span>,
                     щоб отримати поради.
-                </p>
+                </span>
             </Scroll>
         );
     }

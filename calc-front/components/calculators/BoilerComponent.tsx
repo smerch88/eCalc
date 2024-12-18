@@ -12,7 +12,7 @@ import { useUnifiedStore } from '@/stores/stores';
 import { TariffChange, options, icons } from '@/components/TariffChange';
 import cn from 'classnames';
 import { boilerContent } from '@/lib/techContent';
-import { Link as Scroll } from 'react-scroll';
+import { scroller } from 'react-scroll';
 import { Loader } from 'react-feather';
 import { useSpring, animated } from '@react-spring/web';
 
@@ -126,11 +126,20 @@ const BoilerComponent = () => {
 
             setIsLoading(false);
         }, 500);
+
+        const isMobile = window.matchMedia('(max-width: 1280px)').matches;
+        const offset = isMobile ? -30 : 250;
+
+        scroller.scrollTo(isMobile ? 'mob-calc-result' : 'calculator-section', {
+            smooth: true,
+            offset: offset,
+            duration: 1500,
+        });
     };
 
     return (
         <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-2xl h-full">
-            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col">
+            <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-6 xl:gap-12">
                 <div className="relative">
                     <TooltipBtn
                         title={boilerContent.city.title}
@@ -164,7 +173,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.waterVolume.title}
                         text={boilerContent.waterVolume.text}
@@ -188,7 +197,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.tariffElectricity.title}
                         text={boilerContent.tariffElectricity.text}
@@ -246,7 +255,7 @@ const BoilerComponent = () => {
                 </div>
                 {selectedCostPerKWh === 'two-zone' && (
                     <>
-                        <div className="relative mt-6 xl:mt-12">
+                        <div className="relative">
                             <TooltipBtn
                                 title={boilerContent.nightRateUsagePercentage.title}
                                 text={boilerContent.nightRateUsagePercentage.text}
@@ -277,7 +286,7 @@ const BoilerComponent = () => {
                     </>
                 )}
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.tariffWater.title}
                         text={boilerContent.tariffWater.text}
@@ -330,7 +339,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.tariffWaterConnection.title}
                         text={boilerContent.tariffWaterConnection.text}
@@ -354,7 +363,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.waterTemperatures.title}
                         text={boilerContent.waterTemperatures.text}
@@ -389,7 +398,7 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <div className="relative mt-6 xl:mt-12">
+                <div className="relative">
                     <TooltipBtn
                         title={boilerContent.coefficientOfEfficiency.title}
                         text={boilerContent.coefficientOfEfficiency.text}
@@ -409,22 +418,16 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <Scroll to="mob-calc-result" smooth={true} offset={-30} duration={1500}>
-                    <Button
-                        onClick={handleSubmit}
-                        size="xl"
-                        className="py-4 xl:hidden text-lg w-full"
-                    >
-                        {isLoading ? (
-                            <Loader
-                                style={{ width: '24px', height: '24px' }}
-                                className="animate-spin"
-                            />
-                        ) : (
-                            'Розрахувати'
-                        )}
-                    </Button>
-                </Scroll>
+                <Button onClick={handleSubmit} size="xl" className="py-4 xl:hidden text-lg w-full">
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
+                </Button>
             </div>
 
             <div className="bg-white rounded-xmd p-4 xl:p-0 flex flex-col justify-between">
@@ -493,22 +496,20 @@ const BoilerComponent = () => {
                     </div>
                 </div>
 
-                <Scroll to="calculator-section" smooth={true} offset={250} duration={1500}>
-                    <Button
-                        size="xl"
-                        className="hidden xl:flex xl:text-2xl w-full"
-                        onClick={handleSubmit}
-                    >
-                        {isLoading ? (
-                            <Loader
-                                style={{ width: '24px', height: '24px' }}
-                                className="animate-spin"
-                            />
-                        ) : (
-                            'Розрахувати'
-                        )}
-                    </Button>
-                </Scroll>
+                <Button
+                    size="xl"
+                    className="hidden xl:flex xl:text-2xl w-full"
+                    onClick={handleSubmit}
+                >
+                    {isLoading ? (
+                        <Loader
+                            style={{ width: '24px', height: '24px' }}
+                            className="animate-spin"
+                        />
+                    ) : (
+                        'Розрахувати'
+                    )}
+                </Button>
             </div>
         </form>
     );
