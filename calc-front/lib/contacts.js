@@ -29,8 +29,7 @@ export const contacts = [
     },
     {
         title: 'Проєктний менеджер, тестувальник',
-        description:
-            'Едуард Куріш. Працює над забезпеченням якості продукту.',
+        description: 'Едуард Куріш. Працює над забезпеченням якості продукту.',
         link: 'https://www.linkedin.com/in/eduardkurish/',
         linkText: 'LinkedIn профіль',
         icon: Icon,
