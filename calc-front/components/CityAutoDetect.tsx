@@ -6,27 +6,27 @@ import { useUnifiedStore } from '@/stores/stores'; // Імпорт zustand store
 import Image from 'next/image';
 import IconArrowDown from '@/public/icons/arrow-down.svg';
 import IconArrowUp from '@/public/icons/arrow-up.svg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Словник для перекладу міст
-const cityTranslations: { [key: string]: string } = {
-    Vinnytsia: 'Вінниця',
-    Dnipro: 'Дніпро',
-    Zhytomyr: 'Житомир',
-    Zaporizhzhia: 'Запоріжжя',
-    Kyiv: 'Київ',
-    Lviv: 'Львів',
-    Mykolaiv: 'Миколаїв',
-    Odessa: 'Одеса',
-    Poltava: 'Полтава',
-    Kharkiv: 'Харків',
-    Kherson: 'Херсон',
-    Cherkasy: 'Черкаси',
-};
+// const cityTranslations: { [key: string]: string } = {
+//     Vinnytsia: 'Вінниця',
+//     Dnipro: 'Дніпро',
+//     Zhytomyr: 'Житомир',
+//     Zaporizhzhia: 'Запоріжжя',
+//     Kyiv: 'Київ',
+//     Lviv: 'Львів',
+//     Mykolaiv: 'Миколаїв',
+//     Odessa: 'Одеса',
+//     Poltava: 'Полтава',
+//     Kharkiv: 'Харків',
+//     Kherson: 'Херсон',
+//     Cherkasy: 'Черкаси',
+// };
 
-const translateCity = (city: string) => {
-    return cityTranslations[city] || city; // Якщо немає перекладу, повертається оригінальна назва
-};
+// const translateCity = (city: string) => {
+//     return cityTranslations[city] || city; // Якщо немає перекладу, повертається оригінальна назва
+// };
 
 const CityAutoDetect = () => {
     // const location = useUnifiedStore((state) => state.location); // Поточне місто.
@@ -35,20 +35,20 @@ const CityAutoDetect = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
     const [searchTerm, setSearchTerm] = useState(''); // Стан пошуку.
 
-    useEffect(() => {
-        // Визначаємо місто через API при завантаженні компонента.
-        fetch('https://ipapi.co/json/')
-            .then(res => res.json())
-            .then(data => {
-                const detectedCity = translateCity(data.city || 'Київ');
-                setLocation(detectedCity);
-                setSearchTerm(detectedCity); // Початкове значення поля.
-            })
-            .catch(() => {
-                setLocation('Київ');
-                setSearchTerm('Київ');
-            });
-    }, [setLocation]);
+    // useEffect(() => {
+    //     // Визначаємо місто через API при завантаженні компонента.
+    //     fetch('https://ipapi.co/json/')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             const detectedCity = translateCity(data.city || 'Київ');
+    //             setLocation(detectedCity);
+    //             setSearchTerm(detectedCity); // Початкове значення поля.
+    //         })
+    //         .catch(() => {
+    //             setLocation('Київ');
+    //             setSearchTerm('Київ');
+    //         });
+    // }, [setLocation]);
 
     const handleInputClick = () => {
         setSearchTerm(''); // Очищаємо поле вводу
@@ -62,7 +62,7 @@ const CityAutoDetect = () => {
     };
 
     return (
-        <div className="relative w-full xl:w-[200px] h-[56px]">
+        <div className="relative w-full xl:w-[282px] h-[56px]">
             {/* Поле вводу */}
             <Input
                 type="text"

@@ -28,14 +28,9 @@ const AdvicesList = () => {
 
     if (!isCalculationDone) {
         return (
-            <Scroll
-                className="text-xl flex justify-center cursor-pointer"
-                to="calculator-section"
-                smooth={true}
-                offset={10}
-                duration={1500}
-            >
-                <span className=" text-gray-300">
+
+            <Scroll to="calculator-section" smooth={true} offset={10} duration={1500}>
+                <p className="text-xl xl:text-2xl text-center cursor-pointer text-placeholder">
                     Будь ласка, натисніть{' '}
                     <span className="text-black text-lg xl:text-2xl">&#34;Розрахувати&#34;</span>,
                     щоб отримати поради.

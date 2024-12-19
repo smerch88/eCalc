@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { Footer } from '@/components/Footer';
 import { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const montserrat = localFont({
     src: [
@@ -78,6 +79,7 @@ export default function RootLayout({
                 <Header />
                 {children}
                 <Analytics />
+                <SpeedInsights />
                 <Footer />
             </body>
         </html>

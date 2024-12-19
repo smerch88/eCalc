@@ -349,7 +349,7 @@ const MWComponent = () => {
                             <AnimatedNumber value={result?.monthly.energyCost || 0} /> грн/міс
                         </p>
                     </div>
-                    <div className="border-t-2 pt-6 border-black xl:border-none xl:pt-0">
+                    <div className="border-t-[1px] pt-6 border-black xl:border-none xl:pt-0">
                         <p className="mb-4">Річне споживання</p>
                         <p className="text-lg xl:text-xl text-gray-600">
                             {result?.yearly.energyConsumption.toFixed(2) || 0} кВт·год/рік

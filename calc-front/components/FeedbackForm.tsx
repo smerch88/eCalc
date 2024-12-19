@@ -69,7 +69,7 @@ export const FeedbackForm: FC = () => {
                         id="name"
                         placeholder="Іванов Іван Іванович"
                         {...register('name', { required: "Це поле є обов'язковим" })}
-                        className={`h-[54px] rounded-2xl mt-4 xl:mt-6 ${
+                        className={`h-[54px] rounded-2xl px-4 xl:px-6 py-4 mt-4 xl:mt-6 placeholder:text-placeholder ${
                             errors.name ? errorClass : ''
                         }`}
                     />
@@ -87,7 +87,7 @@ export const FeedbackForm: FC = () => {
                         id="email"
                         placeholder="ivanov123@gmail.com"
                         {...register('email', { required: "Це поле є обов'язковим" })}
-                        className={`h-[54px] rounded-2xl mt-4 xl:mt-6 ${
+                        className={`h-[54px] rounded-2xl px-4 xl:px-6 py-4 mt-4 xl:mt-6 placeholder:text-placeholder ${
                             errors.email ? errorClass : ''
                         }`}
                     />
@@ -107,7 +107,7 @@ export const FeedbackForm: FC = () => {
                     maxLength={400}
                     placeholder="Вітаю..."
                     {...register('message', { required: "Це поле є обов'язковим" })}
-                    className={`border border-black xl:text-lg rounded-2xl px-4 xl:px-6 py-4 mt-4 xl:mt-6 ${
+                    className={`border border-black outline-none xl:text-lg rounded-2xl px-4 xl:px-6 py-4 mt-4 xl:mt-6 placeholder:text-placeholder ${
                         errors.message ? errorClass : ''
                     }`}
                 />
