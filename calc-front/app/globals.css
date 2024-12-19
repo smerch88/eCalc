@@ -74,6 +74,7 @@ body {
 
     input[type='number'] {
         -moz-appearance: textfield;
+        appearance: none;
     }
 
     /* Стилізація основного повзунка */
@@ -81,6 +82,7 @@ body {
         position: relative;
         top: 5px;
         -webkit-appearance: none;
+        appearance: none;
         width: 100%;
         background-color: transparent;
         height: 0px;
@@ -112,6 +114,7 @@ body {
         top: 5px;
         right: 12px;
         -webkit-appearance: none;
+        appearance: none;
         height: 24px;
         width: 24px;
         background-color: transparent;
@@ -126,6 +129,7 @@ body {
         top: 5px;
         right: 12px;
         -webkit-appearance: none;
+        appearance: none;
         height: 24px;
         width: 24px;
         background-color: transparent;
@@ -199,4 +203,8 @@ body {
         height: 40px;
         background-color: white;
     }
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
