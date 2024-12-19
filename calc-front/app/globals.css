@@ -76,6 +76,10 @@ body {
         -moz-appearance: textfield;
         appearance: none;
     }
+    summary {
+        appearance: none;
+        -webkit-appearance: none;
+    }
 
     /* Стилізація основного повзунка */
     input[type='range'] {
