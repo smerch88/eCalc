@@ -138,7 +138,7 @@ const BoilerComponent = () => {
     };
 
     return (
-        <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 text-lg xl:text-lg h-full">
+        <form className="flex flex-col xl:flex-row gap-4 xl:gap-16 xl:text-lg h-full">
             <div className="w-full bg-white rounded-b-xmd px-4 pb-4 xl:px-0 xl:pb-0 xl:w-[660px] flex-shrink-0 flex flex-col gap-4 xl:gap-8">
                 <div className="relative">
                     <TooltipBtn
@@ -158,7 +158,7 @@ const BoilerComponent = () => {
                             value={location}
                             readOnly
                             onChange={handleInputChange}
-                            className="px-6 py-6 rounded-2xl text-lg"
+                            className="p-4 xl:p-6 rounded-2xl"
                         />
                         {/* <MapPin className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4" /> */}
                         <svg
@@ -191,9 +191,9 @@ const BoilerComponent = () => {
                             placeholder="Літрів"
                             value={formData.waterVolume}
                             onChange={handleInputChange}
-                            className="w-full px-4 xl:px-6 rounded-2xl text-base"
+                            className="w-full px-4 xl:px-6 rounded-2xl"
                         />
-                        <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-sm">
+                        <span className="absolute right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-sm">
                             літрів
                         </span>
                     </div>
@@ -229,11 +229,11 @@ const BoilerComponent = () => {
                                 value={formData.costPerKWh}
                                 onChange={handleInputChange}
                                 disabled={isInputDisabled}
-                                className={`px-4 w-full mt-4 xl:mt-0 xl:px-6 rounded-2xl text-base xl:text-lg ${
+                                className={`px-4 w-full mt-4 xl:mt-0 xl:px-6 rounded-2xl ${
                                     isInputDisabled ? 'bg-gray-200 cursor-not-allowed' : ''
                                 } ${!isValid ? 'border-2 border-red-500' : ''}`}
                             />
-                            <span className="absolute mt-2 xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-base xl:text-sm">
+                            <span className="absolute mt-2 xl:mt-0 right-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap text-sm">
                                 грн/кВт
                             </span>
                             {formData.icon && Array.isArray(formData.icon) ? (
@@ -371,8 +371,8 @@ const BoilerComponent = () => {
                         text={boilerContent.waterTemperatures.text}
                         buttonText="Зрозуміло"
                     />
-                    <div className="flex flex-col xl:flex-row xl:gap-12">
-                        <div className="mb-4 xl:mb-0">
+                    <div className="flex flex-col xl:flex-row gap-4 xl:gap-12">
+                        <div>
                             <label htmlFor="initialTemp" className="block xl:mb-3 text-shadow">
                                 Початкова температура:
                             </label>
@@ -385,7 +385,7 @@ const BoilerComponent = () => {
                             />
                         </div>
 
-                        <div className="mb-4 xl:mb-0">
+                        <div>
                             <label htmlFor="targetTemp" className="block xl:mb-3 text-shadow">
                                 Цільова температура:
                             </label>
@@ -500,7 +500,7 @@ const BoilerComponent = () => {
 
                 <Button
                     size="xl"
-                    className="hidden xl:flex xl:text-2xl w-full"
+                    className="hidden xl:flex xl:text-xl w-full"
                     onClick={handleSubmit}
                 >
                     {isLoading ? (

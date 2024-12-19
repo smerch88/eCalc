@@ -197,7 +197,7 @@ export const CalculatorsSelect = () => {
     return (
         <>
             <div className="bg-white px-4 pb-6 rounded-t-[30px]">
-                <p className="py-4 text-lg">Прилад для розрахунку:</p>
+                <p className="py-4">Прилад для розрахунку:</p>
                 <SelectInput
                     options={devices.map(device => ({
                         label: device.name,
