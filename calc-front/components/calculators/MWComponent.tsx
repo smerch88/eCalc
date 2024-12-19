@@ -328,7 +328,7 @@ const MWComponent = () => {
                 <Button onClick={handleSubmit} size="xl" className="py-4 xl:hidden text-lg w-full">
                     {isLoading ? (
                         <Loader
-                            style={{ width: '24px', height: '24px' }}
+
                             className="animate-spin"
                         />
                     ) : (
@@ -367,7 +367,6 @@ const MWComponent = () => {
                 >
                     {isLoading ? (
                         <Loader
-                            style={{ width: '24px', height: '24px' }}
                             className="animate-spin"
                         />
                     ) : (
