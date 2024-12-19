@@ -33,7 +33,7 @@ const AdvicesList = () => {
                     Будь ласка, натисніть{' '}
                     <span className="text-black text-lg xl:text-2xl">&#34;Розрахувати&#34;</span>,
                     щоб отримати поради.
-                </span>
+                </p>
             </Scroll>
         );
     }
