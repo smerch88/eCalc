@@ -50,7 +50,7 @@ export const InfoPopUp: FC = () => {
                 }`}
             >
                 <p className="text-center">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, labore..
+                    ⚠️ Сайт ще знаходиться у розробці. Деякі функції можуть бути недоступні.
                 </p>
 
                 <Button
