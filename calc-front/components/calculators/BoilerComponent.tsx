@@ -1,6 +1,7 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
+import CitySelector from '@/components/CitySelect';
 // import { MapPin } from 'lucide-react';
 import { Button } from '../ui/button';
 import { SelectInput } from '../ui/selectInput';
@@ -48,6 +49,20 @@ const AnimatedNumber = ({ value }: { value: number }) => {
 };
 
 const BoilerComponent = () => {
+    const setLocation = useUnifiedStore(state => state.setLocation); // Оновлення міста.
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
+    const [searchTerm, setSearchTerm] = useState(''); // Стан пошуку.
+    const handleInputClick = () => {
+        setSearchTerm(''); // Очищаємо поле вводу
+        setIsDropdownOpen(true); // Відкриваємо список міст
+    };
+
+    const handleCitySelect = (city: string) => {
+        setLocation(city); // Оновлюємо глобальний стан
+        setSearchTerm(city); // Вставляємо місто у поле
+        setIsDropdownOpen(false); // Закриваємо випадаючий список
+    };
+
     const [selectedCostPerKWh, setSelectedCostPerKWh] = useState<string>('single-zone');
     // const [inputValue, setInputValue] = useState<string>("4.32");
     const [formData, setFormData] = useState<FormData>({
@@ -155,11 +170,22 @@ const BoilerComponent = () => {
                             type="text"
                             placeholder="Місто"
                             // value={formData.city}
-                            value={location}
-                            readOnly
-                            onChange={handleInputChange}
+                            value = {isDropdownOpen ? searchTerm : location}
+                            onChange={e => setSearchTerm(e.target.value)}
+                            onClick={handleInputClick}
+                            // value={location}
+                            // readOnly
+                            // onChange={handleInputChange}
                             className="p-4 xl:p-6 rounded-2xl"
                         />
+
+                        {/* Список міст */}
+                        {isDropdownOpen && (
+                            <CitySelector
+                                searchTerm={searchTerm} // Передаємо введене значення
+                                onCitySelect={handleCitySelect} // Вибір міста
+                            />
+                        )}
                         {/* <MapPin className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4" /> */}
                         <svg
                             className="absolute w-6 h-6 right-4 top-1/2 transform -translate-y-1/2"
