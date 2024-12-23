@@ -407,7 +407,7 @@ const BoilerComponent = () => {
                         buttonText="Зрозуміло"
                     />
                     <label htmlFor="efficiency" className="block xl:mb-3 text-shadow">
-                        Який КПД бойлера?
+                        Який ККД бойлера?
                     </label>
                     <div>
                         <CalcInput
