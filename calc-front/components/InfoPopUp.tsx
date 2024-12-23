@@ -7,7 +7,7 @@ export const InfoPopUp: FC = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const isPopupUsed = localStorage.getItem('popupClosed') === 'true';
+        const isPopupUsed = localStorage.getItem('popupUsed') === 'true';
         if (isPopupUsed) return;
 
         const handleScroll = () => {
