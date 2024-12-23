@@ -122,7 +122,7 @@ const BoilerComponent = () => {
         setTimeout(() => {
             calculateAndSetResult(formData);
             setCalculationDone(true);
-            setCalculationType('light');
+            setCalculationType('boiler');
 
             setIsLoading(false);
         }, 500);

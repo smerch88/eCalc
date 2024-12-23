@@ -145,7 +145,7 @@ const WMComponent = () => {
         setTimeout(() => {
             calculateAndSetResult(formData);
             setCalculationDone(true);
-            setCalculationType('light');
+            setCalculationType('wm');
 
             setIsLoading(false);
         }, 500);
