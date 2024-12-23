@@ -254,7 +254,7 @@ const LightComponent = () => {
                             type="number"
                             value={formData.hoursPerDay}
                             onChange={handleInputChange}
-                            unit="час/день"
+                            unit="год/день"
                         />
                     </div>
                 </div>
