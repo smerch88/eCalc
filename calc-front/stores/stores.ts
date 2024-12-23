@@ -2,9 +2,12 @@ import { UnifiedStoreState } from '@/types/common';
 import { create } from 'zustand';
 
 export const useUnifiedStore = create<UnifiedStoreState>(set => ({
-    location: '',
+    location: localStorage.getItem('location') || 'Київ', // Початкове значення
+    setLocation: location => {
+        localStorage.setItem('location', location); // Зберігаємо в localStorage
+        set({ location });
+    },
     tariffType: 'day',
-    setLocation: location => set({ location }),
     setTariffType: type => set({ tariffType: type }),
     boiler: null,
     setBoiler: boiler => set({ boiler }),

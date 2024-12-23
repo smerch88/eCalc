@@ -29,7 +29,7 @@ import { useState } from 'react';
 // };
 
 const CityAutoDetect = () => {
-    // const location = useUnifiedStore((state) => state.location); // Поточне місто.
+    const location = useUnifiedStore(state => state.location); // Поточне місто.
     const setLocation = useUnifiedStore(state => state.setLocation); // Оновлення міста.
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
@@ -49,9 +49,14 @@ const CityAutoDetect = () => {
     //             setSearchTerm('Київ');
     //         });
     // }, [setLocation]);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // setSearchTerm(''); // Очищаємо поле вводу
+        setSearchTerm(e.target.value); // Оновлюємо локальний стан пошуку
+    };
 
     const handleInputClick = () => {
-        setSearchTerm(''); // Очищаємо поле вводу
+        // setSearchTerm(''); // Очищаємо поле вводу
+        // setLocation('');
         setIsDropdownOpen(true); // Відкриваємо список міст
     };
 
@@ -67,13 +72,14 @@ const CityAutoDetect = () => {
             <Input
                 type="text"
                 placeholder="Місто"
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+                value={location}
+                onChange={handleInputChange}
+                // onChange={e => setSearchTerm(e.target.value)}
                 onClick={handleInputClick}
                 className={`w-full h-full bg-white px-4 text-lg cursor-pointer border-gray-200 
           hover:bg-[#f0f0f0] focus:outline-none focus-visible:ring-0 transition-all 
           ${isDropdownOpen ? 'rounded-t-xl rounded-b-none' : 'rounded-xl'}`}
-                // onChange={(e) => setSearchTerm(e.target.value)} // Пошук міст
+                //  onChange={(e) => setSearchTerm(e.target.value)} // Пошук міст
                 // onClick={handleInputClick} // Очищення та відкриття списку
                 // className="w-full h-full bg-white px-4 rounded-xl text-lg cursor-pointer border-gray-200 hover:bg-[#f0f0f0] hover:outline-none focus:outline-none focus-visible:ring-0"
             />
