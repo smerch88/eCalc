@@ -398,7 +398,12 @@ const WMComponent = () => {
                     </div>
                 </div>
 
-                <Button onClick={handleSubmit} size="xl" className="py-4 xl:hidden text-lg w-full">
+                <Button
+                    onClick={handleSubmit}
+                    id="btn-wm-calc"
+                    size="xl"
+                    className="py-4 xl:hidden text-lg w-full"
+                >
                     {isLoading ? <Loader className="animate-spin" /> : 'Розрахувати'}
                 </Button>
             </div>
@@ -435,6 +440,7 @@ const WMComponent = () => {
 
                 <Button
                     size="xl"
+                    id="btn-wm-calc"
                     className="hidden xl:flex xl:text-2xl w-full"
                     onClick={handleSubmit}
                 >
