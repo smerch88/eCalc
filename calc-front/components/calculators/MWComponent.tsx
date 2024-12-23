@@ -118,7 +118,7 @@ const MWComponent = () => {
         setTimeout(() => {
             calculateAndSetResult(formData);
             setCalculationDone(true);
-            setCalculationType('light');
+            setCalculationType('mw');
 
             setIsLoading(false);
         }, 500);
@@ -326,14 +326,7 @@ const MWComponent = () => {
                 </div>
 
                 <Button onClick={handleSubmit} size="xl" className="py-4 xl:hidden text-lg w-full">
-                    {isLoading ? (
-                        <Loader
-
-                            className="animate-spin"
-                        />
-                    ) : (
-                        'Розрахувати'
-                    )}
+                    {isLoading ? <Loader className="animate-spin" /> : 'Розрахувати'}
                 </Button>
             </div>
 
@@ -365,13 +358,7 @@ const MWComponent = () => {
                     className="hidden xl:flex xl:text-2xl w-full"
                     onClick={handleSubmit}
                 >
-                    {isLoading ? (
-                        <Loader
-                            className="animate-spin"
-                        />
-                    ) : (
-                        'Розрахувати'
-                    )}
+                    {isLoading ? <Loader className="animate-spin" /> : 'Розрахувати'}
                 </Button>
             </div>
         </form>

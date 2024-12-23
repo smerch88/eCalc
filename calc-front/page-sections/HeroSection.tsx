@@ -1,4 +1,5 @@
 import { ScrollBtn } from '@/components/ScrollBtn';
+import { InfoPopUp } from '@/components/InfoPopUp';
 import cn from 'classnames';
 
 export const HeroSection = () => {
@@ -14,6 +15,7 @@ export const HeroSection = () => {
                 <h1 className="w-64 mb-auto text-[32px] font-bold leading-10 xl:mb-12 xl:w-[651px] xl:text-5xl">
                     Контролюй споживання електроенергії легко
                 </h1>
+                <InfoPopUp />
                 <ScrollBtn />
             </div>
         </div>
