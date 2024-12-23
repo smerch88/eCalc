@@ -29,7 +29,7 @@ import { useState } from 'react';
 // };
 
 const CityAutoDetect = () => {
-    // const location = useUnifiedStore((state) => state.location); // Поточне місто.
+    const location = useUnifiedStore((state) => state.location); // Поточне місто.
     const setLocation = useUnifiedStore(state => state.setLocation); // Оновлення міста.
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
@@ -67,7 +67,7 @@ const CityAutoDetect = () => {
             <Input
                 type="text"
                 placeholder="Місто"
-                value={searchTerm}
+                value = {isDropdownOpen ? searchTerm : location}
                 onChange={e => setSearchTerm(e.target.value)}
                 onClick={handleInputClick}
                 className={`w-full h-full bg-white px-4 text-lg cursor-pointer border-gray-200 
