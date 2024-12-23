@@ -7,6 +7,9 @@ export const InfoPopUp: FC = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        const isPopupUsed = localStorage.getItem('popupClosed') === 'true';
+        if (isPopupUsed) return;
+
         const handleScroll = () => {
             if (window.scrollY > 680) {
                 setIsVisible(true);
@@ -25,6 +28,7 @@ export const InfoPopUp: FC = () => {
     const handleClose = () => {
         setIsVisible(false);
         document.body.classList.remove('overflow-hidden');
+        localStorage.setItem('popupUsed', 'true');
     };
 
     return (
