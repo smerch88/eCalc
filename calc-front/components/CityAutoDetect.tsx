@@ -6,7 +6,7 @@ import { useUnifiedStore } from '@/stores/stores'; // Імпорт zustand store
 import Image from 'next/image';
 import IconArrowDown from '@/public/icons/arrow-down.svg';
 import IconArrowUp from '@/public/icons/arrow-up.svg';
-import { useState } from 'react';
+import { useState,useEffect,useRef } from 'react';
 
 // Словник для перекладу міст
 // const cityTranslations: { [key: string]: string } = {
@@ -34,6 +34,7 @@ const CityAutoDetect = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
     const [searchTerm, setSearchTerm] = useState(''); // Стан пошуку.
+    const dropdownRef = useRef<HTMLDivElement>(null); // Реф для випадаючого списку.
 
     // useEffect(() => {
     //     // Визначаємо місто через API при завантаженні компонента.
@@ -49,6 +50,19 @@ const CityAutoDetect = () => {
     //             setSearchTerm('Київ');
     //         });
     // }, [setLocation]);
+ useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false); // Закриваємо випадаюче меню
+                setSearchTerm(location); // Повертаємо попереднє місто
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [location]);
 
     const handleInputClick = () => {
         setSearchTerm(''); // Очищаємо поле вводу
@@ -62,7 +76,7 @@ const CityAutoDetect = () => {
     };
 
     return (
-        <div className="relative w-full xl:w-[282px] h-[56px]">
+        <div className="relative w-full xl:w-[282px] h-[56px]" ref={dropdownRef}>
             {/* Поле вводу */}
             <Input
                 type="text"
