@@ -15,6 +15,8 @@ export const footerItems = [
         links: [
             { subtitle: 'Про нас', href: 'about-us' },
             { subtitle: 'Контакти', href: 'contacts' },
+            { subtitle: 'Умови та положення', href: 'terms' },
+            { subtitle: 'Політика конфіденційності', href: 'policy' },
         ],
     },
     {
