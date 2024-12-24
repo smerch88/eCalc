@@ -1,7 +1,7 @@
 'use client';
 
 import CitySelector from '@/components/CitySelect';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect,useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { CalcInput } from '@/components/ui/calcInput';
 import { calculateWMConsumption } from '@/lib/calculators';
@@ -68,6 +68,8 @@ const WMComponent = () => {
     const setLocation = useUnifiedStore(state => state.setLocation); // Оновлення міста.
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
     const [searchTerm, setSearchTerm] = useState(''); // Стан пошуку.
+   const dropdownRef = useRef<HTMLDivElement>(null); // Реф для випадаючого списку.
+
     const handleInputClick = () => {
         setSearchTerm(''); // Очищаємо поле вводу
         setIsDropdownOpen(true); // Відкриваємо список міст
@@ -103,6 +105,20 @@ const WMComponent = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const location = useUnifiedStore(state => state.location);
+    // Закриття списку, якщо користувач клацає за межами
+        useEffect(() => {
+            const handleClickOutside = (event: MouseEvent) => {
+                if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                    setIsDropdownOpen(false); // Закриваємо випадаюче меню
+                    setSearchTerm(location); // Повертаємо попереднє місто
+                }
+            };
+            document.addEventListener('mousedown', handleClickOutside);
+    
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }, [location]);
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
@@ -187,7 +203,7 @@ const WMComponent = () => {
                     <label className="text-shadow" htmlFor="city">
                         Тарифи за воду з міста:
                     </label>
-                    <div className="relative mt-4 xl:mt-3">
+                    <div className="relative mt-4 xl:mt-3" ref={dropdownRef}>
                         <Input
                             id="city"
                             type="text"
