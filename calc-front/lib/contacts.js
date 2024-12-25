@@ -39,7 +39,7 @@ export const contacts = [
         title: 'SMM-менеджер',
         description:
             'Єгор. Відповідає за стратегію, ведення соціальних мереж та популяризацію продукту.',
-        link: 'https://www.linkedin.com/in/',
+        link: 'https://www.linkedin.com/in/egor-kalinin-683611343',
         linkText: 'LinkedIn профіль',
         icon: Icon,
         alt: 'LinkedIn logotype',
