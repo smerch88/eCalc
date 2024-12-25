@@ -87,7 +87,7 @@ const BoilerComponent = () => {
     const location = useUnifiedStore(state => state.location); // Поточне місто
     // Закриття списку, якщо користувач клацає за межами
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
+        const handleClickOutside = (event: globalThis.MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setIsDropdownOpen(false); // Закриваємо випадаюче меню
                 setSearchTerm(location); // Повертаємо попереднє місто
