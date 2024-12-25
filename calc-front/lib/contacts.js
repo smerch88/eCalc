@@ -36,6 +36,15 @@ export const contacts = [
         alt: 'LinkedIn logotype',
     },
     {
+        title: 'SMM-менеджер',
+        description:
+            'Єгор. Відповідає за стратегію, ведення соціальних мереж та популяризацію продукту.',
+        link: 'https://www.linkedin.com/in/egor-kalinin-683611343',
+        linkText: 'LinkedIn профіль',
+        icon: Icon,
+        alt: 'LinkedIn logotype',
+    },
+    {
         title: 'Фронтенд розробник',
         description:
             'Сергій Сафонов. Розробник, що працює над інтерфейсом та функціоналом додатку.',
