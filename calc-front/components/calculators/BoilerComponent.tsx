@@ -6,7 +6,7 @@ import CitySelector from '@/components/CitySelect';
 import { Button } from '../ui/button';
 import { SelectInput } from '../ui/selectInput';
 import { CalcInput } from '@/components/ui/calcInput';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useRef, useEffect } from 'react';
 import TooltipBtn from '../ui/tooltipBtn';
 import { calculateBoilerEnergyConsumption } from '@/lib/calculators';
 import { useUnifiedStore } from '@/stores/stores';
@@ -49,16 +49,14 @@ const AnimatedNumber = ({ value }: { value: number }) => {
 };
 
 const BoilerComponent = () => {
+
     const setLocation = useUnifiedStore(state => state.setLocation); // Оновлення міста.
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Стан випадаючого списку.
     const [searchTerm, setSearchTerm] = useState(''); // Стан пошуку.
-    const handleInputClick = () => {
-        setSearchTerm(''); // Очищаємо поле вводу
-        setIsDropdownOpen(true); // Відкриваємо список міст
-    };
+    const dropdownRef = useRef<HTMLDivElement>(null); // Реф для випадаючого списку.
 
     const handleCitySelect = (city: string) => {
-        setLocation(city); // Оновлюємо глобальний стан
+               setLocation(city); // Оновлюємо глобальний стан
         setSearchTerm(city); // Вставляємо місто у поле
         setIsDropdownOpen(false); // Закриваємо випадаючий список
     };
@@ -87,6 +85,25 @@ const BoilerComponent = () => {
 
     const setCalculationDone = useUnifiedStore(state => state.setCalculationDone);
     const location = useUnifiedStore(state => state.location); // Поточне місто
+    // Закриття списку, якщо користувач клацає за межами
+    useEffect(() => {
+        const handleClickOutside = (event: globalThis.MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false); // Закриваємо випадаюче меню
+                setSearchTerm(location); // Повертаємо попереднє місто
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [location]);
+
+    const handleInputClick = () => {
+        setSearchTerm(''); // Очищаємо поле вводу
+        setIsDropdownOpen(true); // Відкриваємо список міст
+    };
     const setCalculationType = useUnifiedStore(state => state.setCalculationType);
 
     const isInputDisabled = selectedCostPerKWh !== 'three-zone';
@@ -164,7 +181,7 @@ const BoilerComponent = () => {
                     <label className="text-shadow" htmlFor="city">
                         Тарифи за воду з міста:
                     </label>
-                    <div className="relative mt-4 xl:mt-3">
+                    <div className="relative mt-4 xl:mt-3" ref={dropdownRef}>
                         <Input
                             id="city"
                             type="text"
