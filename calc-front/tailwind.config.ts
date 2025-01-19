@@ -21,11 +21,6 @@ const config: Config = {
                 notXl: { max: '1199.98px' },
             },
         },
-        backgroundImage: {
-            hero: "image-set(url('/bgImages/hero.png') 1x,url('/bgImages/hero@2x.png') 2x);",
-            heroMd: "image-set(url('/bgImages/heroMd.png') 1x,url('/bgImages/heroMd@2x.png') 2x);",
-            heroLg: "image-set(url('/bgImages/heroLg.png') 1x,url('/bgImages/heroLg@2x.png') 2x);",
-        },
         extend: {
             colors: {
                 success: '#225C07',

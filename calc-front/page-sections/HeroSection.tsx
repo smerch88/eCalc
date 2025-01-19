@@ -12,7 +12,7 @@ export const HeroSection = () => {
             )}
         >
             <div className="container flex flex-col h-[744px] max-h-[100lvh] pt-16 pb-24 xl:h-[860px] xl:py-80">
-                <h1 className="w-64 mb-auto text-[32px] font-bold leading-10 xl:mb-12 xl:w-[651px] xl:text-5xl">
+                <h1 className="w-64 mb-auto text-[32px] font-bold leading-10 xl:mb-12 xl:w-[651px] xl:text-5xl text-white">
                     Контролюй споживання електроенергії легко
                 </h1>
                 <InfoPopUp />
